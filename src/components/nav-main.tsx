@@ -1,7 +1,7 @@
 "use client"
 
 import {type LucideIcon } from "lucide-react"
-import { IoAddCircle,IoBagCheckOutline  } from "react-icons/io5";
+import { IoBagCheckOutline  } from "react-icons/io5";
 import {LayoutDashboardIcon,UserCircleIcon,Bookmark,CreditCard, } from "lucide-react"
 
 import {
