@@ -7,12 +7,12 @@ import { FileProvider } from "@/app/FileContext";
 import { DataProvider } from "@/app/DataContext";
 import { NotificationProvider } from "@/app/NotificationContext";
 import { BoostProvider } from "@/app/BoostContext";
-import { CheckoutProvider } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { fetchClientSecret } from "@/lib/helpers";
+// import { CheckoutProvider } from "@stripe/react-stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
+// import { fetchClientSecret } from "@/lib/helpers";
 
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PROMISE_KEY??"" );
+// const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PROMISE_KEY??"" );
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
