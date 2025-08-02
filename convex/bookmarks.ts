@@ -19,7 +19,7 @@ export const createBookmark = mutation({
 
                         const existing = await ctx.db
                         .query("bookmarks")
-                        .withIndex("by_product_id", (q) => q.eq("product_id", args.Bookmark.product_id))
+                        .withIndex("by_user_id_and_product_id", (q) => q.eq("user_id", args.Bookmark.user_id).eq("product_id", args.Bookmark.product_id))
                         .unique();
                   if(!existing){
                         await ctx.db.insert("bookmarks", {

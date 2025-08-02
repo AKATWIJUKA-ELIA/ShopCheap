@@ -48,7 +48,7 @@ const conditionalborder = (sponsorship: string) => {
 
 export default function ProductBoost() {
         const { AllBoostedProducts } = useBoost()
-        const [activeBoosts, setActiveBoosts] = useState<BoostWithInteraction[]>([])
+        const [activeBoosts, setActiveBoosts] = useState<BoostWithInteraction[]>()
 
 useEffect(() => {
                 setActiveBoosts(AllBoostedProducts ?? [])
@@ -131,7 +131,7 @@ useEffect(() => {
                                 <div>
                                   <div className="text-lg font-bold">
                                         {/* Sales we order count ie the number of times the product was ordered / appears in the orders table */}
-                                    {product.interaction?.type.view.count??0}
+                                    {product.product_views?.toLocaleString() ?? 0}
                                   </div>
                                   <div className="flex items-center gap-1 text-xs text-gray-600">
                                         <span>views</span>
