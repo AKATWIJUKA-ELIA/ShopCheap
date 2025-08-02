@@ -29,11 +29,6 @@ export function NavMain() {
                         icon: IoBagCheckOutline as LucideIcon,
                         link:"/profile/orders",
                 },
-                {
-                        title: "Sell",
-                        icon: IoAddCircle  as LucideIcon,
-                        link:"/post",
-                },
                  
                 {
                         title: "Bookmarks",
