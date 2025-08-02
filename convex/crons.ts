@@ -144,8 +144,9 @@ export const SendRecommendedProducts = internalAction({
   handler: async (ctx) => {
         const customers = await ctx.runQuery(api.users.GetAllCustomers, {});
         for (const customer of customers) {
-            const products = await ctx.runQuery(api.products.recommendProducts, { user_id: customer._id as Id<"customers">,type: "view" });
-            if (!products || products.length === 0) continue;
+            const ViewedProducts = await ctx.runQuery(api.products.recommendProducts, { user_id: customer._id as Id<"customers">,type: "view" });
+            const CartedProducts = await ctx.runQuery(api.products.recommendProducts, { user_id: customer._id as Id<"customers">,type: "cart" });
+            const products = [...ViewedProducts, ...CartedProducts].slice(0, 7);
             // Send email
             await ctx.runMutation(api.sendEmail.sendEmail, {
                 receiverEmail: customer.email,
