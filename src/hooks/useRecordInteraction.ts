@@ -2,7 +2,9 @@ import { useAppSelector } from "@/hooks";
 import { api } from "../../convex/_generated/api";
 import { useMutation } from "convex/react";
 
+
 export default function useRecordInteraction() {
+        // console.log("useRecordInteraction hook called");
   const recordInteraction = useMutation(api.products.recordInteraction);
   const userId = useAppSelector((state) => state.user.user?.User_id || "");
 
