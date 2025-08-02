@@ -17,7 +17,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PROMISE_KEY??"" 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <ConvexClientProvider>
-        <CheckoutProvider stripe={stripePromise} options={{ fetchClientSecret }}>
+        {/* <CheckoutProvider stripe={stripePromise} options={{ fetchClientSecret }}> */}
           <NotificationProvider>
             <BoostProvider>
               <ReduxProvider>
@@ -31,7 +31,7 @@ export default function ClientProviders({ children }: { children: React.ReactNod
               </ReduxProvider>
             </BoostProvider>
           </NotificationProvider>
-        </CheckoutProvider>
+        {/* </CheckoutProvider> */}
     </ConvexClientProvider>
   );
 }

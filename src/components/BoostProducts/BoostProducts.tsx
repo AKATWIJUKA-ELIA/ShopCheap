@@ -131,9 +131,9 @@ export default function ProductBoost() {
         const [duration, setDuration] = useState("weekly")
         const [autoRenew, setAutoRenew] = useState(false)
         const { boostProduct,BoostedProducts } = useBoost()
-        const [activeBoosts, setActiveBoosts] = useState<BoostWithInteraction[]>([])
+        const [activeBoosts, setActiveBoosts] = useState<BoostWithInteraction[]>()
         const { setNotification } = useNotification()
-        console.log("boost",boost)
+        
   const calculateTotalCost = () => {
     const baseCost = selectedBoost.pricing[duration as keyof typeof selectedBoost.pricing]
     return baseCost
@@ -661,7 +661,7 @@ useEffect(() => {
                                 </div>
                                 <div>
                                   <div className="text-lg font-bold">
-                                    {product.interaction?.type.cart.count ??0}
+                                    {product.product_views}
                                   </div>
                                   <div className="flex items-center gap-1 text-xs text-gray-600">
                                         <span>Cart</span> 

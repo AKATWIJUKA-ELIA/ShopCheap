@@ -109,6 +109,7 @@ bookmarks: defineTable({
     product_id: v.string(),
     _creationTime: v.number(),
 }).index("by_user_id", ["user_id"])
+.index("by_user_id_and_product_id", ["user_id", "product_id"])
 .index("by_product_id", ["product_id"]),
 
 interactions:defineTable( {
