@@ -1,23 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ReduxProvider from "./ReduxProvider";
-import { ConvexClientProvider } from "./ConvexClientProvider";
-import { ThemeProvider } from "@/components/theme-provider";
-// import SessionChecker from "./sessionchecker";
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { FileProvider } from "./FileContext";
-import { DataProvider } from "./DataContext";
-import { NotificationProvider } from "./NotificationContext";
 import { ModeToggle } from "@/components/Dark-light/page";
 import FeedBackButton from "@/components/FeedBackButton/page";
 import Header from "@/components/Header/page";
 import ConditionalFooter from "@/components/ConditionalFooter/page"
 import MessagePop from "@/components/MessagePop/page";
-import { BoostProvider } from "./BoostContext";
-import {CheckoutProvider} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
-import {fetchClientSecret} from "@/lib/helpers";
 import ClientProviders from "./Providers";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 
 export const metadata: Metadata = {
@@ -25,8 +14,6 @@ export const metadata: Metadata = {
   description: "ShopCheap Anytime Anywhere",
 };
 const CLIENT_ID = process.env.CLIENT_ID ?? "";
-const stripePromise = loadStripe(process.env.STRIPE_PROMISE_KEY ??"");
-
 export default function RootLayout({
   children,
 }: {
@@ -35,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className=" " >
+        <GoogleOAuthProvider clientId={CLIENT_ID}>
         <ClientProviders>
                 <Header  />
                 <MessagePop />
@@ -43,6 +31,7 @@ export default function RootLayout({
                 <ModeToggle />
                 <ConditionalFooter/>
         </ClientProviders>
+        </GoogleOAuthProvider>
       </body>
       <script src="https://accounts.google.com/gsi/client" async defer></script>
     </html>

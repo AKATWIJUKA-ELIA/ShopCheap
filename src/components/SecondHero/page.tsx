@@ -13,6 +13,7 @@ import {useData} from  '../../app/DataContext';
 import { Card, CardContent } from '../ui/card'
 import { Oval } from 'react-loader-spinner'
 import { Id } from '../../../convex/_generated/dataModel'
+import useGetSponsored from '@/hooks/useGetSponsored';
 interface Product {
         approved: boolean;
          product_cartegory: string;
@@ -34,8 +35,9 @@ const SecondHero = () => {
         const carousel2 = Autoplay({ delay: 4500})
         const carousel3 = Autoplay({ delay: 6000})
         const { data } = useData();
+          const { sponsored: sponsored } = useGetSponsored();
                 // console.log("data is ",product)
-
+        const [Sponsored, setSponsored] = useState<Product[]>([]);
         const [products, setproducts] = useState<Product[]>([]);
                 useEffect(() => {
                         if (data.Products.product && data.Products.product.length > 0) {
@@ -43,6 +45,12 @@ const SecondHero = () => {
                         }
                         //   console.log("data is ",products)
                 }, [data.Products.product]);
+
+                useEffect(() => {
+                  if (sponsored && sponsored.length > 0) {
+                    setSponsored(sponsored.filter((item): item is Product => item !== null && item.product_sponsorship?.type==="premium" && item.product_sponsorship?.status==="active"));
+                  }
+                }, [sponsored]);
 
   return (
 
@@ -169,14 +177,33 @@ const SecondHero = () => {
 <div className="flex flex-col gap-3">
 
 <div className='flex justify-center -mt-3 '>
-        <h1 className='font-bold text-2xl  ' >Best <span className='text-gold'>Sellers</span></h1>
+        <h1 className='font-bold text-2xl  ' >Premium <span className='text-gold'>Sellers</span></h1>
     </div>
 
 <div className='flex gap-4  justify-center  w-full'>
           {/* Carousel 1 */}
   <div className="flex-1 min-w-0 flex justify-center  ">
-    {products && products.length>0 ?(
-        <Carousel opts={{ align: "center", loop: true }} plugins={[carousel1]} className="w-full">
+    {(()=>{
+        if(Sponsored && Sponsored.length>0) {
+                return(
+                        <Carousel opts={{ align: "center", loop: true }} plugins={[carousel3]} className="w-full">
+      <CarouselContent>
+        {Sponsored.map((product) => (
+          <CarouselItem key={product._id} >
+            <div className="p-1">
+            <HeroCard key={product._id} product={product} />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+                );
+        
+    } else if (!Sponsored ||  Sponsored.length<=0){
+        return(
+                 <Carousel opts={{ align: "center", loop: true }} plugins={[carousel3]} className="w-full">
       <CarouselContent>
         {products.map((product) => (
           <CarouselItem key={product._id} >
@@ -189,8 +216,10 @@ const SecondHero = () => {
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>
-    ):(
-        <Carousel opts={{ align: "center", loop: true }} plugins={[carousel3]} className="w-full">
+        );
+    } else {
+        return(
+                <Carousel opts={{ align: "center", loop: true }} plugins={[carousel3]} className="w-full">
       <CarouselContent>
         {Array.from({ length: 7 }).map((_, idx) => (
     <CarouselItem key={idx} className=" basis-[200px] md:basis-[300px] shrink-0">
@@ -220,13 +249,35 @@ const SecondHero = () => {
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>
-    )}
+        );
+    }
+})()
+       }
   </div>
 
         {/* Carousel 4 */}
 <div className="flex-1 min-w-0 flex justify-center  ">
-    {products && products.length>0 ?(
-        <Carousel opts={{ align: "center", loop: true }} plugins={[carousel2]} className="w-full">
+    {(()=>{
+        if(Sponsored && Sponsored.length>0) {
+                return(
+                        <Carousel opts={{ align: "center", loop: true }} plugins={[carousel2]} className="w-full">
+      <CarouselContent>
+        {Sponsored.map((product) => (
+          <CarouselItem key={product._id} >
+            <div className="p-1">
+            <HeroCard key={product._id} product={product} />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+                );
+        
+    } else if (!Sponsored ||  Sponsored.length<=0){
+        return(
+                 <Carousel opts={{ align: "center", loop: true }} plugins={[carousel2]} className="w-full">
       <CarouselContent>
         {products.map((product) => (
           <CarouselItem key={product._id} >
@@ -239,8 +290,10 @@ const SecondHero = () => {
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>
-    ):(
-        <Carousel opts={{ align: "center", loop: true }} plugins={[carousel2]} className="w-full">
+        );
+    } else {
+        return(
+                <Carousel opts={{ align: "center", loop: true }} plugins={[carousel2]} className="w-full">
       <CarouselContent>
         {Array.from({ length: 7 }).map((_, idx) => (
     <CarouselItem key={idx} className=" basis-[200px] md:basis-[300px] shrink-0">
@@ -270,7 +323,10 @@ const SecondHero = () => {
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>
-    )}
+        );
+    }
+})()
+       }
   </div>
 </div>
 
