@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { useState } from "react"
+// import { useState } from "react"
 import {
   Store,
 //   CreditCard,
@@ -12,35 +12,35 @@ import CheckoutForm from "@/components/Stripe/CheckoutForm/checkoutForm"
 export default function SellerRegistration() {
 
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errors, setErrors] = useState<Record<string, string>>({})
+//   const [isSubmitting, setIsSubmitting] = useState(false)
+//   const [errors, setErrors] = useState<Record<string, string>>({})
 
 
-  const validateStep = (step: number): boolean => {
-    const newErrors: Record<string, string> = {}
+//   const validateStep = (step: number): boolean => {
+//     const newErrors: Record<string, string> = {}
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+//     setErrors(newErrors)
+//     return Object.keys(newErrors).length === 0
+//   }
 
 
 
-  const handleSubmit = async () => {
-    if (!validateStep(5)) return
+//   const handleSubmit = async () => {
+//     if (!validateStep(5)) return
 
-    setIsSubmitting(true)
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      alert(
-        "Registration submitted successfully! We will review your application and get back to you within 2-3 business days.",
-      )
-    } catch (error) {
-      alert(`An error occurred.${error} Please try again.`)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+//     setIsSubmitting(true)
+//     try {
+//       // Simulate API call
+//       await new Promise((resolve) => setTimeout(resolve, 2000))
+//       alert(
+//         "Registration submitted successfully! We will review your application and get back to you within 2-3 business days.",
+//       )
+//     } catch (error) {
+//       alert(`An error occurred.${error} Please try again.`)
+//     } finally {
+//       setIsSubmitting(false)
+//     }
+//   }
 
 
 

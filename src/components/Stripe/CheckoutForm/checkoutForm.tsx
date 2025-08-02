@@ -1,11 +1,13 @@
 "use client";
 import React from 'react';
-import {useCheckout,PaymentElement} from '@stripe/react-stripe-js';
+import {
+        // useCheckout
+        PaymentElement} from '@stripe/react-stripe-js';
 import PayButton from '../PayButton/PayButton';
 import EmailInput from '../EmailInput/EmailInput';
 
 const CheckoutForm = () => {
-  const checkout = useCheckout();
+//   const checkout = useCheckout();
   return (
     <pre>
         <form>
