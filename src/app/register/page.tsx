@@ -7,7 +7,7 @@ import {
   Store,
 //   CreditCard,
 } from "lucide-react"
-import CheckoutForm from "@/components/Stripe/CheckoutForm/checkoutForm"
+
 
 export default function SellerRegistration() {
 
@@ -59,7 +59,7 @@ export default function SellerRegistration() {
           </p>
         </div>
 
-        <CheckoutForm/>
+
 
       </div>
     </div >
