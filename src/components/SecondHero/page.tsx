@@ -186,7 +186,7 @@ const SecondHero = () => {
     {(()=>{
         if(Sponsored && Sponsored.length>0) {
                 return(
-                        <Carousel opts={{ align: "center", loop: true }} plugins={[carousel2]} className="w-full">
+                        <Carousel opts={{ align: "center", loop: true }} plugins={[carousel3]} className="w-full">
       <CarouselContent>
         {Sponsored.map((product) => (
           <CarouselItem key={product._id} >
@@ -203,7 +203,7 @@ const SecondHero = () => {
         
     } else if (!Sponsored ||  Sponsored.length<=0){
         return(
-                 <Carousel opts={{ align: "center", loop: true }} plugins={[carousel2]} className="w-full">
+                 <Carousel opts={{ align: "center", loop: true }} plugins={[carousel3]} className="w-full">
       <CarouselContent>
         {products.map((product) => (
           <CarouselItem key={product._id} >
@@ -219,7 +219,7 @@ const SecondHero = () => {
         );
     } else {
         return(
-                <Carousel opts={{ align: "center", loop: true }} plugins={[carousel2]} className="w-full">
+                <Carousel opts={{ align: "center", loop: true }} plugins={[carousel3]} className="w-full">
       <CarouselContent>
         {Array.from({ length: 7 }).map((_, idx) => (
     <CarouselItem key={idx} className=" basis-[200px] md:basis-[300px] shrink-0">
