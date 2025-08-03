@@ -54,11 +54,6 @@ export function NavMain() {
                         icon: MdOutlinePending     as LucideIcon,
                         link:"/admin/pending",
                 },
-                {
-                        title: "Transactions",
-                        icon: CreditCard   as LucideIcon,
-                        link:"/admin/transactions",
-                },
                 
                 {
                         title: "Boost ",

@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import DeleteAllModal from "@/components/DeleteAll/page";
 import { Transaction } from "@/lib/utils";
 import { Id } from "../../../convex/_generated/dataModel";
-import Trasactions from "@/app/sudo/transactions/page";
 
 interface DataTableProps {
   transactions: Transaction[];
