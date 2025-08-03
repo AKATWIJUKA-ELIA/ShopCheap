@@ -185,7 +185,7 @@ useEffect(() => {
         </div>
 
         <Tabs defaultValue="boost" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="boost">Create Boost</TabsTrigger>
             <TabsTrigger value="active">Active Boosts</TabsTrigger>
             <TabsTrigger value="expired">Expired</TabsTrigger>
