@@ -1,8 +1,14 @@
+"use client"
 import React from 'react'
+import Transactions from '@/components/TransactionsTable/Transactions'
+import useGetAllTasactions from '@/hooks/useGetAllTasactions'
 
 const Trasactions = () => {
+        const { data } = useGetAllTasactions();
   return (
-    <div>Trasactions</div>
+    <div>
+        <Transactions transactions={data ?? []} />
+    </div>
   )
 }
 
