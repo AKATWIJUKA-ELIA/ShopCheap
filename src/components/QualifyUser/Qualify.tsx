@@ -1,6 +1,5 @@
 import React, {  useEffect, useState } from 'react';
 import { BiX } from 'react-icons/bi';
-import { Oval } from 'react-loader-spinner';
 import useQualifyUser from '@/hooks/useQualifyUser';
 import { useAppSelector } from '@/hooks';
 import { Id } from '../../../convex/_generated/dataModel';
@@ -17,7 +16,6 @@ const QualifyUser: React.FC<QualifyUserProps> = ({ isvisible, onClose,  }) => {
     const [info, setInfo] = useState("");
     const [title, setTitle] = useState("");
     const [success, setSuccess] = useState(true);
-    const [loading, setLoading] = useState(false);
     const { qualifyUser } = useQualifyUser();
 
     useEffect(() => {
@@ -34,12 +32,10 @@ const QualifyUser: React.FC<QualifyUserProps> = ({ isvisible, onClose,  }) => {
                     setSuccess(false);
                     setTitle("Error");
                 }
-            } catch (error) {
+            } catch {
                 setInfo("An error occurred while qualifying the user.");
                 setSuccess(false);
                 setTitle("Error");
-            } finally {
-                setLoading(false);
             }
         };
         
