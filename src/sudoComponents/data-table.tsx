@@ -110,7 +110,7 @@ const DataTable: React.FC<DataTableProps> = ({ products }) => {
                       <TableHead className="text-right">Price</TableHead>
                       <TableHead className="text-right">Status</TableHead>
                       <TableHead className="text-right">Date Created</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      {/* <TableHead className="text-right">Actions</TableHead> */}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -148,10 +148,10 @@ const DataTable: React.FC<DataTableProps> = ({ products }) => {
                             {new Date(product._creationTime).toLocaleDateString()}
                           </time>
                         </TableCell>
-                        <TableCell className=" justify-center  flex gap-1">
+                        {/* <TableCell className=" justify-center  flex gap-1">
                         <Button className="flex  bg-blue-400 hover:bg-blue-700 transition-transform duration-500 " onClick={()=>{HandleEdit(product._id)}} >Edit</Button>
                         <Button className="flex bg-red-400  hover:bg-red-700 transition-transform duration-500 " onClick={()=>{HandleDelete(product._id)}}  >Delete</Button>
-                        </TableCell>
+                        </TableCell> */}
                       </TableRow>
                     ))}
                   </TableBody>

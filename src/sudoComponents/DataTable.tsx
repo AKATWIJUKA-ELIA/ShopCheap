@@ -129,10 +129,10 @@ const PendingDataTable: React.FC<DataTable> = ({ products, status }) => {
                       <TableHead className="w-[100px]">Product</TableHead>
                       <TableHead>Category</TableHead>
                       <TableHead>Description</TableHead>
-                      <TableHead className="text-right">Image</TableHead>
-                      <TableHead className="text-right">Price</TableHead>
-                      <TableHead className="text-right">Date Created</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      <TableHead className="text-center">Image</TableHead>
+                      <TableHead className="text-center">Price</TableHead>
+                      <TableHead className="text-center">Date Created</TableHead>
+                      <TableHead className="text-center">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -171,7 +171,7 @@ const PendingDataTable: React.FC<DataTable> = ({ products, status }) => {
                         <TableCell className=" justify-center  flex gap-1">
                                 <Button className="flex  bg-blue-400 hover:bg-blue-700 transition-transform duration-500 " onClick={()=>{HandleApproveRevoke(product._id)}} >{product.approved? "Revoke" : "Approve"}</Button>
 
-                        <Button
+                        {/* <Button
                           className="flex  bg-blue-400 hover:bg-blue-700 transition-transform duration-500 "
                           onClick={() => {
                             if (product._id !== undefined) {
@@ -180,7 +180,7 @@ const PendingDataTable: React.FC<DataTable> = ({ products, status }) => {
                           }}
                         >
                           Edit
-                        </Button>
+                        </Button> */}
                         <Button
                           className="flex bg-red-400  hover:bg-red-700 transition-transform duration-500 "
                           onClick={() => {

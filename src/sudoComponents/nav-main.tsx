@@ -26,13 +26,6 @@ export function NavMain() {
                         icon: HomeIcon as LucideIcon,
                         link:"/sudo",
                 },
-                
-              
-                {
-                        title: "Orders",
-                        icon: IoBagCheckOutline as LucideIcon,
-                        link:"/sudo/orders",
-                },
              
                  {
                         title: "Add products",

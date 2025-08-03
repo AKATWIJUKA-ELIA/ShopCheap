@@ -2,6 +2,8 @@
 import { useAction  } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import useSaveUser from "./useSaveUser";
+import { UpdateUser } from "@/lib/convex";
+import { Id } from "../../convex/_generated/dataModel";
 // type User = {
 //             username: string,
 //             email: string,
@@ -84,6 +86,17 @@ const useAuthenticate = () => {
                                 isVerified:user?.isVerified||false, 
                         }
                         saveUser(usertosave)
+                          if (user?._id) {
+                                                        UpdateUser({
+                                                                ...user,
+                                                                _id: user._id as Id<"customers">,
+                                                                lastLogin: Date.now(),
+                                                                _creationTime: 0,
+                                                                reset_token_expires: user.reset_token_expires ?? 0,
+                                                                updatedAt: Date.now(),
+                                                                
+                                                        });
+                                                }
                         
                         if (!response.ok) {
                                 throw new Error('Failed to create session');

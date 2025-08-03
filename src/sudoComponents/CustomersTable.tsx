@@ -113,7 +113,7 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                 }
                 const updatedUser = {
                         ...user.user,
-                        isActive: !user.user.isVerified, 
+                        isVerified: !user.user.isVerified, 
         }
                 return await UpdateUser(updatedUser).then((res) => {
                         if (!res.success) {
@@ -125,7 +125,7 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                         }                                 
                                 setNotification({
                                         status:"success",
-                                        message: `User ${updatedUser.isActive ? "activated" : "blocked"} successfully`,
+                                        message: `User ${updatedUser.isVerified ? "activated" : "blocked"} successfully`,
                                 })
                                 return true;
                         
@@ -312,11 +312,11 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                           </time>
                         </TableCell>
                         <TableCell className=" justify-center  flex gap-1">
-                                <Button 
+                                {/* <Button 
                                 className={`${user.role==="admin"?"bg-red-500 hover:bg-red-700":"bg-green-500 hover:bg-green-700"}   transition duration-500`} 
                                 onClick={() => MakeAdmin(user._id)}>
                                         {user.role === "admin" ? "Remove admin" : "Make admin"}
-                                </Button>
+                                </Button> */}
                         <Button
                         disabled={user.role === "admin"}
                           className={`flex ${user.isVerified?"bg-gray-500 hover:bg-gray-700":"bg-green-500 hover:bg-green-700"}   transition duration-500 `}
