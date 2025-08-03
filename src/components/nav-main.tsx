@@ -36,9 +36,9 @@ export function NavMain() {
                         link:"/profile/bookmarks",
                 },
                 {
-                        title: "payments",
+                        title: "transactions",
                         icon: CreditCard  as LucideIcon,
-                        link:"/profile/payments",
+                        link:"/profile/transactions",
                 },
 
         ]

@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import DeleteAllModal from "@/components/DeleteAll/page";
 import { Transaction } from "@/lib/utils";
 import { Id } from "../../../convex/_generated/dataModel";
+import Trasactions from "@/app/sudo/transactions/page";
 
 interface DataTableProps {
   transactions: Transaction[];
@@ -86,7 +87,7 @@ const DataTable: React.FC<DataTableProps> = ({ transactions }) => {
                             <TableHead className="w-[50px]"><Checkbox
                                 onCheckedChange={HandleSelectAll}
                                 checked={allchecked}
-                                aria-label="Select all products"
+                                aria-label="Select all transactions"
                             /></TableHead>
                       <TableHead className="w-[100px]">User Id</TableHead>
                       <TableHead>Amount</TableHead>
@@ -100,7 +101,7 @@ const DataTable: React.FC<DataTableProps> = ({ transactions }) => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {transactions.map((transaction) => (
+                    {transactions && transactions.length>0 ? (transactions.map((transaction) => (
                         
                       <TableRow key={transaction._id}>
                         <TableCell className="font-medium"><Checkbox
@@ -127,7 +128,13 @@ const DataTable: React.FC<DataTableProps> = ({ transactions }) => {
                         <Button className="flex bg-red-400  hover:bg-red-700 transition-transform duration-500 " onClick={()=>{HandleDelete(transaction._id as Id<"transactions">)}}  >Delete</Button>
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ))):(
+                            <TableRow>
+                                <TableCell colSpan={9} className="text-center">
+                                 You Have&apos;nt made any Transactions yet.
+                                </TableCell>
+                            </TableRow>
+                    )}
                   </TableBody>
                 </Table>):(
                         <Oval

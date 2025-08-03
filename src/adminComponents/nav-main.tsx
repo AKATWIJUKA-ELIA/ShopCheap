@@ -57,7 +57,7 @@ export function NavMain() {
                 {
                         title: "Transactions",
                         icon: CreditCard   as LucideIcon,
-                        link:"/admin/payment-methods",
+                        link:"/admin/transactions",
                 },
                 
                 {
