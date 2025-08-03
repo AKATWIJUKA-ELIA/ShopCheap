@@ -59,15 +59,15 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                 }
         }
 
-        const toggle_role = (role: string) => {
-                if (role === "seller") {
-                        return "admin";
-                }
-                if (role === "admin") {
-                        return "seller";
-                }
-                return role;
-        }
+        // const toggle_role = (role: string) => {
+        //         if (role === "seller") {
+        //                 return "admin";
+        //         }
+        //         if (role === "admin") {
+        //                 return "seller";
+        //         }
+        //         return role;
+        // }
 //         const MakeAdmin = async (UserId: Id<"customers">) => {
 //                  const user = await getUserById(UserId);
 //                 if (!user || !user.user) {
