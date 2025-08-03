@@ -10,7 +10,7 @@ import {
       import Image from "next/image";
 import { Oval } from "react-loader-spinner";
 import { Button } from "./ui/button";
-import EditModal from "./EditModal/page";
+// import EditModal from "./EditModal/page";
 import DeleteModal from "./DeleteModal/page";
 import { useEffect, useState } from "react";
 import DeleteAllModal from "./DeleteAll/page";
@@ -30,7 +30,7 @@ interface DataTableProps {
   products: Product[];
 }
 const DataTable: React.FC<DataTableProps> = ({ products }) => {
-        const [isvisible, setisvisible] = useState(false);
+        // const [isvisible, setisvisible] = useState(false);
         const [isdelete, setisdelete] = useState(false);
         const [isdeleteall, setisdeleteall] = useState(false);
         const [productId, setproductId] = useState("");
@@ -65,10 +65,10 @@ const DataTable: React.FC<DataTableProps> = ({ products }) => {
                 }
 
 }
-        const HandleEdit=(ProductId:string)=>{
-                setproductId(ProductId)
-                setisvisible(true)
-        }
+        // const HandleEdit=(ProductId:string)=>{
+        //         setproductId(ProductId)
+        //         setisvisible(true)
+        // }
         const HandleDelete=(ProductId:string)=>{
                 setproductId(ProductId)
                 setisdelete(true)
@@ -110,7 +110,7 @@ const DataTable: React.FC<DataTableProps> = ({ products }) => {
                       <TableHead className="text-right">Price</TableHead>
                       <TableHead className="text-right">Status</TableHead>
                       <TableHead className="text-right">Date Created</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                      {/* <TableHead className="text-right">Actions</TableHead> */}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -149,7 +149,7 @@ const DataTable: React.FC<DataTableProps> = ({ products }) => {
                           </time>
                         </TableCell>
                         <TableCell className=" justify-center  flex gap-1">
-                        <Button className="flex  bg-blue-400 hover:bg-blue-700 transition-transform duration-500 " onClick={()=>{HandleEdit(product._id)}} >Edit</Button>
+                        {/* <Button className="flex  bg-blue-400 hover:bg-blue-700 transition-transform duration-500 " onClick={()=>{HandleEdit(product._id)}} >Edit</Button> */}
                         <Button className="flex bg-red-400  hover:bg-red-700 transition-transform duration-500 " onClick={()=>{HandleDelete(product._id)}}  >Delete</Button>
                         </TableCell>
                       </TableRow>
@@ -167,7 +167,7 @@ const DataTable: React.FC<DataTableProps> = ({ products }) => {
                         />
                 )}
               </div>
-                <EditModal isvisible={isvisible} onClose={() => setisvisible(false)} productId={productId} />
+                {/* <EditModal isvisible={isvisible} onClose={() => setisvisible(false)} productId={productId} /> */}
                 <DeleteModal isdelete={isdelete} onClose={() => setisdelete(false)} productId={productId} />
                         <DeleteAllModal isdeleteall={isdeleteall} onClose={() => setisdeleteall(false)} productIds={checked} />
                 </>

@@ -3,7 +3,9 @@ import { useAction  } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import useSaveUser from "./useSaveUser";
 import {jwtDecode} from 'jwt-decode'
-import { CredentialResponse } from "@react-oauth/google"; 
+import { CredentialResponse } from "@react-oauth/google";
+import { UpdateUser } from "@/lib/convex";
+import { Id } from "../../convex/_generated/dataModel";
 
 interface UsertoSave {
         User_id: string|"";
@@ -52,6 +54,7 @@ interface DecodedToken {
 const useAuthByGoogle = () => {
  const saveUser = useSaveUser();
      const getCustomerByEmail = useAction(api.users.GetCustomerByEmail);
+     
     const AuthenticateByGoogle = async (response: CredentialResponse) => {
         
       try {
@@ -100,6 +103,16 @@ const useAuthByGoogle = () => {
                                 isVerified:user?.isVerified||false, 
                         }
                         saveUser(usertosave)
+                        if (user?._id) {
+                                UpdateUser({
+                                        ...user,
+                                        _id: user._id as Id<"customers">,
+                                        lastLogin: Date.now(),
+                                        _creationTime: 0,
+                                        reset_token_expires: user.reset_token_expires ?? 0,
+                                        updatedAt: Date.now(), 
+                                });
+                        }
                         
                        
                         
