@@ -226,15 +226,7 @@ export default function OrdersTracking() {
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                          <div className="text-right">
-                            {/* <div className="text-lg font-bold">${order.total.toFixed(2)}</div> */}
-                            {order.order_status === "delivered" && (
-                              <div className="flex items-center gap-1 text-sm text-yellow-600">
-                                <Star className="w-3 h-3" />
-                                Rate Order
-                              </div>
-                            )}
-                          </div>
+                          
                           <div className="flex gap-2">
                             <Dialog>
                               <DialogTrigger asChild>
