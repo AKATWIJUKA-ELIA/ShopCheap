@@ -15,25 +15,25 @@ interface UsertoSave {
         profilePicture:string|"",
         isVerified:boolean,
 }
-      type response={
-        success:boolean
-        message: string
-        status:number
-        user:{
-                _id?: string;
-                username: string,
-                email: string,
-                passwordHash: string,
-                phoneNumber?: string,
-                profilePicture?: string,
-                isVerified: boolean,
-                role: string,
-                reset_token?: string,
-                reset_token_expires?:number,
-                updatedAt?: number,
-                lastLogin?: number,
-        } | null
-      } | undefined
+//       type response={
+//         success:boolean
+//         message: string
+//         status:number
+//         user:{
+//                 _id?: string;
+//                 username: string,
+//                 email: string,
+//                 passwordHash: string,
+//                 phoneNumber?: string,
+//                 profilePicture?: string,
+//                 isVerified: boolean,
+//                 role: string,
+//                 reset_token?: string,
+//                 reset_token_expires?:number,
+//                 updatedAt?: number,
+//                 lastLogin?: number,
+//         } | null
+//       } | undefined
 
 
 interface DecodedToken {
