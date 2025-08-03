@@ -185,6 +185,44 @@ export const SendNewsLetter = internalAction({
         }
 
 })
+ export const QualifyUserAsSeller = internalAction({
+   args: {},
+   handler: async (ctx) => {
+     const customers = await ctx.runQuery(api.users.GetAllCustomers, {});
+     for (const customer of customers) {
+       // Skip if already a seller
+       if (customer.role === "seller" || customer.role==="admin" ) continue;
+ 
+       const timeSpentOnSite = Date.now() - customer._creationTime;
+       const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
+       if (timeSpentOnSite < thirtyDaysInMs) continue;
+ 
+       // Get orders for this user
+       const orders = await ctx.runQuery(api.orders.getUserOrders, { userId: customer._id as Id<"customers"> });
+       if (!orders || orders.length < 3) continue;
+ 
+       // Qualify as seller
+       await ctx.runMutation(api.users.UpdateCustomer, {
+         User: {
+           ...customer,
+           role: "seller",
+           isVerified: true,
+         }
+       });
+ 
+       // Send notification email
+       if (customer.email) {
+         await ctx.runMutation(api.sendEmail.sendEmail, {
+           receiverEmail: customer.email,
+           subject: "Congratulations! You are now a Seller",
+           html: `Hi ${customer.username ?? "there"}, you now qualify as a seller on our platform!`,
+           department: "support",
+         });
+       }
+     }
+     return { success: true, status: 200, message: "Processed all users for seller qualification." };
+   },
+ });
 
 // Register cron jobs
 const crons = cronJobs();
@@ -216,6 +254,12 @@ crons.interval(
   "Send NewsLetter",
   { minutes: 1 },
   internal.crons.SendNewsLetter,
+  {}
+);
+crons.interval(
+  "Qualify Users as Sellers",
+  { hours: 24 },
+  internal.crons.QualifyUserAsSeller,
   {}
 );
 export default crons;

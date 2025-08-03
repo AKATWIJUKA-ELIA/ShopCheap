@@ -133,7 +133,7 @@ export default function ProductBoost() {
         const { boostProduct,BoostedProducts } = useBoost()
         const [activeBoosts, setActiveBoosts] = useState<BoostWithInteraction[]>()
         const { setNotification } = useNotification()
-        
+        console.log("boost",BoostedProducts)
   const calculateTotalCost = () => {
     const baseCost = selectedBoost.pricing[duration as keyof typeof selectedBoost.pricing]
     return baseCost
@@ -566,11 +566,11 @@ useEffect(() => {
                                   </div>
                                   {/* Likes refers to the bookmark count  we use bookmark as like */}
                                   <div className="flex items-center gap-1 text-xs text-gray-600">
-                                        <span>Likes </span>
+                                        <span>BookMarks </span>
                                         <Heart  className="w-4 h-4" fill="red" color="red"  />  
                                         </div> 
                                 </div>
-                                <div>
+                                {/* <div>
                                   <div className="text-lg font-bold">
                                     {product.interaction?.type.cart.count ??0}
                                   </div>
@@ -578,7 +578,7 @@ useEffect(() => {
                                         <span>Cart</span> 
                                         <ShoppingCart   className="w-4 h-4" color="purple" />
                                         </div>
-                                </div>
+                                </div> */}
                                 <div>
                                   <div className="text-lg font-bold">
                                         {/* Sales we order count ie the number of times the product was ordered / appears in the orders table */}
