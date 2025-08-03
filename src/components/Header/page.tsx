@@ -19,7 +19,6 @@ import { usePathname } from 'next/navigation';
 import {useData} from  '../../app/DataContext';
 import useGetCart from '@/hooks/useGetCart';
 import useCart from '@/hooks/useCart';
-import { Id } from '../../../convex/_generated/dataModel';
 import QualifyUser from '../QualifyUser/Qualify';
 // import useGenerateEmbeddings from '@/hooks/useGenerateEmbeddings';
 // import useVectorSearch from '@/hooks/useVectorSearch';
