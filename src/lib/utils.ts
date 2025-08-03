@@ -110,3 +110,15 @@ export type OrderItem = {
     user_id: Id<"customers">;
     updatedAt?: number;
 };
+export type Transaction = {
+        _id: Id<"transactions">;
+  user_id:  Id<"customers">;
+  order_id?: Id<"orders">;
+  amount: number;
+  currency?: string;
+  status: "pending" | "completed" | "failed" | "cancelled" | "refunded";
+  payment_method: "card" | "mobile-money" | "bank-transfer" | "cash" | "other";
+  reference?: string;
+  type: "purchase" | "refund" | "becoming-a-seller" | "other";
+        _creationTime: number;
+};

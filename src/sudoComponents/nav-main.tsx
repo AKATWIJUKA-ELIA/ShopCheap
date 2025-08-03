@@ -63,7 +63,7 @@ export function NavMain() {
                 {
                         title: "Transactions",
                         icon: CreditCard   as LucideIcon,
-                        link:"/sudo/payment-methods",
+                        link:"/sudo/transactions",
                 },
                 
                 {

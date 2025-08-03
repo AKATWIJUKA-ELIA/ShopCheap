@@ -51,3 +51,22 @@ export const CreateTransaction = mutation({
         }
         },
   })
+
+  export const getTrasactionsByUser = query({
+        args: { user_id: v.id("customers") },
+        handler: async (ctx, args) => {
+          const transactions = await ctx.db.query("transactions")
+            .withIndex("by_user_id", (q) => q.eq("user_id", args.user_id))
+            .collect();
+          return transactions;
+        },
+      });
+
+      export const getAllTrasactions = query({
+        args:{},
+        handler:async(ctx)=>{
+                const transactions = await ctx.db.query("transactions").collect();
+                return transactions
+        }
+      })
+  

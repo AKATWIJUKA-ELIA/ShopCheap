@@ -22,7 +22,7 @@ const useBoost = () => {
 
         useEffect(() => {
 //   console.log("Merged Interactions:", interactions);
-}, [interactions,]);
+}, [interactions,ids,]);
 
         const { data: products } = useGetProductsByIds(ids ? ids.flat() : []);
         
