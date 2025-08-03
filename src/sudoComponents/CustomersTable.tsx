@@ -22,6 +22,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { useSendMail } from "@/hooks/useSendMail";
 
 interface DataTable {
   users: User[];
@@ -36,6 +37,7 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
         // const [isdelete, setisdelete] = useState(false);
         // const [isdeleteall, setisdeleteall] = useState(false);
         // const [productId, setproductId] = useState<Id<"Users">>("" as Id<"Users">);
+        const {sendEmail} = useSendMail()
         const [checked, setchecked] = useState<Id<"customers">[]>([]);
         const [allchecked, setallchecked] = useState(false);
         const finalUsers = users.filter((user) => {
@@ -59,50 +61,7 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                 }
         }
 
-        // const toggle_role = (role: string) => {
-        //         if (role === "seller") {
-        //                 return "admin";
-        //         }
-        //         if (role === "admin") {
-        //                 return "seller";
-        //         }
-        //         return role;
-        // }
-//         const MakeAdmin = async (UserId: Id<"customers">) => {
-//                  const user = await getUserById(UserId);
-//                 if (!user || !user.user) {
-//                         setNotification({
-//                                 status: "error",
-//                                 message: "User not found",})
-//                         return false;
-//                 }
-//                 const updatedUser = {
-//                         ...user.user,
-//                         role: user.user.role = toggle_role(user.user.role),
-//                 }
-//                 if (updatedUser.role !=="admin" && updatedUser.role !== "seller") {
-//                                 setNotification({
-//                                         status: "error",
-//                                         message: "Only Sellers can be toggled to admin",
-//                                 })
-//                                 return 
-//                         }        
-//                 return await UpdateUser(updatedUser).then((res) => {
-//                         if (!res.success) {
-//                                 setNotification({
-//                                         status: "error",
-//                                         message: res.message || "Failed to update user status",
-//                                 })
-//                                 return 
-//                         }                                 
-//                                 setNotification({
-//                                         status:"success",
-//                                         message: `User ${updatedUser.username } ${updatedUser.role === "admin" ? "activated to admin" : "removed from admin"} successfully`,
-//                                 })
-//                                 return true;
-                        
-// })
-//         }
+
         const HandleBlockUser = async (UserId: Id<"customers">) => {
                 const user = await getUserById(UserId);
                 if (!user || !user.user) {
@@ -113,6 +72,7 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                 }
                 const updatedUser = {
                         ...user.user,
+                        _creationTime: user.user._creationTime,
                         isVerified: !user.user.isVerified, 
         }
                 return await UpdateUser(updatedUser).then((res) => {
@@ -127,6 +87,14 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                                         status:"success",
                                         message: `User ${updatedUser.isVerified ? "activated" : "blocked"} successfully`,
                                 })
+                                // send an email to the user about the status change
+                                if(user.user){
+                                 sendEmail(
+                                        user.user.email||"",
+                                         `Your account has been ${updatedUser.isVerified ? "activated" : "blocked"}`,
+                                         `Dear ${user.user.username},\n\nYour account has been ${updatedUser.isVerified ? "activated" : "blocked"}.\n\nThank you.`,
+                                         "ShopCheap"
+                                );}
                                 return true;
                         
 })

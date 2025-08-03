@@ -142,7 +142,7 @@ export const GetAllCustomers = query({
                                return { success:false ,status: 404,message: "User not Found",user:user.user };
                         }
                         if (!user.user?.isVerified) {
-                               return { success:false ,status: 404,message: `This User is not verified pliz verify your Account via the email that was sent to ${user.user?.email}`,user:user.user };
+                               return { success:false ,status: 404,message: `This User is not verified pliz verify your Account via the email that was sent to ${user.user?.email} or contact Support`,user:user.user };
                         }
                         
                         const isMatch = await bcrypt.compare(args.password, user.user?.passwordHash ?? "");
