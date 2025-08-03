@@ -113,6 +113,7 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                 }
                 const updatedUser = {
                         ...user.user,
+                        _creationTime: user.user._creationTime,
                         isVerified: !user.user.isVerified, 
         }
                 return await UpdateUser(updatedUser).then((res) => {
