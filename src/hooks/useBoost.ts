@@ -32,10 +32,10 @@ const useBoost = () => {
         });
 
         useEffect(() => {
-        if (products) {
+        if (products) { 
         setBoostedProducts(boostedProductsWithInteractions||[]);
         }
-        }, [interactions,]);
+        }, [interactions,products]);
 
 
                 //  Getting all boosted products 
