@@ -65,7 +65,7 @@ const useAuthByGoogle = () => {
         const email = decoded.email || "";
 
               
-              const res: response = await getCustomerByEmail({ email });
+              const res = await getCustomerByEmail({ email });
         //       const data = res?.json();
         // setData(res);
         if(!res?.success){
@@ -108,7 +108,7 @@ const useAuthByGoogle = () => {
                                         ...user,
                                         _id: user._id as Id<"customers">,
                                         lastLogin: Date.now(),
-                                        _creationTime: 0,
+                                        _creationTime: user._creationTime,
                                         reset_token_expires: user.reset_token_expires ?? 0,
                                         updatedAt: Date.now(), 
                                 });

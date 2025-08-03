@@ -22,6 +22,7 @@ type Response = {
             reset_token_expires?:number,
             updatedAt?: number,
             lastLogin?: number,
+            _creationTime: number,
   }|null
 };
 export const CreateUser = mutation({
