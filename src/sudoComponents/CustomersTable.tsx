@@ -68,41 +68,41 @@ const CustomersTable: React.FC<DataTable> = ({ users, status }) => {
                 }
                 return role;
         }
-        const MakeAdmin = async (UserId: Id<"customers">) => {
-                 const user = await getUserById(UserId);
-                if (!user || !user.user) {
-                        setNotification({
-                                status: "error",
-                                message: "User not found",})
-                        return false;
-                }
-                const updatedUser = {
-                        ...user.user,
-                        role: user.user.role = toggle_role(user.user.role),
-                }
-                if (updatedUser.role !=="admin" && updatedUser.role !== "seller") {
-                                setNotification({
-                                        status: "error",
-                                        message: "Only Sellers can be toggled to admin",
-                                })
-                                return 
-                        }        
-                return await UpdateUser(updatedUser).then((res) => {
-                        if (!res.success) {
-                                setNotification({
-                                        status: "error",
-                                        message: res.message || "Failed to update user status",
-                                })
-                                return 
-                        }                                 
-                                setNotification({
-                                        status:"success",
-                                        message: `User ${updatedUser.username } ${updatedUser.role === "admin" ? "activated to admin" : "removed from admin"} successfully`,
-                                })
-                                return true;
+//         const MakeAdmin = async (UserId: Id<"customers">) => {
+//                  const user = await getUserById(UserId);
+//                 if (!user || !user.user) {
+//                         setNotification({
+//                                 status: "error",
+//                                 message: "User not found",})
+//                         return false;
+//                 }
+//                 const updatedUser = {
+//                         ...user.user,
+//                         role: user.user.role = toggle_role(user.user.role),
+//                 }
+//                 if (updatedUser.role !=="admin" && updatedUser.role !== "seller") {
+//                                 setNotification({
+//                                         status: "error",
+//                                         message: "Only Sellers can be toggled to admin",
+//                                 })
+//                                 return 
+//                         }        
+//                 return await UpdateUser(updatedUser).then((res) => {
+//                         if (!res.success) {
+//                                 setNotification({
+//                                         status: "error",
+//                                         message: res.message || "Failed to update user status",
+//                                 })
+//                                 return 
+//                         }                                 
+//                                 setNotification({
+//                                         status:"success",
+//                                         message: `User ${updatedUser.username } ${updatedUser.role === "admin" ? "activated to admin" : "removed from admin"} successfully`,
+//                                 })
+//                                 return true;
                         
-})
-        }
+// })
+//         }
         const HandleBlockUser = async (UserId: Id<"customers">) => {
                 const user = await getUserById(UserId);
                 if (!user || !user.user) {

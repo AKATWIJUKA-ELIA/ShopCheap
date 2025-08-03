@@ -65,14 +65,14 @@ const DataTable: React.FC<DataTableProps> = ({ products }) => {
                 }
 
 }
-        const HandleEdit=(ProductId:string)=>{
-                setproductId(ProductId)
-                setisvisible(true)
-        }
-        const HandleDelete=(ProductId:string)=>{
-                setproductId(ProductId)
-                setisdelete(true)
-        }
+        // const HandleEdit=(ProductId:string)=>{
+        //         setproductId(ProductId)
+        //         setisvisible(true)
+        // }
+        // const HandleDelete=(ProductId:string)=>{
+        //         setproductId(ProductId)
+        //         setisdelete(true)
+        // }
 
         const HandelDeleteAll=(checked:string[])=>{
                 console.log(checked)

@@ -1,7 +1,6 @@
 "use client"
 
 import {Rocket, type LucideIcon } from "lucide-react"
-import { IoBagCheckOutline  } from "react-icons/io5";
 import {LayoutDashboardIcon,HomeIcon,CreditCard,SquarePlus,Rows4,Newspaper,
         Users,
         // HandCoins,SquareStack,User

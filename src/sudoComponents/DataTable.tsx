@@ -87,10 +87,10 @@ const PendingDataTable: React.FC<DataTable> = ({ products, status }) => {
                 setischange(true)
         }
 
-        const HandleEdit=(ProductId:Id<"products">)=>{
-                setproductId(ProductId)
-                setisvisible(true)
-        }
+        // const HandleEdit=(ProductId:Id<"products">)=>{
+        //         setproductId(ProductId)
+        //         setisvisible(true)
+        // }
         const HandleDelete=(ProductId:Id<"products">)=>{
                 setproductId(ProductId)
                 setisdelete(true)
