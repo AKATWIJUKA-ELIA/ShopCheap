@@ -68,6 +68,9 @@ const useAuthByGoogle = () => {
               const res = await getCustomerByEmail({ email });
         //       const data = res?.json();
         // setData(res);
+        if(res.user?.isVerified===false){
+                        return { success: false, message: "User is not verified" };
+                }
         if(!res?.success){
                 if(res?.status===404){
                         return { success: false, message: res.message};
