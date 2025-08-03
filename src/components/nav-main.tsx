@@ -1,7 +1,7 @@
 "use client"
 
 import {type LucideIcon } from "lucide-react"
-import { IoAddCircle,IoBagCheckOutline  } from "react-icons/io5";
+import { IoBagCheckOutline  } from "react-icons/io5";
 import {LayoutDashboardIcon,UserCircleIcon,Bookmark,CreditCard, } from "lucide-react"
 
 import {
@@ -28,11 +28,6 @@ export function NavMain() {
                         title: "Orders",
                         icon: IoBagCheckOutline as LucideIcon,
                         link:"/profile/orders",
-                },
-                {
-                        title: "Sell",
-                        icon: IoAddCircle  as LucideIcon,
-                        link:"/post",
                 },
                  
                 {

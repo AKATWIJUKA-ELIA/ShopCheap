@@ -178,3 +178,37 @@ export const GetAllCustomers = query({
               
               
         }})
+
+        export const QualifyUser = mutation({
+                args:{user_id: v.id("customers")},
+                handler: async (ctx, args) => {
+                        const user = await ctx.db.get(args.user_id);
+                        if (!user) {
+                                return { success: false, status: 404, message: "User not found", };
+                        }
+                        if (user.role === "seller") {
+                                return { success: false, status: 400, message: "You are already a seller" };
+                        }
+                        const TimeSpentOnSite = Date.now() - (user._creationTime || Date.now());
+                        const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+                        
+                        if(TimeSpentOnSite < thirtyDaysInMs) {
+                                const daysRegistered = Math.floor(TimeSpentOnSite / (24 * 60 * 60 * 1000));
+                                return { success: false, status: 400, message: `you have spent only ${daysRegistered} days, please spend at least 30 days on the site to Qualify` };
+
+                        }
+
+                        const ordersMade = await ctx.db.query("orders")
+                                .withIndex("by_user_id", (q) => q.eq("user_id", args.user_id))
+                                .collect();
+                        if (ordersMade.length < 3) {
+                                const ordersCount = ordersMade.length;
+                                return { success: false, status: 400, message: `you have made only ${ordersCount} orders, please make at least 3 orders to Qualify` };
+                        }
+                        const userWithRole = await ctx.db.patch(args.user_id, {
+                                role: "seller",
+                                isVerified: true,
+                        });
+                        return { success: true, status: 200, message: "Congratulations you now qualify as a seller", user: userWithRole };
+                }
+        })

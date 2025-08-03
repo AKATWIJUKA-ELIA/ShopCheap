@@ -171,7 +171,7 @@ export const IncreaseCart = mutation({
                                   _creationTime: Date.now(),
                                 },
                                   Seller,
-                                  product
+                                  newproduct as Product,
                                 ),
                                 department: "ShopCheap",
                           });
