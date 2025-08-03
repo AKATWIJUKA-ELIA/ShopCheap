@@ -1,6 +1,6 @@
 import { api } from "./_generated/api";
 import { Id } from "./_generated/dataModel";
-import {action, internalQuery, mutation, query} from "./_generated/server"
+import { mutation, query} from "./_generated/server"
 import {v} from "convex/values"
 import {newOrderCreationEmailHTML} from "../src/EmailTemplates/OrderCreationEmail";
 import {generateStatusChangeEmailHTML, User} from "../src/EmailTemplates/OrderStatusChange";

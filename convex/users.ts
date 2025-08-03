@@ -4,7 +4,6 @@ import {v} from "convex/values"
 import { ConvexError } from "convex/values";
 import { api } from "../convex/_generated/api";
 import bcrypt from "bcryptjs";
-import { internal } from "./_generated/api";
 type Response = {
   success: boolean;
   message: string;

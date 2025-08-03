@@ -31,7 +31,6 @@ import {
   Search,
   Calendar,
   Phone,
-  Star,
   RotateCcw,
   Eye,
 } from "lucide-react"
