@@ -6,8 +6,6 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-// import { Textarea } from "@/components/ui/textarea"
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
@@ -23,8 +21,6 @@ import {
   Crown,
   RotateCcw,
   Rocket,
-  BarChart3,
-  Users,
   CheckCircle,
   Award,
   ShieldHalf ,
@@ -193,7 +189,6 @@ useEffect(() => {
             <TabsTrigger value="boost">Create Boost</TabsTrigger>
             <TabsTrigger value="active">Active Boosts</TabsTrigger>
             <TabsTrigger value="expired">Expired</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
 
           {/* Create Boost Tab */}
@@ -693,75 +688,6 @@ useEffect(() => {
             </Card>
           </TabsContent>
 
-          {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Card className="dark:bg-gray-600" >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Eye className="w-5 h-5 text-blue-500" />
-                    <div>
-                      <div className="text-2xl font-bold">24.5K</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-200">Total Impressions</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="dark:bg-gray-600" >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Users className="w-5 h-5 text-green-500" />
-                    <div>
-                      <div className="text-2xl font-bold">1.2K</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-200 ">Clicks</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="dark:bg-gray-600"  >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <ShoppingCart className="w-5 h-5 text-purple-500" />
-                    <div>
-                      <div className="text-2xl font-bold">89</div>
-                      <div className="text-sm text-gray-600  dark:text-gray-200">Conversions</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="dark:bg-gray-600"  >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-orange-500" />
-                    <div>
-                      <div className="text-2xl font-bold">7.4%</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-200">Conversion Rate</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-            </div>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Performance Overview</CardTitle>
-                <CardDescription>Track your boost campaign performance over time</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-64 flex items-center justify-center text-gray-500">
-                  <BarChart3 className="w-12 h-12 mb-2" />
-                  <div className="text-center">
-                    <p>Analytics chart would be displayed here</p>
-                    <p className="text-sm">Showing impressions, clicks, and conversions over time</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
         </Tabs>
       </div>
     </div>

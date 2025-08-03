@@ -1,6 +1,5 @@
-import {action, internalQuery, mutation, query} from "./_generated/server"
+import { mutation, query} from "./_generated/server"
 import {v} from "convex/values"
-import { api, internal } from "../convex/_generated/api";
 import { Id } from "./_generated/dataModel";
 
 
