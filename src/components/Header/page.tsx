@@ -18,7 +18,9 @@ import Autoplay from 'embla-carousel-autoplay';
 import { usePathname } from 'next/navigation';
 import {useData} from  '../../app/DataContext';
 import useGetCart from '@/hooks/useGetCart';
-import useCart from '@/hooks/useCart';  
+import useCart from '@/hooks/useCart';
+import { Id } from '../../../convex/_generated/dataModel';
+import QualifyUser from '../QualifyUser/Qualify';
 // import useGenerateEmbeddings from '@/hooks/useGenerateEmbeddings';
 // import useVectorSearch from '@/hooks/useVectorSearch';
 
@@ -30,6 +32,7 @@ const Header = () => {
         const { SynchronizeCart } = useCart();
         const Cart = cartitem?.reduce((total, item) => total + (item.quantity || 0), 0)
         const [Hovered,setHovered] = useState(false)
+        const [CheckQualify,setCheckQualify] = useState(false)
         const [sticky, setSticky] = useState(false);
         const [Focused, setFocused] = useState(false)
          const [showlowerBar, setshowlowerBar] = useState(true)
@@ -43,8 +46,6 @@ const Header = () => {
         // const {Embed} = useGenerateEmbeddings();
         // const vectorSearchHook = useVectorSearch();
         // const vectorSearch = vectorSearchHook?.vectorSearch;
-
-
 
         const [comingSoon, setcomingSoon] = useState(false)
         const carousel = Autoplay({ delay: 6000})
@@ -262,10 +263,19 @@ const Header = () => {
                 <div className={`flex rounded-full   p-2 ${Hovered?"bg-gray-100":"bg-gray-500 "} transition duration-500  hover:cursor-pointer  gap-2 dark:bg-transparent dark:hover:bg-gray-700`}   onMouseOver={showDropDownMenu} >
                          <BsList className=' font-bold text-2xl ' /> <h1 className='flex '>Categories</h1>
                 </div  >
-                <div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
-                        <Link className='hidden md:flex' href="/register" >Become a Seller?</Link>
-                        <Link className='flex md:hidden' href="/register" >sell ?</Link>
+                {User ?(<div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
+                        <div className='hidden md:flex'
+                        onClick={()=>setCheckQualify(true)}
+                        >Become a Seller?</div>
+                        <div className='flex md:hidden'
+                        onClick={()=>setCheckQualify(true)}
+                        >sell ?</div>
+                </div>):(
+                         <div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
+                        <Link href="/register" className='hidden md:flex'>Become a Seller?</Link>
+                         <Link href="/register" className='flex md:hidden'>sell ?</Link>
                 </div>
+                )}
         </div >
 
         
@@ -328,6 +338,7 @@ const Header = () => {
     {  searchTerm.length>1 ? (<SearchModel Focused={Focused}searchTerm={searchTerm} onClose={HandleClose} />):("")}
     {  showImageModal ? (<ImageSearchModal  onClose={HandleClose} />):("")}
         <UserDropDownMenu isvisible={UserDrawer} onClose={() => setUserDrawer(false)} />
+                <QualifyUser isvisible={CheckQualify} onClose={() => setCheckQualify(false)} />
     </>
   )
 }
