@@ -48,7 +48,7 @@ const conditionalborder = (sponsorship: string) => {
 
 export default function ProductBoost() {
         const { AllBoostedProducts } = useBoost()
-        const [activeBoosts, setActiveBoosts] = useState<BoostWithInteraction[]>()
+        const [activeBoosts, setActiveBoosts] = useState<BoostWithInteraction[]>(AllBoostedProducts||[])
 
 useEffect(() => {
                 setActiveBoosts(AllBoostedProducts ?? [])
@@ -119,7 +119,7 @@ useEffect(() => {
                                         <Heart  className="w-4 h-4" fill="red" color="red"  />  
                                         </div> 
                                 </div>
-                                <div>
+                                {/* <div>
                                   <div className="text-lg font-bold">
                                     {product.interaction?.type.cart.count ??0}
                                   </div>
@@ -127,7 +127,7 @@ useEffect(() => {
                                         <span>Cart</span> 
                                         <ShoppingCart   className="w-4 h-4" color="purple" />
                                         </div>
-                                </div>
+                                </div> */}
                                 <div>
                                   <div className="text-lg font-bold">
                                         {/* Sales we order count ie the number of times the product was ordered / appears in the orders table */}
