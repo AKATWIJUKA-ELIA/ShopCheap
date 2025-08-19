@@ -102,6 +102,12 @@ const boostOptions: BoostOption[] = [
     estimatedReach: { min: 2000, max: 5000 },
     color: "bg-purple-500",
   },
+
+
+
+
+
+  
   {
     id: "platinum",
     name: "Platinum ",
