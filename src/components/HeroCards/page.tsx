@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { MdAddShoppingCart } from "react-icons/md";
+// import { MdAddShoppingCart } from "react-icons/md";
 import ProductSkeleton from '../ProductsSkeleton/page'
-import useAddToCart  from '../../hooks/useAddToCart';
+// import useAddToCart  from '../../hooks/useAddToCart';
 import { useEffect, useState } from 'react';
 import { Id } from '../../../convex/_generated/dataModel';
 
@@ -25,7 +25,7 @@ interface Product {
 const HeroCard = ({ product }: HeroCardProps) => {
         
 
-         const addToCart = useAddToCart()
+        //  const addToCart = useAddToCart()
          const [productData, setProductData] = useState<Product | null>(product)
         const truncateString = (text: string, maxLength: number): string => {
                 return text.length > maxLength ? text.slice(0, maxLength) + ".." : text;
