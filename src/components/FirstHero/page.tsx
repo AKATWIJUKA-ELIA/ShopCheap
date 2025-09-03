@@ -33,7 +33,7 @@ const FisrtHero =  () => {
                         
                         useEffect(() => {
                             if (data.Products.product.length>0) {
-                                setproducts(data.Products.product.slice(0, 8));
+                                setproducts(data.Products.product.slice(0, 12));
                             }
                         }, [data.Products.product]);
 
@@ -47,12 +47,12 @@ const FisrtHero =  () => {
         <div className='bg-transparent backdrop-blur-md '>
         {
                 products && products.length>0 ?(
-                <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-6' >
+                <div className='grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-6' >
                         {products.map((product) => (
-        <div key={product._id}  className="p-1 hover:scale-105  transition-transform hover:rotate-3 border-2 hover:border-green-400 duration-500 ease-in-out rounded-lg " >
-                <Card   className="  h-auto bg-transparent">
+        <div key={product._id}  className="p-1 hover:scale-105  md:h-auto  transition-transform hover:rotate-3 border-2 hover:border-green-400 duration-500 ease-in-out rounded-lg " >
+                <Card   className="  md:h-auto bg-transparent">
                 <Link href={`/category/${product.product_cartegory}`} >
-                <CardContent className="relative  bg-transparent flex items-center justify-center p-6 h-64 overflow-hidden rounded-lg">
+                <CardContent className="relative  bg-transparent flex items-center justify-center p-6 h-28 w-28 md:w-full md:h-64 overflow-hidden rounded-lg">
                 {/* Image */}
                 <Image
                 src={product.product_image[0] ?? "/placeholder.png"}
@@ -64,10 +64,10 @@ const FisrtHero =  () => {
                 />
 
                 {/* Text Overlay */}
-                <div className="group absolute top-0 left-0 w-full h-full flex flex-col text-center items-center justify-center bg-black/50 hover:bg-black/40 transition duration-150 text-white text-xl font-semibold p-4">
+                <div className="group absolute top-0 left-0 w-full h-full flex flex-col text-center items-center justify-center bg-black/50 hover:bg-black/40 transition duration-150 text-white md:text-xl font-semibold p-4">
                 <h1 className='flex text-gray-200' >{product.product_cartegory}</h1>
 
-                <div className="  flex mt-4 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                <div className=" hidden md:flex mt-4 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                     <span className="inline-flex items-center text-white font-semibold">
                       Explore Collection
                       <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
