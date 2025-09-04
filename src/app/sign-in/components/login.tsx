@@ -12,6 +12,7 @@ import useAuthByGoogle from "@/hooks/useAuthByGoogle"
 import { useRouter } from "next/navigation";
 // import { useSession } from "next-auth/react";
 import { GoogleLogin,CredentialResponse } from "@react-oauth/google"
+import Loader from "@/components/Loader/loader"
 
 
 const LoginForm=({
@@ -30,15 +31,18 @@ const LoginForm=({
         const router = useRouter();
 
         const HandleGoogleLogin= async (response:CredentialResponse)=>{
+                 setIsSubmitting(true);
                 const AuthRes = await AuthenticateByGoogle(response)
                 if(!AuthRes.success){
                         setSubmittingError(AuthRes.message)
                         setTimeout(()=>{
                                 setSubmittingError("")
                         },5000)
+                         setIsSubmitting(false);
                         return
                 }
                 router.push('/')
+                 setIsSubmitting(false);
               
         }
 
@@ -77,6 +81,9 @@ const LoginForm=({
                         setSubmittingError("")
                 },10000)
         }
+        }
+        if(IsSubmitting){
+                return <Loader />
         }
 
   return (
