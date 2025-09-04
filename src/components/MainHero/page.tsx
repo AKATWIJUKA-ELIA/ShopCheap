@@ -94,7 +94,7 @@ useEffect(() => {
                       </Link>
                     </div>
                   </div>
-                  <div className=" group md:flex h-[60%]  w-[50%] md:w-[30%] md:h-full absolute top-10  md:top-0 md:bottom-0 right-2  md:right-24 shadow-lg border-8 rotate-6 md:opacity-50 hover:opacity-100 hover:-rotate-2 transition duration-1000 border-white bg-blue-400">
+                  <div className=" group mid:hidden md:flex h-[60%]  w-[50%] md:w-[30%] md:h-full absolute top-10  md:top-0 md:bottom-0 right-2  md:right-24 shadow-lg border-8 rotate-6 md:opacity-50 hover:opacity-100 hover:-rotate-2 transition duration-1000 border-white bg-blue-400">
                     <Image
                       src={product.product_image[0] ?? ""}
                       alt={product.product_name}
