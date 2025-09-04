@@ -9,7 +9,7 @@ import {
       import { Checkbox } from "@/components/ui/checkbox";
 import { Oval } from "react-loader-spinner";
 import { Button } from "@/components/ui/button";
-import DeleteModal from "@/components/DeleteModal/page";
+import DeleteModal from "@/components/DeleteTransactions/page";
 import { useEffect, useState } from "react";
 import DeleteAllModal from "@/components/DeleteAll/page";
 import { Transaction } from "@/lib/utils";
@@ -22,7 +22,7 @@ const DataTable: React.FC<DataTableProps> = ({ transactions }) => {
 
         const [isdelete, setisdelete] = useState(false);
         const [isdeleteall, setisdeleteall] = useState(false);
-        const [productId, setproductId] = useState("");
+        const [transactionId, setTransactionId] = useState("");
         const [checked, setchecked] = useState<Id<"transactions">[]>([]);
         const [allchecked, setallchecked] = useState(false);
 
@@ -55,8 +55,8 @@ const DataTable: React.FC<DataTableProps> = ({ transactions }) => {
 
 }
 
-        const HandleDelete=(ProductId:string)=>{
-                setproductId(ProductId)
+        const HandleDelete=(transactionId:string)=>{
+                setTransactionId(transactionId)
                 setisdelete(true)
         }
 
@@ -70,7 +70,7 @@ const DataTable: React.FC<DataTableProps> = ({ transactions }) => {
                 <>
                 <div className="w-full  overflow-x-auto   rounded-lg border px-2 ">
                         <div className="flex items-center justify-between p-4 bg-gray-100  dark:bg-gray-800 rounded-t-lg">
-                                <div className="text-lg font-semibold">All Products</div>
+                                <div className="text-lg font-semibold">All Transactions</div>
                                 <Button 
                                 className="bg-red-400 hover:bg-red-700 transition-transform duration-500" 
                                 onClick={() => HandelDeleteAll(checked)}
@@ -147,7 +147,7 @@ const DataTable: React.FC<DataTableProps> = ({ transactions }) => {
                         />
                 )}
               </div>
-                <DeleteModal isdelete={isdelete} onClose={() => setisdelete(false)} productId={productId} />
+                <DeleteModal isdelete={isdelete} onClose={() => setisdelete(false)} transactionId={transactionId} />
                         <DeleteAllModal isdeleteall={isdeleteall} onClose={() => setisdeleteall(false)} productIds={checked} />
                 </>
               

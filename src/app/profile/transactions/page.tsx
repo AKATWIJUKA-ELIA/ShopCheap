@@ -6,7 +6,7 @@ import useGetTrasactionsByUser from '@/hooks/useGetTrasactionsByUser'
 const Trasactions = () => {
         const { data } = useGetTrasactionsByUser();
   return (
-    <div>
+    <div className='mt-[10%]' >
         <Transactions transactions={data ?? []} />
     </div>
   )

@@ -67,4 +67,15 @@ export const CreateTransaction = mutation({
                 return transactions
         }
       })
-  
+
+      export const DeleteTransactions = mutation({
+        args: { id: v.id("transactions") },
+        handler: async (ctx, args) => {
+          try {
+            await ctx.db.delete(args.id);
+            return { success: true, message: "Transaction deleted successfully" };
+          } catch {
+            return { success: false, message: "Error deleting transaction" };
+          }
+        },
+      });
