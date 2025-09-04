@@ -22,6 +22,7 @@ import useCart from '@/hooks/useCart';
 import QualifyUser from '../QualifyUser/Qualify';
 // import useGenerateEmbeddings from '@/hooks/useGenerateEmbeddings';
 // import useVectorSearch from '@/hooks/useVectorSearch';
+import { useWindowResize } from '@/hooks/useWindowResize';
 
 const Header = () => {
         const { data} = useData();
@@ -39,6 +40,7 @@ const Header = () => {
         const [showImageModal, setShowImageModal] = useState(false);
         const [UserDrawer, setUserDrawer] = useState(false);
         const pathname = usePathname()
+        const { width} = useWindowResize();
         
 
         // console.log("Data from DataContext :",data.Products)
@@ -129,7 +131,23 @@ const Header = () => {
                   window.removeEventListener("scroll", handleStickyNavbar);
                 };
               }, []); 
-        //         flex    border border-gray-300 
+              const NumberofCategories = ()=>{
+                switch (true) {
+                  case width >= 1500:
+                    return 7;
+                    case width >= 1448:
+                    return 6;
+                    case width >= 1280:
+                    return 5;
+                    case width >= 1024:
+                    return 4;
+                  
+                  case width >= 768:
+                    return 2;
+                  default:
+                    return 2;
+                }
+              }
   return (
     <>
     <div className={` fixed  top-0 left-0 z-40 flex flex-col py-3 w-full  bg-white text-black gap-1 dark:bg-dark dark:text-white
@@ -185,26 +203,30 @@ const Header = () => {
                         </SignedIn> */}
 
                         {User ? (
-                                <div className='flex' >
-                                        <div className="hidden lg:flex  bg-white hover:bg-gray-200 transition duration-100 border border-gray-300 rounded-3xl"
-                                        onMouseEnter={()=>setUserDrawer(true)}
+                                <div className=''>
+                                        <div className={` ${width > 500?"flex":"hidden"}   bg-white hover:bg-gray-200 transition duration-100 border border-gray-300 rounded-3xl`}
+                                        onClick={()=>setUserDrawer(true)}
                                         >
                                                 <div className='flex mt-1 font-sans dark:text-dark px-2 ' >
                                                         
                                                         {User.Username}
                                                         
                                                 </div>
-                                                <div className='flex rounded-full' >
-                                                        <Image src={User.profilePicture?User.profilePicture:"/images/images.png"} width={35} height={35} alt='profile picture' className="rounded-full" />
+                                                <div className='flex lg:hidden 2xl:flex rounded-full' >
+                                                        <Image src={User.profilePicture?User.profilePicture:"/images/images.png"} 
+                                                        width={30} height={30} alt='profile picture' className="rounded-full" />
                                                 </div>
                                         </div>
                                         {/* For small screens */}
-                                        <Link href="/profile" className='flex lg:hidden mr-5' >
-                                                 <Image src={User.profilePicture?User.profilePicture:"/images/images.png"}
-                                                  width={100}
-                                                   height={50}
-                                                    alt='profile picture' className="rounded-full" />
-                                                </Link>
+                                        <Link href="/profile" className='flex gap-3' >
+                                                {/* <button className="p-2 rounded bg-transparent ">
+                                                <VscAccount className="text-2xl" />
+                                                </button> */}
+                                                <div className={`p-2 ${width>500 ?"hidden":""} rounded-full`} >
+                                                        <Image src={User.profilePicture?User.profilePicture:"/images/images.png"} 
+                                                        width={100} height={30} alt='profile picture' className="rounded-full" />
+                                                </div>
+                                        </Link>
                                 </div> ):(
                                 <div>
                                         <div className="hidden md:flex items-center gap-1">
@@ -280,7 +302,7 @@ const Header = () => {
         
 <div className='hidden md:flex ml-5 gap-14'>
   {data.Categories.categories && data.Categories.categories.length>0 ? (
-    data.Categories.categories?.slice(0, 7).map((cartegory, index) =>
+    data.Categories.categories?.slice(0, NumberofCategories()).map((cartegory, index) =>
       <div
         key={index}
         className={`rounded-full p-2 hover:cursor-pointer  bg-gray-100 hover:bg-gray-200 dark:text-black dark:hover:bg-gray-700`}
@@ -299,6 +321,8 @@ const Header = () => {
     ))
   )}
 </div>
+
+
 
 
               <div className="flex md:hidden ml-3 w-[27%] h-8  bg-gray-100 dark:bg-transparent rounded-lg items-center justify-center p-1 overflow-hidden">
