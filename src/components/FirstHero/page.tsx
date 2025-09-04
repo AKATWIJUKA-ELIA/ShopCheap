@@ -50,9 +50,9 @@ const FisrtHero =  () => {
                 <div className='grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:p-6' >
                         {products.map((product) => (
         <div key={product._id}  className="p-1 hover:scale-105  md:h-auto  transition-transform hover:rotate-3 border-2 hover:border-green-400 duration-500 ease-in-out rounded-lg " >
-                <Card   className="  md:h-auto bg-transparent">
-                <Link href={`/category/${product.product_cartegory}`} >
-                <CardContent className="relative  bg-transparent flex items-center justify-center p-6 h-28 w-28 md:w-full md:h-64 overflow-hidden rounded-lg">
+                <Card   className="  md:h-auto ">
+                <Link href={`/category/${product.product_cartegory}`} className='w-full' >
+                <CardContent className="relative mx-auto  bg-transparent flex items-center justify-center p-6 h-28  w-full md:h-64 overflow-hidden rounded-lg ">
                 {/* Image */}
                 <Image
                 src={product.product_image[0] ?? "/placeholder.png"}
