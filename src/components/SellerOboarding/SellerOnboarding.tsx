@@ -12,7 +12,6 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   const [open, setOpen] = useState(false);
   const [storeName, setStoreName] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
@@ -87,7 +86,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
 
           <Button
             type="submit"
-            disabled={loading || !storeName || !description || !location}
+            disabled={loading || !storeName || !description || !selectedLocation}
             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           >
             {loading ? "Submitting..." : "Submit Application"}
