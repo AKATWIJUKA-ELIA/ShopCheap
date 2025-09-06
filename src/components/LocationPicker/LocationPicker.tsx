@@ -19,7 +19,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLo
           const [marker, setMarker] = useState<{ lat: number; lng: number } | null>(null);
           
 
-  const handleClick = (event: any) => {
+  const handleClick = (event:  { lngLat: { lat: number; lng: number } }) => {
     const lat = event.lngLat.lat;
     const lng = event.lngLat.lng;
     setMarker({ lat, lng });
