@@ -34,7 +34,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   }
 
   return (
-    <div className="p-6 border rounded-lg shadow bg-white max-w-md">
+    <div className="flex p-6 border rounded-lg shadow bg-white dark:bg-dark w-full ">
       {!open ? (
         <button
           onClick={() => setOpen(true)}
@@ -45,10 +45,10 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
       ) : success ? (
         <p className="text-green-600 font-medium">🎉 Application submitted! Await admin approval.</p>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <h2 className="text-xl font-semibold">Seller Application</h2>
+        <form onSubmit={handleSubmit} className="space-y-4 w-full">
+          <h2 className="text-xl font-semibold dark:text- ">Seller Application</h2>
           <div>
-            <label className="block text-sm font-medium">Store Name</label>
+            <label className="block text-sm font-medium dark:text- ">Store Name</label>
             <input
               type="text"
               value={storeName}
@@ -58,7 +58,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
             />
           </div>
           <div>
-            <label className="block text-sm font-medium">Description</label>
+            <label className="block text-sm font-medium dark:text- ">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}

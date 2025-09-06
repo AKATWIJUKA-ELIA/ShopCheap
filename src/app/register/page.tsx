@@ -1,6 +1,6 @@
 "use client"
 
-import React, { use } from "react"
+import React from "react"
 import SellerOnboarding from "@/components/SellerOboarding/SellerOnboarding"
 import {
   Store,
@@ -45,7 +45,7 @@ export default function SellerRegistration() {
 
 
   return (
-    <div className="min-h-screen mt-16 bg-gradient-to-br from-blue-50 to-indigo-100 dark:bg-gray-500 py-8 px-4">
+    <div className="min-h-screen mt-16  dark:bg-gray-800 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -58,9 +58,11 @@ export default function SellerRegistration() {
             your products to millions of customers worldwide.
           </p>
         </div>
-        {User && (
+       <div className="flex mx-auto bg-slate-100 p-3 items-center  justify-center " >
+         {User && (
           <SellerOnboarding user={{ id: User.User_id, role: User.role }} />
         )}
+       </div>
 
 
 
