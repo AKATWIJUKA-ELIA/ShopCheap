@@ -1,17 +1,17 @@
 "use client"
 
-import React from "react"
-
-// import { useState } from "react"
+import React, { use } from "react"
+import SellerOnboarding from "@/components/SellerOboarding/SellerOnboarding"
 import {
   Store,
 //   CreditCard,
 } from "lucide-react"
+import { useAppSelector } from "@/hooks"
 
 
 export default function SellerRegistration() {
 
-
+ const User = useAppSelector(state=> state.user.user)
 //   const [isSubmitting, setIsSubmitting] = useState(false)
 //   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -45,7 +45,7 @@ export default function SellerRegistration() {
 
 
   return (
-    <div className="min-h-screen mt-16 bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
+    <div className="min-h-screen mt-16 bg-gradient-to-br from-blue-50 to-indigo-100 dark:bg-gray-500 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -58,6 +58,9 @@ export default function SellerRegistration() {
             your products to millions of customers worldwide.
           </p>
         </div>
+        {User && (
+          <SellerOnboarding user={{ id: User.User_id, role: User.role }} />
+        )}
 
 
 

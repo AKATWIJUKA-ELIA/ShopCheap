@@ -219,12 +219,12 @@ const ShoppingCart= ()=> {
              ({itemCount} items) Shs:{subtotal().toFixed(2)}
           </div>
 
-          <Button
+          {/* <Button
            className="w-full bg-gold hover:bg-yellow-500 text-dark font-medium rounded-full"
            onClick={()=>CheckOut()}
            >
             Proceed to checkout
-          </Button>
+          </Button> */}
         </div>
 
         <div className="bg-white h-[500px] overflow-auto p-4 rounded border border-gray-200 dark:bg-gray-500 dark:border-gray-500 ">

@@ -285,9 +285,7 @@ const Header = () => {
                          <BsList className=' font-bold text-2xl ' /> <h1 className='flex '>Categories</h1>
                 </div  >
                 {User ?(<div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
-                        <div className='hidden md:flex'
-                        onClick={()=>setCheckQualify(true)}
-                        >Become a Seller?</div>
+                        <Link href="/register" className='hidden md:flex'>Become a Seller?</Link>
                         <div className='flex md:hidden'
                         onClick={()=>setCheckQualify(true)}
                         >sell ?</div>
