@@ -1,4 +1,6 @@
-import mapboxgl, { Marker } from 'mapbox-gl';
+import mapboxgl
+//  { Marker }
+ from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useRef, useState } from 'react';
 
