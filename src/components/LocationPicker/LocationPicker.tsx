@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import React from 'react'
 import { BiX } from 'react-icons/bi';
+import { Input } from '../ui/input';
+import MapSearchModel from '../MapSearchModel/MapSearchModel';
 
 interface LocationPickerProps {
   isvisible: boolean;
@@ -17,7 +19,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLo
       const mapContainerRef = useRef<HTMLDivElement | null>(null);
         const mapRef = useRef<mapboxgl.Map | null>(null);
           const [marker, setMarker] = useState<{ lat: number; lng: number } | null>(null);
-          
+          const [searchTerm, setSearchTerm] = useState('');
+          const [focused, setFocused] = useState(false);
 
   const handleClick = (event:  { lngLat: { lat: number; lng: number } }) => {
     const lat = event.lngLat.lat;
@@ -25,6 +28,14 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLo
     setMarker({ lat, lng });
     onLocationSelect({ lat, lng });
   };
+  const forceBlur = () => {
+                document.getElementById("inputsearch")?.blur();
+              };
+          const HandleClose =()=>{
+                setSearchTerm("")
+                setFocused(false)
+                forceBlur()
+        }
 
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1IjoiZWxpYWxpZ2h0IiwiYSI6ImNtNzIyNWg5NTA1YmcyaXIwZHRjYWc4c3oifQ.xp5_tI2e6Zr5B1NbJv4HHQ';
@@ -60,13 +71,28 @@ if (mapRef.current && marker) {
   }, []);
   if (!isvisible) return null;
   return (
+        <>
         <div  className="  fade-in  fixed z-40 inset-0 backdrop-blur-lg shadow-lg flex rounded-xl mx-auto  w-[70%]  h-[70%]  mt-[42%] md:mt-[7%]   overflow-auto overflow-x-hidden bg-white dark:bg-dark " id="wrapper" >
-                  <button className='  z-50  border border-gray-200 shadow shadow-black/30 flex absolute bg-white top-10 right-10 w-30 h-30 rounded-full p-1  '
+                  
+                  <div className=' flex absolute z-50 left-[10%]  w-[50%] p-auto mt-5 mx-auto '>
+                                <Input value={searchTerm}
+                                id='inputsearch'
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                 onFocus={()=>{setFocused(true)}}
+                                 type="text"
+                                  className=' flex p-5 h-10 rounded-full border   border-gray-500 w-[100%] bg-white dark:bg-black dark:text-white ' 
+                                  placeholder='Search location'  />
+                                  { searchTerm.length>1 && (<BiX onClick={HandleClose} className="absolute hover:cursor-pointer border top-[16%] right-[10%]  bg-gray-100 text-dark text-3xl   rounded-lg"/>)}
+                        </div>
+                        
+                        <button className='  z-50  border border-gray-200 shadow shadow-black/30 flex absolute bg-white top-5 right-10 w-30 h-30 rounded-full p-1  '
                                                        onClick={onClose}>
                                                        <span className="text-black text-xl"><BiX className='text-3xl'/></span>
                                                  </button>
                 <div className=''  ref={mapContainerRef} style={{ width: '100%', height: '100%',padding:"10px" }}>Select Your Location </div>
         </div>
+        {  searchTerm.length>1 ? (<MapSearchModel Focused={focused}searchTerm={searchTerm} onClose={HandleClose} />):("")}
+        </>
     
   )
 }

@@ -42,6 +42,10 @@ export interface User {
         lastLogin?: number,
         _creationTime:number,
 }
+export const stripTrailingSlash = (url: string) => {
+  return url.replace(/\/$/, "");
+};
+
 export interface Bookmark {
         _id?: Id<"bookmarks">,
         product_id?: string,
