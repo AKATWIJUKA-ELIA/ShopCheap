@@ -8,7 +8,6 @@ import React from 'react'
 import { BiCurrentLocation,BiX } from 'react-icons/bi';
 import { Input } from '../ui/input';
 import MapSearchModel from '../MapSearchModel/MapSearchModel';
-import { useAppSelector } from '@/hooks';
 
 interface LocationPickerProps {
   isvisible: boolean;
@@ -20,19 +19,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLo
       const mapContainerRef = useRef<HTMLDivElement | null>(null);
         const mapRef = useRef<mapboxgl.Map | null>(null);
         const markerRef = useRef<mapboxgl.Marker | null>(null);
-          const [marker, setMarker] = useState<{ lat: number; lng: number } | null>(null);
           const [searchTerm, setSearchTerm] = useState('');
           const [focused, setFocused] = useState(false);
-          const location = useAppSelector((state) => state.location.location);
           const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
         //   console.log("location from redux:",location)
-
-  const handleClick = (event:  { lngLat: { lat: number; lng: number } }) => {
-    const lat = event.lngLat.lat;
-    const lng = event.lngLat.lng;
-    setMarker({ lat, lng });
-    onLocationSelect({ lat, lng });
-  };
   const forceBlur = () => {
                 document.getElementById("inputsearch")?.blur();
               };
@@ -41,15 +31,15 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLo
                 setFocused(false)
                 forceBlur()
         }
-                const HandleReset =()=>{
-                if (mapRef.current) {
-                        mapRef.current.flyTo({
-                                center: [18.5,5], 
-                                zoom: 3.0,
-                                essential: true 
-                            });
-                      }
-        }
+        //         const HandleReset =()=>{
+        //         if (mapRef.current) {
+        //                 mapRef.current.flyTo({
+        //                         center: [18.5,5], 
+        //                         zoom: 3.0,
+        //                         essential: true 
+        //                     });
+        //               }
+        // }
 
         useEffect(() => {
                 if (navigator.geolocation) {
