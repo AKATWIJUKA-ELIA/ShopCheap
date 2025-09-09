@@ -5,22 +5,27 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useEffect, useRef, useState } from 'react';
 
 import React from 'react'
-import { BiX } from 'react-icons/bi';
+import { BiCurrentLocation,BiX } from 'react-icons/bi';
 import { Input } from '../ui/input';
 import MapSearchModel from '../MapSearchModel/MapSearchModel';
+import { useAppSelector } from '@/hooks';
 
 interface LocationPickerProps {
   isvisible: boolean;
   onClose: () => void;
-  onLocationSelect : (loc: { lat: number; lng: number }) => void
+  onLocationSelect : (loc: { lat: number; lng: number }) => void;
 }
 const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLocationSelect  }) => {
 
       const mapContainerRef = useRef<HTMLDivElement | null>(null);
         const mapRef = useRef<mapboxgl.Map | null>(null);
+        const markerRef = useRef<mapboxgl.Marker | null>(null);
           const [marker, setMarker] = useState<{ lat: number; lng: number } | null>(null);
           const [searchTerm, setSearchTerm] = useState('');
           const [focused, setFocused] = useState(false);
+          const location = useAppSelector((state) => state.location.location);
+          const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
+        //   console.log("location from redux:",location)
 
   const handleClick = (event:  { lngLat: { lat: number; lng: number } }) => {
     const lat = event.lngLat.lat;
@@ -36,39 +41,62 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLo
                 setFocused(false)
                 forceBlur()
         }
+                const HandleReset =()=>{
+                if (mapRef.current) {
+                        mapRef.current.flyTo({
+                                center: [18.5,5], 
+                                zoom: 3.0,
+                                essential: true 
+                            });
+                      }
+        }
+
+        useEffect(() => {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition((position) => {
+                    setUserLocation({
+                            lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                        });
+                        });
+                }
+        }, []);
 
   useEffect(() => {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZWxpYWxpZ2h0IiwiYSI6ImNtNzIyNWg5NTA1YmcyaXIwZHRjYWc4c3oifQ.xp5_tI2e6Zr5B1NbJv4HHQ';
+    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAP_API_TOKEN || '';    
 
     if (mapContainerRef.current) {
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: 'mapbox://styles/mapbox/streets-v12',
         center: [32.6438,0.5703], // starting position [lng, lat]
-        zoom: 9, // starting zoom
+        zoom: 12, // starting zoom 
+        projection: { name: "mercator" },
         
       });
     }
-if (mapRef.current) {
-  mapRef.current.addInteraction('my-polygon-click-interaction', {
-    type: 'click',
-    handler: (e) => {
-        handleClick(e)
-    }
-  });
-}
-if (mapRef.current && marker) {
-  // Remove any existing marker before adding a new one
-  const existingMarkers = document.getElementsByClassName('custom-location-marker');
-  while (existingMarkers.length > 0) {
-    existingMarkers[0].parentNode?.removeChild(existingMarkers[0]);
-  }
-  new mapboxgl.Marker({ color: 'red' })
-    .setLngLat([marker.lng, marker.lat])
-    .addTo(mapRef.current)
-    .getElement().classList.add('custom-location-marker');
-}
+
   }, []);
+
+          const handleUserClick=(data:{lat:number,lng:number})=>{
+                if (mapRef.current) {
+                        mapRef.current.flyTo({
+                                center: [data.lng,data.lat], 
+                                zoom: 12,
+                                essential: true,
+                                
+                            });
+                            if (!markerRef.current) {
+    // Create marker if it doesn't exist
+    markerRef.current = new mapboxgl.Marker({ color: "red" })
+      .setLngLat([data.lng, data.lat])
+      .addTo(mapRef.current);
+  } else {
+    // Just update its position
+    markerRef.current.setLngLat([data.lng, data.lat]);
+  }
+                      }
+        }
   if (!isvisible) return null;
   return (
         <>
@@ -88,10 +116,19 @@ if (mapRef.current && marker) {
                         <button className='  z-50  border border-gray-200 shadow shadow-black/30 flex absolute bg-white top-5 right-10 w-30 h-30 rounded-full p-1  '
                                                        onClick={onClose}>
                                                        <span className="text-black text-xl"><BiX className='text-3xl'/></span>
-                                                 </button>
-                <div className=''  ref={mapContainerRef} style={{ width: '100%', height: '100%',padding:"10px" }}>Select Your Location </div>
+                        </button>
+                        <button className='  z-50  border border-gray-200 shadow shadow-black/30 flex absolute bg-white top-5 right-10 w-30 h-30 rounded-full p-1  '
+                                                       onClick={onClose} title='Reset'>
+                                                       <span className="text-black text-xl"><BiX className='text-3xl'/></span>
+                        </button>
+
+                        <button className='  z-50  border border-gray-200 shadow shadow-black/30 flex absolute bg-white bottom-16 right-10 w-30 h-30 rounded-full p-1  '
+                                                       onClick={() => userLocation && handleUserClick(userLocation)} title='Go to My Location'>
+                                                       <span className="text-black text-xl"><BiCurrentLocation className='text-3xl'/></span>
+                        </button>
+                <div className=''  ref={mapContainerRef} style={{ width: '100%', height: '100%',padding:"10px" }}> </div>
         </div>
-        {  searchTerm.length>1 ? (<MapSearchModel Focused={focused}searchTerm={searchTerm} onClose={HandleClose} />):("")}
+        {  searchTerm.length>1 ? (<MapSearchModel Focused={focused}searchTerm={searchTerm} onClose={HandleClose} handleLocationClick={(newLocation)=>handleUserClick(newLocation)} />):("")}
         </>
     
   )

@@ -3,19 +3,28 @@ import React, { useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Oval } from 'react-loader-spinner';
 import useGetSuggestions from '@/hooks/useGetSuggestions';
+import useRetrieveLocation from '@/hooks/useRetrieveLocation';
 // import localStorage from 'redux-persist/es/storage';
+import { useAppDispatch } from '@/hooks';
+import { SaveLocation } from "@/store/location";
 
 interface MapSearchModel {
   onClose: () => void;
   Focused:boolean
   searchTerm: string;
+  handleLocationClick?:(position:{
+        lat:number
+        lng:number
+  })=>void
 }
 
 
-const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused  }) => {
+const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused,handleLocationClick  }) => {
         const [newSuggestions, setnewSuggestions] =useState<any[]>([]);
         const sessionToken = typeof window !== "undefined" ? window.localStorage.getItem("sessionToken") || "" : "";
         const [userLocation, setUserLocation] = useState<{latitude: number, longitude: number} | null>(null);
+        // const [coordinates, setcoordinates] = useState<{lat:number,lng:number}>({lat:0,lng:0});
+        const Dispatch = useAppDispatch();
         useEffect(() => {
                 if (navigator.geolocation) {
                   navigator.geolocation.getCurrentPosition((position) => {
@@ -27,11 +36,19 @@ const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused  
                 }
         }, []);
         const suggestions = useGetSuggestions(searchTerm, sessionToken, userLocation?.latitude, userLocation?.longitude);
+        const retrievedLocation = useRetrieveLocation(searchTerm, sessionToken);
 
          useEffect(() => {
                         setnewSuggestions(suggestions);
-                        console.log(suggestions)
+                        // console.log("suggestions: ",suggestions)
                         }, [searchTerm, suggestions]);
+
+                        const HandleClick= (position:{lat:number,lng:number})=>{
+                                Dispatch(SaveLocation({lat:position.lat,lng:position.lng}))
+                                handleLocationClick && handleLocationClick(position);
+                                // console.log("coordinates :",position)
+                                onClose();
+                        }
         if (!Focused) return null;
 
        
@@ -47,14 +64,15 @@ const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused  
                 <div className='flex flex-col w-full '>
                 {newSuggestions && newSuggestions.length>0 ? (
                         newSuggestions.map((suggestion) => (
-                                <div className="flex cursor-pointer w-full rounded-lg mr-2 p-2  slider slide--fast hover:bg-gray-200 dark:hover:bg-gray-700" onClick={onClose}
+                                <div key={suggestion.id} className="relative flex cursor-pointer w-full rounded-lg mr-2 p-2  slider slide--fast hover:bg-gray-200 dark:hover:bg-gray-700" 
+                                onClick={()=>HandleClick(suggestion.position)}
                         >
-                                <h1 className=" flex  animated main">
+                                <h1 className=" flex  animated main ">
                                 <span id="main" className="animated current">
-                                {suggestion.place_formatted }
+                                {suggestion.title }
                                 </span>
                                 </h1>
-                                <ArrowUpRight className='flex  mt-2 text-2xl md:ml-[80%]'/>
+                                <ArrowUpRight className='flex absolute right-6 top-0 mt-2 text-2xl '/>
                         </div>
                         ))
                         ) : (
