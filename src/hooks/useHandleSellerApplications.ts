@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { api } from "../../convex/_generated/api"; 
 import { useMutation } from "convex/react";
 import { Id } from "../../convex/_generated/dataModel";
-import { use } from "react";
 
 interface Application {
 user_id:Id<"customers">;
