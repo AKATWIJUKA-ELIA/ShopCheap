@@ -41,7 +41,7 @@ const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused,h
         // const retrievedLocation = useRetrieveLocation(searchTerm, sessionToken);
 
          useEffect(() => {
-                        setnewSuggestions(suggestions);
+                        setnewSuggestions(suggestions.suggestions);
                         // console.log("suggestions: ",suggestions)
                         }, [searchTerm, suggestions]);
 

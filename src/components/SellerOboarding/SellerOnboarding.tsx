@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { MapPin } from 'lucide-react';
 import Link from "next/link";
 import LocationPicker from "@/components/LocationPicker/LocationPicker";
+import useRetrieveLocation from "@/hooks/useRetrieveLocation";
 
 
 
@@ -16,6 +17,10 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   const [success, setSuccess] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const retrievedLocation = useRetrieveLocation(
+    selectedLocation?.lat ?? 0,
+    selectedLocation?.lng ?? 0
+  ); // Replace with actual lat,lng
   
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,7 +44,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   };
   const handelLocationSelect = (loc: { lat: number; lng: number }) => {
     setSelectedLocation(loc);
-    setShowLocationPicker(false);
+//     setShowLocationPicker(false);
   }     
 
   if (user.role === "seller") {
@@ -85,7 +90,9 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
             <label className="block text-sm font-medium dark:text- ">Choose Location</label>
             <Button variant={"outline"} type="button" className="mt-2"
             onClick={() => setShowLocationPicker(true)}
-            > <MapPin/> Select on Map</Button> {selectedLocation&& <div>{`Selected Location: ${selectedLocation.lng}, ${selectedLocation.lat}`}</div>}
+            > <MapPin/> Select on Map</Button> {selectedLocation&& 
+            <div>{`Confirm Location: ${retrievedLocation.retrievedLocation.map((loc)=>
+            {return `${loc.address.label}`})}`}</div>}
           </div>
 
           <Button
