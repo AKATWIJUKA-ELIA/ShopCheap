@@ -212,3 +212,36 @@ export const GetAllCustomers = query({
                         return { success: true, status: 200, message: "Congratulations you now qualify as a seller", user: userWithRole };
                 }
         })
+
+        export const HandleSellerApplication = mutation({
+                args:{user_id: v.id("customers"),
+                        store_name:v.string(),
+                        description:v.string(),
+                        location:v.object({
+                                lat:v.number(),
+                                lng:v.number(),
+                })},
+                handler: async (ctx, args) => {
+                        const user = await ctx.db.get(args.user_id);
+                        if (!user) {
+                                return { success: false, status: 404, message: "User not found", };
+                        }
+                        if (user.role === "seller") {
+                                return { success: false, status: 400, message: "You are already a seller" };
+                        }
+                        await ctx.db.insert("seller_applications", {
+                                user_id: args.user_id,
+                                store_name: args.store_name,
+                                description: args.description,
+                                location: args.location,
+                                status: "pending",
+                        });
+                }
+        })
+
+        export const GetSellerApplications = query({
+                handler: async (ctx) => {
+                        const applications = await ctx.db.query("seller_applications").collect();
+                        return applications;
+                }
+        })

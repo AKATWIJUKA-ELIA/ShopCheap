@@ -6,6 +6,8 @@ import { MapPin } from 'lucide-react';
 import Link from "next/link";
 import LocationPicker from "@/components/LocationPicker/LocationPicker";
 import useRetrieveLocation from "@/hooks/useRetrieveLocation";
+import useHandleSellerApplications from "@/hooks/useHandleSellerApplications";
+import { Id } from "../../../convex/_generated/dataModel";
 
 
 
@@ -17,29 +19,39 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   const [success, setSuccess] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const { CreateApplication } = useHandleSellerApplications();
+//   console.log("selectedLocation: ",selectedLocation)
   const retrievedLocation = useRetrieveLocation(
     selectedLocation?.lat ?? 0,
     selectedLocation?.lng ?? 0
   ); // Replace with actual lat,lng
+//   console.log("retrievedLocation: ",retrievedLocation)
   
-
+ const clearForm= ()=>{
+        setStoreName("");
+        setDescription("");
+        setSelectedLocation(null);
+ }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch("/api/sellers/apply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id, storeName, description }),
+      const res = await CreateApplication({
+        user_id: user.id as Id<"customers">,
+        storeName,
+        description,
+        location: selectedLocation ? selectedLocation : { lat: 0, lng: 0 }
       });
-
-      if (!res.ok) throw new Error("Failed to submit application");
-      setSuccess(true);
+      const data = await res.json();
+      if (data?.success) {
+        setSuccess(true);
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
+      clearForm();
     }
   };
   const handelLocationSelect = (loc: { lat: number; lng: number }) => {
@@ -91,8 +103,8 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
             <Button variant={"outline"} type="button" className="mt-2"
             onClick={() => setShowLocationPicker(true)}
             > <MapPin/> Select on Map</Button> {selectedLocation&& 
-            <div>{`Confirm Location: ${retrievedLocation.retrievedLocation.map((loc)=>
-            {return `${loc.address.label}`})}`}</div>}
+            <div>{`Seleted Location: ${retrievedLocation.retrievedLocation.map((loc)=>
+            {return `${loc.address.label}, ${loc.resultType}`})}`}</div>}
           </div>
 
           <Button
@@ -103,7 +115,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
             {loading ? "Submitting..." : "Submit Application"}
           </Button>
 
-          <h1>By submitting your application, you agree to our terms and conditions. <Link className="text-blue-800" href="/" >Click here to read them.</Link></h1>
+          <h1>By submitting your application, you agree to our <Link className="text-blue-800" href="/" >terms and conditions.</Link> </h1>
         </form>
       )}
 

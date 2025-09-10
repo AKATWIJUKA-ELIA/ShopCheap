@@ -187,4 +187,18 @@ transactions: defineTable({
   .index("by_status", ["status"])
   .index("by_order_and_user", ["order_id", "user_id"])
   .index("by_payment_method", ["payment_method"]),
+  seller_applications: defineTable({
+        user_id: v.string(),
+        store_name: v.string(),
+        description: v.string(),
+        location: v.optional(v.object({
+                lat: v.number(),
+                lng: v.number(),
+        })),
+        status: v.union(
+                v.literal("pending"),
+                v.literal("approved"),
+                v.literal("rejected")
+        )
+  })
 });
