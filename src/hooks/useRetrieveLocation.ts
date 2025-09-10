@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {MAP_BOX_SEARCH} from "../urls"
-import { HereSuggestions, LocationResult } from "@/lib/types";
+import { HereSuggestions } from "@/lib/types";
 const token = process.env.NEXT_PUBLIC_MAP_API_TOKEN
 const useRetrieveLocation = (placeId: string,sessionToken:string) => {
   const [retrievedLocation, setRetrievedLocation] = useState<HereSuggestions[]>([]);
