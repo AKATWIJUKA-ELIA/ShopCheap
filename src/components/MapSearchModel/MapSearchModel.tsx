@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Oval } from 'react-loader-spinner';
 import useGetSuggestions from '@/hooks/useGetSuggestions';
-import useRetrieveLocation from '@/hooks/useRetrieveLocation';
+// import useRetrieveLocation from '@/hooks/useRetrieveLocation';
 // import localStorage from 'redux-persist/es/storage';
 import { useAppDispatch } from '@/hooks';
 import { SaveLocation } from "@/store/location";
+import { HereSuggestions } from '@/lib/types';
+
 
 interface MapSearchModel {
   onClose: () => void;
@@ -20,21 +22,21 @@ interface MapSearchModel {
 
 
 const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused,handleLocationClick  }) => {
-        const [newSuggestions, setnewSuggestions] =useState<any[]>([]);
-        const sessionToken = typeof window !== "undefined" ? window.localStorage.getItem("sessionToken") || "" : "";
-        const [userLocation, setUserLocation] = useState<{latitude: number, longitude: number} | null>(null);
+        const [newSuggestions, setnewSuggestions] =useState<HereSuggestions[]>([]);
+        // const sessionToken = typeof window !== "undefined" ? window.localStorage.getItem("sessionToken") || "" : "";
+        // const [userLocation, setUserLocation] = useState<{latitude: number, longitude: number} | null>(null);
         // const [coordinates, setcoordinates] = useState<{lat:number,lng:number}>({lat:0,lng:0});
         const Dispatch = useAppDispatch();
-        useEffect(() => {
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition((position) => {
-                    setUserLocation({
-                            latitude: position.coords.latitude,
-                                longitude: position.coords.longitude
-                        });
-                        });
-                }
-        }, []);
+        // useEffect(() => {
+        //         if (navigator.geolocation) {
+        //           navigator.geolocation.getCurrentPosition((position) => {
+        //             setUserLocation({
+        //                     latitude: position.coords.latitude,
+        //                         longitude: position.coords.longitude
+        //                 });
+        //                 });
+        //         }
+        // }, []);
         const suggestions = useGetSuggestions(searchTerm);
         // const retrievedLocation = useRetrieveLocation(searchTerm, sessionToken);
 
@@ -44,7 +46,7 @@ const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused,h
                         }, [searchTerm, suggestions]);
 
                         const HandleClick= (position:{lat:number,lng:number})=>{
-                                Dispatch(SaveLocation({lat:position.lat,lng:position.lng}))
+                                Dispatch(SaveLocation({lat:position.lat,lng:position.lng}));
                                 handleLocationClick && handleLocationClick(position);
                                 // console.log("coordinates :",position)
                                 onClose();

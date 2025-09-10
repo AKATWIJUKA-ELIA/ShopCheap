@@ -8,7 +8,7 @@ const useRetrieveLocation = (placeId: string,sessionToken:string) => {
   useEffect(() => {
     const retrieveLocation = async () => {
       if (placeId) {
-         let url = `${MAP_BOX_SEARCH}/${placeId}?session_token=${sessionToken}&access_token=${token}`
+         const url = `${MAP_BOX_SEARCH}/${placeId}?session_token=${sessionToken}&access_token=${token}`
                 const response = await axios.get(url)
                 const data = await response.data;
                 setRetrievedLocation(data.suggestions || []);

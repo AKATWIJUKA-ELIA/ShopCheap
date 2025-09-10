@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {HERE_SUGGESTIONS} from "../urls"
+import { HereSuggestions,LocationResult } from "@/lib/types";
 const token = process.env.NEXT_PUBLIC_HERE_TOKEN
 const useGetSuggestions = (searchTerm: string) => {
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<HereSuggestions[]>([]);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -14,7 +15,7 @@ const useGetSuggestions = (searchTerm: string) => {
                 //         url += `&proximity=${longitude},${latitude}`;
                 //     }
                 const response = await axios.get(url)
-                const data = await response.data;
+                const data:LocationResult = await response.data;
                 setSuggestions(data.items || []);
       } else {
         setSuggestions([]);

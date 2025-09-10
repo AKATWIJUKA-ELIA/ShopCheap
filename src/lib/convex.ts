@@ -1,8 +1,8 @@
 import {ConvexClient} from "convex/browser";
 import { api } from "../../convex/_generated/api";
-import { User } from "./utils";
+import { User } from "./types";
 import { Id } from "../../convex/_generated/dataModel";
-import { OrderItem } from "./utils";
+import { OrderItem } from "./types";
 
 
 const convex = new ConvexClient("https://cheery-cod-687.convex.cloud");

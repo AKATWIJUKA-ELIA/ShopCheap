@@ -14,7 +14,7 @@ interface LocationPickerProps {
   onClose: () => void;
   onLocationSelect : (loc: { lat: number; lng: number }) => void;
 }
-const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLocationSelect  }) => {
+const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose  }) => {
 
       const mapContainerRef = useRef<HTMLDivElement | null>(null);
         const mapRef = useRef<mapboxgl.Map | null>(null);
