@@ -11,7 +11,7 @@ import { Button } from "./ui/button";
 // import DeleteModal from "./DeleteModal/page";
 import { useEffect, useState } from "react";
 // import DeleteAllModal from "./DeleteAll/page";
-import { User } from "@/lib/utils";
+import { User } from "@/lib/types";
 import { Id } from "../../convex/_generated/dataModel";
 import { formatDate } from "@/lib/helpers";
 import { getUserById } from "@/lib/convex";

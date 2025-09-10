@@ -2,7 +2,7 @@ import { api } from "../../convex/_generated/api";
 import { useMutation } from "convex/react";
 import { useSendMail } from './useSendMail';
 import { WelcomeEmail } from '@/EmailTemplates/WelcomeTemplates';
-import { User } from "@/lib/utils";
+import { User } from "@/lib/types";
 import { randomBytes } from 'crypto';
 interface user {
         username: string,

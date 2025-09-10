@@ -15,7 +15,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import useBoost from "@/hooks/useBoost"
-import { BoostWithInteraction } from "@/lib/utils"
+import { BoostWithInteraction } from "@/lib/types"
 import { formatDate } from "@/lib/helpers"
 
 

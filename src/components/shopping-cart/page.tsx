@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 import { Minus, Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useAppSelector } from "@/hooks"
 import { Oval } from 'react-loader-spinner'
@@ -13,8 +13,8 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Id } from "../../../convex/_generated/dataModel"
 import useGetCart from '@/hooks/useGetCart';
-import useCheckOut from "@/hooks/useCheckOut"
-import { useNotification } from "@/app/NotificationContext"
+// import useCheckOut from "@/hooks/useCheckOut"
+// import { useNotification } from "@/app/NotificationContext"
 import Recommended from "../Recommended/page"
 interface Product {
         total:number;
@@ -42,10 +42,10 @@ const ShoppingCart= ()=> {
         const productIds = User && User.User_id && User.User_id.length > 0
                 ? UpstreamCart?.map((item) => item.product_id)
                 : cart.map((item) => item.product_id);
-        const { setNotification } = useNotification();
+        // const { setNotification } = useNotification();
         const { data: products, loading: isLoading } = useGetProductsByIds((productIds?.flatMap(id => id)) || []);
         const [loading,setLoading] = useState(isLoading)
-        const { handleCheckOut } = useCheckOut();
+        // const { handleCheckOut } = useCheckOut();
 
         useEffect(() => {
                 if (cart.length === 0 ||cart.length > 0) {
@@ -53,19 +53,19 @@ const ShoppingCart= ()=> {
                 }
         }, [cart]);
 
-        const CheckOut = async () => {
-    const result = await handleCheckOut();
-    if (!result.success) {
-      setNotification({
-        message: result.message,
-        status: "error"
-      })
-    } else{
-        setNotification({
-        message:result.message,
-        status: "success"
-      })}
-  };
+//         const CheckOut = async () => {
+//     const result = await handleCheckOut();
+//     if (!result.success) {
+//       setNotification({
+//         message: result.message,
+//         status: "error"
+//       })
+//     } else{
+//         setNotification({
+//         message:result.message,
+//         status: "success"
+//       })}
+//   };
         
         const itemQuantity = (id: string) => {
                 const item = User && User?.User_id.length>0 ? UpstreamCart?.find((item) => item.product_id === id)
@@ -219,12 +219,12 @@ const ShoppingCart= ()=> {
              ({itemCount} items) Shs:{subtotal().toFixed(2)}
           </div>
 
-          <Button
+          {/* <Button
            className="w-full bg-gold hover:bg-yellow-500 text-dark font-medium rounded-full"
            onClick={()=>CheckOut()}
            >
             Proceed to checkout
-          </Button>
+          </Button> */}
         </div>
 
         <div className="bg-white h-[500px] overflow-auto p-4 rounded border border-gray-200 dark:bg-gray-500 dark:border-gray-500 ">

@@ -10,7 +10,7 @@ import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { useAppSelector } from "@/hooks"
 import { getUserById,UpdateUser } from "@/lib/convex"
-import {User } from "@/lib/utils"
+import {User } from "@/lib/types"
 import bcrypt from "bcryptjs"
 import { Id } from "../../../convex/_generated/dataModel"
 

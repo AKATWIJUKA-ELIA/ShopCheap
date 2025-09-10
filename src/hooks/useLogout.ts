@@ -18,7 +18,7 @@ const useLogout = () => {
                         }
                         router.push("/")
                 } catch (error) {
-                        console.error('Error during session creation:', error);
+                        console.error('Error during session deletion:', error);
                 }
         }
         
