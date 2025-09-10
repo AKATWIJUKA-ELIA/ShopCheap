@@ -56,7 +56,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
         status:"success",
         message:res.message||" Application submitted successfully! We will review your application and get back to you within 2-3 business days"
        })
-    } catch (err) {
+    } catch {
       setNotification({
         status:"error",
         message:"error creating application"

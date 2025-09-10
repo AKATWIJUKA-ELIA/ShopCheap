@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { api } from "../../convex/_generated/api"; 
 import { useMutation } from "convex/react";
 import { Id } from "../../convex/_generated/dataModel";
@@ -29,9 +28,9 @@ const useHandleSellerApplications = () => {
                 }
                 await sendEmail(user?.email||'', 'Application Received', `<p>Dear ${user?.Username||''},</p>
                 <p>Thank you for applying to become a seller on our platform. We have received your application for the store named "${Application.storeName}". Our team will review your application and get back to you shortly.</p>
-                <p>Best regards,<br/>Shop Cheap Team</p>`, 'Support').then(data=>console.log("success:",data)).catch(err=>console.log("error:",err));
+                <p>Best regards,<br/>Shop Cheap Team</p>`, 'Support')
 
-                await sendEmail(admin, 'Seller Application Received', `User ${user?.Username||''} has applied to become a seller.`, 'Support').then(data=>console.log("success:")).catch(err=>console.log("error:",err));
+                await sendEmail(admin, 'Seller Application Received', `User ${user?.Username||''} has applied to become a seller.`, 'Support')
                 return { success: true, message:response.message , status: 200 };
                 }catch{
                         return  { success: false, message: "Sorry,  Failed to apply,  please try again later",status:500 };
