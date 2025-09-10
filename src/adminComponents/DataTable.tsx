@@ -13,7 +13,7 @@ import EditModal from "./EditModal/page";
 import DeleteModal from "./DeleteModal/page";
 import { useEffect, useState } from "react";
 import DeleteAllModal from "./DeleteAll/page";
-import { Product } from "@/lib/utils";
+import { Product } from "@/lib/types";
 import { Id } from "../../convex/_generated/dataModel";
 
 interface DataTable {

@@ -31,7 +31,7 @@ import {
 import Image from "next/image"
 import useGetSellersOrders from "@/hooks/useGetSellersOrders"
 import { formatDate } from "@/lib/helpers"
-import { Order} from "@/lib/utils"
+import { Order} from "@/lib/types"
 import { CardHeader } from "@/adminComponents/ui/card"
 import { truncateString } from "@/lib/helpers"
 import {getUserById,getOrderById,UpdateOrder,getProductById} from "@/lib/convex"

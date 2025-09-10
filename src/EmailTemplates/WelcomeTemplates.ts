@@ -1,4 +1,4 @@
-import { User } from "@/lib/utils"
+import { User } from "@/lib/types"
 const currentYear = new Date().getFullYear()
 export const WelcomeEmail = (user:User,token:string)=>{
         return `

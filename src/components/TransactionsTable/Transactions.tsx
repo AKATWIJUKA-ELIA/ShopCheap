@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import DeleteModal from "@/components/DeleteTransactions/page";
 import { useEffect, useState } from "react";
 import DeleteAllModal from "@/components/DeleteAll/page";
-import { Transaction } from "@/lib/utils";
+import { Transaction } from "@/lib/types";
 import { Id } from "../../../convex/_generated/dataModel";
 
 interface DataTableProps {

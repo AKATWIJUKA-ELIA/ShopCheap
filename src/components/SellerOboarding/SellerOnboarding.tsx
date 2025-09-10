@@ -37,6 +37,10 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
       setLoading(false);
     }
   };
+  const handelLocationSelect = (loc: { lat: number; lng: number }) => {
+    setSelectedLocation(loc);
+    setShowLocationPicker(false);
+  }     
 
   if (user.role === "seller") {
     return <p className="p-4 bg-green-100 text-green-800 rounded">✅ You are already a seller!</p>;
@@ -96,7 +100,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
         </form>
       )}
 
-      {showLocationPicker && <LocationPicker isvisible={showLocationPicker} onClose={() => setShowLocationPicker(false)} onLocationSelect={setSelectedLocation} />}
+      {showLocationPicker && <LocationPicker isvisible={showLocationPicker} onClose={() => setShowLocationPicker(false)} onLocationSelect={handelLocationSelect} />}
     </div>
   );
 }       

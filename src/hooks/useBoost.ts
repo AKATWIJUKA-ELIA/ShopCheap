@@ -1,7 +1,7 @@
 import { api } from "../../convex/_generated/api"; 
 import { useMutation, useQuery } from "convex/react";
 import { useAppSelector } from "@/hooks";
-import { Boost,BoostWithInteraction, } from "@/lib/utils";
+import { Boost,BoostWithInteraction, } from "@/lib/types";
 import useGetProductsByIds from "./useGetProductsByIds";
 import { useEffect, useState } from "react";
 
