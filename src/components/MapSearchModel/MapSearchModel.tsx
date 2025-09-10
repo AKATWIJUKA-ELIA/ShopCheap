@@ -47,9 +47,10 @@ const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused,h
 
                         const HandleClick= (position:{lat:number,lng:number})=>{
                                 Dispatch(SaveLocation({lat:position.lat,lng:position.lng}));
-                                handleLocationClick && handleLocationClick(position);
+                                const click = handleLocationClick && handleLocationClick(position);
                                 // console.log("coordinates :",position)
                                 onClose();
+                                return click;
                         }
         if (!Focused) return null;
 
