@@ -1,25 +1,30 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {MAP_BOX_SEARCH} from "../urls"
-import { HereSuggestions } from "@/lib/types";
-const token = process.env.NEXT_PUBLIC_MAP_API_TOKEN
-const useRetrieveLocation = (placeId: string,sessionToken:string) => {
+import {HERE_RETRIEVE_LOCATION,} from "../urls"
+import { HereSuggestions,LocationResult } from "@/lib/types";
+const token = process.env.NEXT_PUBLIC_HERE_TOKEN
+const useRetrieveLocation = (lat:number,lng:number) => {
   const [retrievedLocation, setRetrievedLocation] = useState<HereSuggestions[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const retrieveLocation = async () => {
-      if (placeId) {
-         const url = `${MAP_BOX_SEARCH}/${placeId}?session_token=${sessionToken}&access_token=${token}`
+      try {
+         const url = `${HERE_RETRIEVE_LOCATION}?at=${lat},${lng}&lang=en-US&apiKey=${token}`
                 const response = await axios.get(url)
-                const data = await response.data;
-                setRetrievedLocation(data.suggestions || []);
-      } else {
+                const data:LocationResult = await response.data;
+                setRetrievedLocation(data.items || []);
+      } catch {
+        setError("Failed to retrieve location");
         setRetrievedLocation([]);
       }
     };
     retrieveLocation();
-  }, [placeId]);
+  }, [lat,lng]);
 
-  return retrievedLocation;
+  return {
+        error,
+        retrievedLocation
+};
 };
 export default useRetrieveLocation;

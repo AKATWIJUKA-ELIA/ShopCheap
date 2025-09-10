@@ -5,9 +5,11 @@ import { HereSuggestions,LocationResult } from "@/lib/types";
 const token = process.env.NEXT_PUBLIC_HERE_TOKEN
 const useGetSuggestions = (searchTerm: string) => {
   const [suggestions, setSuggestions] = useState<HereSuggestions[]>([]);
+   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
+        try{
       if (searchTerm) {
 
          const url = `${HERE_SUGGESTIONS}?q=${searchTerm.toLowerCase()}&apiKey=${token}`
@@ -20,10 +22,14 @@ const useGetSuggestions = (searchTerm: string) => {
       } else {
         setSuggestions([]);
       }
+}catch{
+        setError("Failed to fetch suggestions");
+          setSuggestions([]);
+}
     };
     fetchSuggestions();
   }, [searchTerm]);
 
-  return suggestions;
+  return {suggestions,error};
 };
 export default useGetSuggestions;

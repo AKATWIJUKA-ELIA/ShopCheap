@@ -14,7 +14,7 @@ interface LocationPickerProps {
   onClose: () => void;
   onLocationSelect : (loc: { lat: number; lng: number }) => void;
 }
-const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose  }) => {
+const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLocationSelect  }) => {
 
       const mapContainerRef = useRef<HTMLDivElement | null>(null);
         const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -64,6 +64,25 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose  }) 
         projection: { name: "mercator" },
         
       });
+
+          //event listener for clicks
+  mapRef.current.on("click", (e) => {
+    const { lng, lat } = e.lngLat;
+        onLocationSelect({ lat, lng });
+//     console.log("Clicked coordinates:", lng, lat);
+
+    // Optional: drop a marker at the clicked location
+    if (!markerRef.current){
+           markerRef.current = new mapboxgl.Marker({ color: "blue" })
+      .setLngLat([lng, lat])
+      .addTo(mapRef.current!);
+    }else{
+          markerRef.current.setLngLat([lng, lat]);
+    }
+
+  }
+);
+
     }
 
   }, []);
@@ -72,7 +91,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose  }) 
                 if (mapRef.current) {
                         mapRef.current.flyTo({
                                 center: [data.lng,data.lat], 
-                                zoom: 12,
+                                zoom: 14.0,
                                 essential: true,
                                 
                             });
