@@ -200,5 +200,5 @@ transactions: defineTable({
                 v.literal("approved"),
                 v.literal("rejected")
         )
-  })
+  }).index("by_user_id", ["user_id"])
 });

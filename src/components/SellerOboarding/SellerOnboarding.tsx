@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { MapPin } from 'lucide-react';
-import Link from "next/link";
 import LocationPicker from "@/components/LocationPicker/LocationPicker";
 import useRetrieveLocation from "@/hooks/useRetrieveLocation";
 import useHandleSellerApplications from "@/hooks/useHandleSellerApplications";
 import { Id } from "../../../convex/_generated/dataModel";
+import { useNotification } from "@/app/NotificationContext";
 
 
 
@@ -16,10 +16,11 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   const [storeName, setStoreName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
   const { CreateApplication } = useHandleSellerApplications();
+  const {setNotification} = useNotification()
+ 
 //   console.log("selectedLocation: ",selectedLocation)
   const retrievedLocation = useRetrieveLocation(
     selectedLocation?.lat ?? 0,
@@ -43,15 +44,28 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
         description,
         location: selectedLocation ? selectedLocation : { lat: 0, lng: 0 }
       });
-      const data = await res.json();
-      if (data?.success) {
-        setSuccess(true);
+
+      if (!res?.success) {
+       setNotification({
+        status:"warning",
+        message:res?.message||"error creating application"
+       })
+       return
       }
+        setNotification({
+        status:"success",
+        message:res.message||" Application submitted successfully! We will review your application and get back to you within 2-3 business days"
+       })
     } catch (err) {
-      console.error(err);
+      setNotification({
+        status:"error",
+        message:"error creating application"
+       })
     } finally {
-      setLoading(false);
+        setLoading(false);
+      setTimeout(()=>{
       clearForm();
+      },5000)
     }
   };
   const handelLocationSelect = (loc: { lat: number; lng: number }) => {
@@ -72,8 +86,6 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
         >
           Become a Seller
         </button>
-      ) : success ? (
-        <p className="text-green-600 font-medium">🎉 Application submitted! Await admin approval.</p>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4 w-full">
           <h2 className="text-xl font-semibold dark:text- ">Seller Application</h2>
@@ -115,7 +127,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
             {loading ? "Submitting..." : "Submit Application"}
           </Button>
 
-          <h1>By submitting your application, you agree to our <Link className="text-blue-800" href="/" >terms and conditions.</Link> </h1>
+          {/* <h1>By submitting your application, you agree to our <Link className="text-blue-800" href="/" >terms and conditions.</Link> </h1> */}
         </form>
       )}
 

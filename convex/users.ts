@@ -229,6 +229,13 @@ export const GetAllCustomers = query({
                         if (user.role === "seller") {
                                 return { success: false, status: 400, message: "You are already a seller" };
                         }
+                        const existingApplication = await ctx.db
+                        .query("seller_applications")
+                        .withIndex("by_user_id", (q) => q.eq("user_id", args.user_id))
+                        .unique();
+                        if(existingApplication){
+                                return {success:false,message:"You have already applied, please wait for admin to review your application",status:400};
+                        }
                         await ctx.db.insert("seller_applications", {
                                 user_id: args.user_id,
                                 store_name: args.store_name,
@@ -236,6 +243,7 @@ export const GetAllCustomers = query({
                                 location: args.location,
                                 status: "pending",
                         });
+                        return { success: true, status: 200, message: "Application submitted successfully! We will review your application and get back to you within 2-3 business days" };
                 }
         })
 

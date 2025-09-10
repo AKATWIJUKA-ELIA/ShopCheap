@@ -41,9 +41,9 @@ useEffect(() => {
   if (!isvisible) return null
 
   return (
-    <div className={` fixed z-40 top-2 right-2 mt-[8%] rounded-lg flex  w-[35%] h-[5%]   overflow-auto overflow-x-hidden ${notificationColor()}`}>
+    <div className={` fixed z-40 top-2 right-4 md:right-2 mt-[8%] rounded-lg flex  w-[90%] md:w-[35%] h-[10%]   overflow-auto overflow-x-hidden ${notificationColor()}`}>
       <div className={`items-center justify-center my-auto mx-auto  ${notificationColor()} rounded-lg`}>
-      <h1 className="text-2xl  text-center">{status}: {message} </h1>
+      <h1 className="text-xl   text-center"><span className="font-bold" >{status}</span>: {message} </h1>
       </div>
       <button onClick={handleclose} className="absolute top-1 right-2 bg-black/60 p-1 rounded-md hover:text-gray-700">
         <IoMdClose size={24} fill="red" />
