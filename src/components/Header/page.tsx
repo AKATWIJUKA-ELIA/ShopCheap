@@ -286,9 +286,7 @@ const Header = () => {
                 </div  >
                 {User ?(<div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
                         <Link href="/register" className='hidden md:flex'>Become a Seller?</Link>
-                        <div className='flex md:hidden'
-                        onClick={()=>setCheckQualify(true)}
-                        >sell ?</div>
+                        <Link href="/register" className='flex md:hidden'>sell ?</Link>
                 </div>):(
                          <div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
                         <Link href="/register" className='hidden md:flex'>Become a Seller?</Link>
