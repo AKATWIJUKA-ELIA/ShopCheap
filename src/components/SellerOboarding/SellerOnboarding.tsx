@@ -47,7 +47,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
 
       if (!res?.success) {
        setNotification({
-        status:"warning",
+        status:"info",
         message:res?.message||"error creating application"
        })
        return
