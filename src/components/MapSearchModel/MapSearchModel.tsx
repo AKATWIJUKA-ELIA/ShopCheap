@@ -56,7 +56,7 @@ const MapSearchModel: React.FC<MapSearchModel> = ({ onClose,searchTerm,Focused,h
 
        
   return (
-        <div className="  fade-in fixed left-[20%] z-40 inset-0 backdrop-blur-lg shadow-lg shadow-gray-400 flex rounded-3xl w-[40%] h-[50%] mt-[38%] md:mt-[12%]   overflow-auto overflow-x-hidden bg-slate-100 dark:bg-dark dark:shadow-gray-800 "  >                  
+        <div className="  fade-in fixed  mx-auto z-40 inset-0 backdrop-blur-lg shadow-lg shadow-gray-400 flex rounded-3xl  w-[80%] md:w-[60%] h-[45%] md:h-[30%] mt-[60%] md:mt-[26%] lg:mt-[18%] lg:w-[45%]   overflow-auto overflow-x-hidden bg-slate-100 dark:bg-dark dark:shadow-gray-800 "  >                  
                      
         <div className=" mx-auto px-5  fade-in w-full gap-4"  > 
                         <div className='flex'>
