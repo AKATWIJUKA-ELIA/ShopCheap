@@ -13,6 +13,7 @@ const useRetrieveLocation = (lat:number,lng:number) => {
          const url = `${HERE_RETRIEVE_LOCATION}?at=${lat},${lng}&lang=en-US&apiKey=${token}`
                 const response = await axios.get(url)
                 const data:LocationResult = await response.data;
+                // console.log("data:",data.items)
                 setRetrievedLocation(data.items || []);
       } catch {
         setError("Failed to retrieve location");
