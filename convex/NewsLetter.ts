@@ -6,6 +6,9 @@ export const AddEmail = mutation({
         args: { email: v.string() },
         handler: async (ctx, args) => {
           // Check if the email already exists
+          if (!args.email || !args.email.includes('@')||args.email.length<=0) {
+            throw new ConvexError("Invalid email address.");
+          }
           const existing = await ctx.db
       .query("NewsLetter")
       .withIndex("by_email", (q) => q.eq("email", args.email))

@@ -109,7 +109,7 @@ Thanks again for joining us. Stay tuned for your first edition!\n
 
 Best regards,\n
 ShopCheap\n
-https://shopcheap.vercel.app/</h3>
+https://shopcheapug.com/</h3>
     <div class="footer">
       &copy; 2025 ShopCheap. All rights reserved.
     </div>
@@ -168,7 +168,9 @@ setTimeout(() => {
                     placeholder={submitting ? "Submitting ..." : "Your email address"}
                     className="max-w-md border-black dark:border-gray-600"
                   />
-                  <Button type="submit" className="bg-gold">
+                  <Button
+                  disabled={submitting || useremail.length===0}
+                   type="submit" className="bg-gold">
                     Subscribe <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </form>

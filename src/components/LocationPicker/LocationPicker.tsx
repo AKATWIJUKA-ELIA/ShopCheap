@@ -109,7 +109,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ isvisible, onClose,onLo
   if (!isvisible) return null;
   return (
         <>
-        <div  className="  fade-in  fixed z-40 inset-0 backdrop-blur-lg shadow-lg flex rounded-xl mx-auto  w-[70%]  h-[70%]  mt-[42%] md:mt-[7%]   overflow-auto overflow-x-hidden bg-white dark:bg-dark " id="wrapper" >
+        <div  className="  fade-in  fixed z-40 inset-0 backdrop-blur-lg shadow-lg flex rounded-xl mx-auto w-[95%] md:w-[85%] h-[50%]   mt-[42%] md:mt-[17%] lg:mt-[12%] lg:h-[70%] lg:w-[50%]   overflow-auto overflow-x-hidden bg-white dark:bg-dark " id="wrapper" >
                   
                   <div className=' flex absolute z-50 left-[10%]  w-[50%] p-auto mt-5 mx-auto '>
                                 <Input value={searchTerm}
