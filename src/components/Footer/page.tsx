@@ -3,7 +3,10 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, ArrowRight } from "lucide-react"
+import {
+        //  Facebook, Instagram, Youtube,
+         Twitter, 
+         Mail, Phone, MapPin, ArrowRight } from "lucide-react"
 import { useSendMail } from "@/hooks/useSendMail"
 import useAddEmail from "@/hooks/useAddEmail"
 import { useState } from "react"
@@ -273,7 +276,7 @@ setTimeout(() => {
                 <div className="mt-6">
                   <h5 className="font-medium text-gold mb-3">Follow Us</h5>
                   <div className="flex space-x-4">
-                    <a
+                    {/* <a
                       href="https://facebook.com"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -281,8 +284,8 @@ setTimeout(() => {
                     >
                       <Facebook className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                       <span className="sr-only">Facebook</span>
-                    </a>
-                    <a
+                    </a> */}
+                    {/* <a
                       href="https://instagram.com"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -290,7 +293,7 @@ setTimeout(() => {
                     >
                       <Instagram className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                       <span className="sr-only">Instagram</span>
-                    </a>
+                    </a> */}
                     <a
                       href="https://x.com/shopcheap__"
                       target="_blank"
@@ -300,7 +303,7 @@ setTimeout(() => {
                       <Twitter className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                       <span className="sr-only">Twitter</span>
                     </a>
-                    <a
+                    {/* <a
                       href="https://youtube.com"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -308,7 +311,7 @@ setTimeout(() => {
                     >
                       <Youtube className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                       <span className="sr-only">YouTube</span>
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
@@ -321,7 +324,7 @@ setTimeout(() => {
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 dark:text-gray-400">
             <div className="mb-4 md:mb-0">© {currentYear} ShopCheap. All rights reserved.</div>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/privacy-policy" className="hover:text-orange-400 dark:hover:text-orange-300">
+              {/* <Link href="/privacy-policy" className="hover:text-orange-400 dark:hover:text-orange-300">
                 Privacy Policy
               </Link>
               <Link href="/terms-of-service" className="hover:text-orange-400 dark:hover:text-orange-300">
@@ -329,7 +332,7 @@ setTimeout(() => {
               </Link>
               <Link href="/accessibility" className="hover:text-orange-400 dark:hover:text-orange-300">
                 Accessibility
-              </Link>
+              </Link> */}
               <Link href="/sitemap" className="hover:text-orange-400 dark:hover:text-orange-300">
                 Sitemap
               </Link>
