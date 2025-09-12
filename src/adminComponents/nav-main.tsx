@@ -1,6 +1,8 @@
 "use client"
 
-import {Rocket, type LucideIcon } from "lucide-react"
+import {
+        // Rocket,
+         type LucideIcon } from "lucide-react"
 import { IoBagCheckOutline  } from "react-icons/io5";
 import {LayoutDashboardIcon,HomeIcon,SquarePlus,Rows4,
         // Users,HandCoins,SquareStack,Newspaper,User
@@ -55,11 +57,11 @@ export function NavMain() {
                         link:"/admin/pending",
                 },
                 
-                {
-                        title: "Boost ",
-                        icon: Rocket   as LucideIcon,
-                        link:"/admin/boost",
-                },
+                // {
+                //         title: "Boost ",
+                //         icon: Rocket   as LucideIcon,
+                //         link:"/admin/boost",
+                // },
                 // {
                 //         title: "NewsLetter",
                 //         icon: Newspaper      as LucideIcon,
