@@ -55,11 +55,11 @@ export function NavMain() {
                         link:"/admin/pending",
                 },
                 
-                {
-                        title: "Boost ",
-                        icon: Rocket   as LucideIcon,
-                        link:"/admin/boost",
-                },
+                // {
+                //         title: "Boost ",
+                //         icon: Rocket   as LucideIcon,
+                //         link:"/admin/boost",
+                // },
                 // {
                 //         title: "NewsLetter",
                 //         icon: Newspaper      as LucideIcon,
