@@ -10,6 +10,7 @@ export const getUserOrders = query({
                   const orders = await ctx.db.query("orders")
                     .withIndex("by_user_id", (q) => q.eq("user_id", args.userId))
                     .collect();
+                    if(orders.length===0) {return}
                   return await Promise.all(
       orders.map(async order => {
         const product = await ctx.db.get(order.product_id as Id<"products">);

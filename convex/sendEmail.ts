@@ -30,7 +30,7 @@ export const sendEmail = mutation({
   handler: async (ctx,args) => {
         try{
     await resend.sendEmail(ctx, {
-      from: `${args.department} <${args.department}@support.lighttech.me>`,
+      from: `${args.department} <${args.department}@shopcheapug.com>`,
       to: `${args.receiverEmail}`,
       subject: args.subject,
       html: args.html,
