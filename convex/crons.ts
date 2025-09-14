@@ -163,7 +163,7 @@ export const SendNewsLetter = internalAction({
         handler:async(ctx)=>{
                 const newsletters = await ctx.runQuery(api.NewsLetter.getNewsLetters)
                 const newsletterToSend = newsletters.filter((letter)=>letter.scheduledTime<=Date.now() && letter.status==="pending" )
-                
+                if(newsletterToSend.length===0) return;
                 for( const newsletter of newsletterToSend){
                         const receivers = newsletter.receipients
                         for (const receiver of receivers) {
