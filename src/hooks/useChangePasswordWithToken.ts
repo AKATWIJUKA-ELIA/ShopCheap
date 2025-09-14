@@ -78,7 +78,7 @@ const useChangePasswordWithToken = () => {
 <body style="background:#f4f4f4;">
 
   <div class="container">
-<a href="https://shopcheap.vercel.app/" > 
+<a href="https://shopcheapug.com/" > 
 <div 
   style="
     background-image: url('https://cheery-cod-687.convex.cloud/api/storage/143325e4-3c05-4b88-82ba-cbbfa7fcd594');
@@ -97,7 +97,7 @@ const useChangePasswordWithToken = () => {
     <h4>Click the button below to Login to you Account.</h4>
     <a 
       class=" button   " style="background-color:black; cursor:pointer; color:gold; border:1px solid black;"
-      href="https://shopcheap.vercel.app/sign-in"
+      href="https://shopcheapug.com/sign-in"
       target="_blank"
     >Sign in</a>
 

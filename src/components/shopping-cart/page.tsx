@@ -197,7 +197,7 @@ const ShoppingCart= ()=> {
                     Compare with similar items
                   </span> */}
 
-                  <span className="text-sm text-blue-500 hover:underline cursor-pointer" onClick={() => handleShare(`https://shopcheap.vercel.app/product/${item._id}`,`${item.product_name}`)} >{Copied?"Link copied successfully":"Share "}</span>
+                  <span className="text-sm text-blue-500 hover:underline cursor-pointer" onClick={() => handleShare(`https://shopcheapug.com/product/${item._id}`,`${item.product_name}`)} >{Copied?"Link copied successfully":"Share "}</span>
                 </div>
               </div>
 

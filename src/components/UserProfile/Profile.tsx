@@ -236,7 +236,7 @@ useEffect(() => {
 <body style="background:#f4f4f4;">
 
   <div class="container">
-<a href="https://shopcheap.vercel.app/" > 
+<a href="https://shopcheapug.com/" > 
 <div 
   style="
     background-image: url('https://cheery-cod-687.convex.cloud/api/storage/143325e4-3c05-4b88-82ba-cbbfa7fcd594');
@@ -252,14 +252,14 @@ useEffect(() => {
     <h1 class="" style="color:black" >Hello, <span style="color:blue"> ${formdata?.username} </span></h1>
     <h3>You Information was Updated.</h3>
 
-<h3>If this wasnt you, pliz update you information via https://shopcheap.vercel.app/profile/account </h3>
+<h3>If this wasnt you, pliz update you information via https://shopcheapug.com/profile/account </h3>
 
 
 Thanks  for using Shopcheap. \n
 
 <h3>Best regards,\n</h3>
 <h4>ShopCheap\n</h4>
-<h4> https://shopcheap.vercel.app/ </h4>
+<h4> https://shopcheapug.com/ </h4>
     <div class="footer">
       &copy; 2025 ShopCheap. All rights reserved.
     </div>

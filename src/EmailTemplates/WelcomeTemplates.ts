@@ -153,13 +153,13 @@ export const WelcomeEmail = (user:User,token:string)=>{
                                 <p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
                                     Thank you for joining the ShopCheap family! We're thrilled to have you on board.
                                     Get ready to discover amazing deals on a wide range of products, all designed to make your shopping experience easy and affordable.
-                                    Note: Please <a href="https://shopcheap.vercel.app/api/verifyaccount?k9m3p7q2r8t4v1w6x5y9z2a8b4c6d1e7f3g9h2j5k8m4n6p1q7r3t9u2v5w8x4y6z3a9b2c7d1e4f8g6h2j9k5m3=${token}">verify your email address here</a> to start receiving updates and special offers!
+                                    Note: Please <a href="https://shopcheapug.com/api/verifyaccount?k9m3p7q2r8t4v1w6x5y9z2a8b4c6d1e7f3g9h2j5k8m4n6p1q7r3t9u2v5w8x4y6z3a9b2c7d1e4f8g6h2j9k5m3=${token}">verify your email address here</a> to start receiving updates and special offers!
                                 </p>
                                 <p style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
                                     At ShopCheap, we're committed to bringing you quality items at prices you'll love. Whether you're looking for electronics, fashion, home goods, or more, we've got something for everyone.
                                 </p>
                                 <p style="font-size: 16px; line-height: 1.6; text-align: center; margin-bottom: 30px;">
-                                    <a href="https://shopcheap.vercel.app/" class="button">Start Shopping Now!</a>
+                                    <a href="https://shopcheapug.com/" class="button">Start Shopping Now!</a>
                                 </p>
                                 <p style="font-size: 16px; line-height: 1.6; margin-bottom: 5px;">
                                     Here are a few things you can do to get started:

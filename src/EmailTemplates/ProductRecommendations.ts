@@ -45,7 +45,7 @@ export function generateProductEmailHTML(
     companyName = "ShopCheap",
     companyLogo = "https://cheery-cod-687.convex.cloud/api/storage/143325e4-3c05-4b88-82ba-cbbfa7fcd594",
     footerText = "Thank you for being a valued customer!",
-    websiteUrl = "https://shopcheap.vercel.app"
+    websiteUrl = "https://shopcheapug.com"
   } = options;
 
   const generateStars = (rating: number = 5) => {
