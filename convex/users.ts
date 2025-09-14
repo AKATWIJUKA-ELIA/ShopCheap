@@ -50,7 +50,7 @@ export const CreateUser = mutation({
                         ...args
                 }) 
                 // await ctx.runMutation(internal.sendEmail.sendEmail,{})
-                return {success:true,message:"Success",status:200,user:user};
+                return {success:true,message:"Success your Account was successfully created ",status:200,user:user};
         }catch{
                         throw new ConvexError({error:"Error creating user",message:"Error creating user",status:500})
                 }
@@ -96,7 +96,7 @@ export const GetCustomerByEmail = action({
     const customer = await ctx.runQuery(api.users.GetCustomer, { email: args.email });
 
     if (!customer.user) {
-      return { success: false, status: 404, message: "User not Found", user: null };
+      return { success: false, status: 404, message: "Account not Found, please sign-Up first !", user: null };
     }
 
     return { success: true, status: 200, message: "Success !", user: customer.user };

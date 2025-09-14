@@ -59,7 +59,7 @@ const useSignUpWithGoogle =()=>{
                         if(!res.success){
                     return { success: false, message: res.message ,  status: 400 };
                         }         
-                        return { success: true, message:res.message,  status: 200 };
+                        return { success: true, message:res.message+"and verified, you'll be redirected to the sign-in page!",  status: 200 };
                   } catch (error) {
                     console.error('Error creating Account:', error);
                     return { success: false, message: 'Error Creating your account try again Later' ,  status: 500 };

@@ -213,7 +213,7 @@ const ProductCard: React.FC<ProductProps> = ({ product }) => {
           Add to Cart
         </button>
         <button
-          onClick={() => handleShare(`https://shopcheap.vercel.app/product/${product._id}`,`${product.product_name}`)}
+          onClick={() => handleShare(`https://shopcheapug.com/product/${product._id}`,`${product.product_name}`)}
           className=" text-black border border-black w-full px-4 py-2 rounded-3xl hover:border-blue-600 hover:text-white hover:bg-blue-700 transition"
         >
           {Copied?"Link copied successfully":"Share "}

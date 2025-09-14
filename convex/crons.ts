@@ -246,7 +246,7 @@ crons.interval(
 );
 crons.interval(
   "Delete UnVerified Users",
-  { hours: 24 },
+  { hours: 168 },
   internal.crons.DeleteUnVerifiedUsers,
   {}
 );

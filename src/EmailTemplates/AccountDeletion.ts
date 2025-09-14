@@ -26,10 +26,10 @@ export const AccountDeletion = (email: string, username: string) => {
               <p style="margin: 0 0 16px;">Your account, associated with the email ${email}, has been permanently removed from our system Since you didnt verify it within Seven (7) days from creation, .
               </p>
               <p style="margin: 0 0 16px;">
-               Please Create a new account to continue enjoying our services! <a href="https://shopcheap.vercel.app/sign-up">Create Account</a> and verify it atleast within 7 days to avoid account deletion in the future.
+               Please Create a new account to continue enjoying our services! <a href="https://shopcheapug.com/sign-up">Create Account</a> and verify it atleast within 7 days to avoid account deletion in the future.
               </p>
               
-              <p style="margin: 0;">Thank you for using <a href="https://shopcheap.vercel.app/" style="color: #007bff; text-decoration: none;">ShopCheap.</p>
+              <p style="margin: 0;">Thank you for using <a href="https://shopcheapug.com/" style="color: #007bff; text-decoration: none;">ShopCheap.</p>
             </td>
           </tr>
          

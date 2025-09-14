@@ -267,7 +267,7 @@
 // <body style="background:#f4f4f4;">
 
 //   <div class="container">
-// <a href="https://shopcheap.vercel.app/" > 
+// <a href="https://shopcheapug.com/" > 
 // <div 
 //   style="
 //     background-image: url('https://cheery-cod-687.convex.cloud/api/storage/143325e4-3c05-4b88-82ba-cbbfa7fcd594');
@@ -292,7 +292,7 @@
 
 // Best regards,\n
 // ShopCheap\n
-// https://shopcheap.vercel.app/</h3>
+// https://shopcheapug.com/</h3>
 //     <div class="footer">
 //       &copy; 2025 ShopCheap. All rights reserved.
 //     </div>

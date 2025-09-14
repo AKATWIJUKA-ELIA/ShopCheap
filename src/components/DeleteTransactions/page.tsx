@@ -35,7 +35,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isdelete, onClose, transactio
         sendEmail(
           user?.email,
           "Transaction Deletion",
-          `Hello ${user.Username},  User ${user?.Username}, The Transaction with the transaction Id  ${transactionId} has been deleted \n Thank you for Doing Business with Us... \n Regards \n ShopCheap \n https://shopcheap.vercel.app/ .`,
+          `Hello ${user.Username},  User ${user?.Username}, The Transaction with the transaction Id  ${transactionId} has been deleted \n Thank you for Doing Business with Us... \n Regards \n ShopCheap \n https://shopcheapug.com/ .`,
         "sales")
       }
 

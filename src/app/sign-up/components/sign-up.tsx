@@ -45,6 +45,7 @@ const SignUpForm = ({
         const [view2,setview2] = useState(false)
         const [isSubmitting, setIsSubmitting] = useState(false)
         const[SubmittingError,setSubmittingError] = useState("")
+        const [successMessage,setSuccessMessage] = useState("")
         const [email, setEmail] = useState('');
         const [password1, setPassword1] = useState('');
         const [password1type, setpassword1type] = useState('password');
@@ -86,13 +87,15 @@ const SignUpForm = ({
                                 setSubmittingError(data.message)
                                 return
                         }
-                        router.push("/sign-in")
+                        setCreated(true)
+                                setSuccessMessage(data.message)
                 }catch(error){
                         setSubmittingError(error instanceof Error ? error.message : String(error))
                 } finally{
                         setTimeout(()=>{
                                 setIsSubmitting(false)
                                 setSubmittingError("")
+                                router.push("/sign-in")
                         },5000)
                 }
                 
@@ -236,7 +239,6 @@ const handlePassword2Change = (e: React.ChangeEvent<HTMLInputElement>)=>{
                                 setSubmittingError(data.message)
                                 return
                         }
-                        
                         setCreated(true)
 resetUser()
 clearForm()
@@ -260,7 +262,7 @@ clearForm()
           Enter your your Details below to create to your account
         </p>
         {Created && <p className="text-balance text-sm text-green-500">
-          Success !  You acount has been created, please verify your email
+        {successMessage}
         </p> }
         {SubmittingError  && SubmittingError.length>0  && <p className="text-balance text-sm text-red-500">
           Error !  {SubmittingError}
