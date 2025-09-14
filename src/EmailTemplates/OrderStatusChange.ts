@@ -68,7 +68,7 @@ export const generateStatusChangeEmailHTML = async (
     const companyLogo="https://cheery-cod-687.convex.cloud/api/storage/143325e4-3c05-4b88-82ba-cbbfa7fcd594"
     const supportEmail = 'eliaakjtrnq@gmail.com'
    const  supportPhone = '+256 787769021'
-    const websiteUrl = 'https://shopcheap.vercel.app'
+    const websiteUrl = 'https://shopcheapug.com'
   // Status configuration
   const statusConfig = {
     pending: {

@@ -94,7 +94,7 @@ useEffect(()=>{
 <body style="background:#f4f4f4;">
 
   <div class="container">
-<a href="https://shopcheap.vercel.app/" > 
+<a href="https://shopcheapug.com/" > 
 <div 
   style="
     background-image: url('https://cheery-cod-687.convex.cloud/api/storage/143325e4-3c05-4b88-82ba-cbbfa7fcd594');
@@ -112,7 +112,7 @@ useEffect(()=>{
     <h3>Your Product Has Been ${action}d \n</h3>
         <h1> Reason: ${message}</h1>
 <h4>Best regards,\n</h4>
-<h4>ShopCheap\n : https://shopcheap.vercel.app/</h4>
+<h4>ShopCheap\n : https://shopcheapug.com/</h4>
 
     <div class="footer">
       &copy; 2025 ShopCheap. All rights reserved.

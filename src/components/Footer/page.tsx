@@ -87,7 +87,7 @@ try {
 <body style="background:#f4f4f4;">
 
   <div class="container">
-<a href="https://shopcheap.vercel.app/" > 
+<a href="https://shopcheapug.com/" > 
 <div 
   style="
     background-image: url('https://cheery-cod-687.convex.cloud/api/storage/143325e4-3c05-4b88-82ba-cbbfa7fcd594');
