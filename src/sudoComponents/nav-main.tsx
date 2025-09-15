@@ -1,8 +1,14 @@
 "use client"
 
 import {Rocket, type LucideIcon } from "lucide-react"
-import {LayoutDashboardIcon,HomeIcon,CreditCard,SquarePlus,Rows4,Newspaper,
+import {LayoutDashboardIcon,
+        HomeIcon,
+        CreditCard,
+        SquarePlus,
+        Rows4,
+        Newspaper,
         Users,
+        FileUser
         // HandCoins,SquareStack,User
 
 } from "lucide-react"
@@ -51,6 +57,11 @@ export function NavMain() {
                         title: "Customers",
                         icon: Users     as LucideIcon,
                         link:"/sudo/customers",
+                },
+                 {
+                        title: "Seller-Applications",
+                        icon: FileUser     as LucideIcon,
+                        link:"/sudo/seller-applications",
                 },
                 {
                         title: "Transactions",
