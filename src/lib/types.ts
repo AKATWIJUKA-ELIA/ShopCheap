@@ -154,3 +154,14 @@ export interface HereSuggestions {
 export interface LocationResult {
   items: HereSuggestions[];
 }
+export interface Application {
+  user_id: string;
+  store_name: string;
+  description: string;
+  location?: {
+    lat: number;
+    lng: number;
+  };
+  status: "pending" | "approved" | "rejected";
+  _creationTime:number
+}

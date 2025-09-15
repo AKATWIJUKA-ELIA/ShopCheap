@@ -19,7 +19,6 @@ import { usePathname } from 'next/navigation';
 import {useData} from  '../../app/DataContext';
 import useGetCart from '@/hooks/useGetCart';
 import useCart from '@/hooks/useCart';
-import QualifyUser from '../QualifyUser/Qualify';
 // import useGenerateEmbeddings from '@/hooks/useGenerateEmbeddings';
 // import useVectorSearch from '@/hooks/useVectorSearch';
 import { useWindowResize } from '@/hooks/useWindowResize';
@@ -32,7 +31,6 @@ const Header = () => {
         const { SynchronizeCart } = useCart();
         const Cart = cartitem?.reduce((total, item) => total + (item.quantity || 0), 0)
         const [Hovered,setHovered] = useState(false)
-        const [CheckQualify,setCheckQualify] = useState(false)
         const [sticky, setSticky] = useState(false);
         const [Focused, setFocused] = useState(false)
          const [showlowerBar, setshowlowerBar] = useState(true)
@@ -357,7 +355,6 @@ const Header = () => {
     {  searchTerm.length>1 ? (<SearchModel Focused={Focused}searchTerm={searchTerm} onClose={HandleClose} />):("")}
     {  showImageModal ? (<ImageSearchModal  onClose={HandleClose} />):("")}
         <UserDropDownMenu isvisible={UserDrawer} onClose={() => setUserDrawer(false)} />
-                <QualifyUser isvisible={CheckQualify} onClose={() => setCheckQualify(false)} />
     </>
   )
 }
