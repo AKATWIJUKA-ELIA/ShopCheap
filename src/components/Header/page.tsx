@@ -31,7 +31,6 @@ const Header = () => {
         const { SynchronizeCart } = useCart();
         const Cart = cartitem?.reduce((total, item) => total + (item.quantity || 0), 0)
         const [Hovered,setHovered] = useState(false)
-        const [CheckQualify,setCheckQualify] = useState(false)
         const [sticky, setSticky] = useState(false);
         const [Focused, setFocused] = useState(false)
          const [showlowerBar, setshowlowerBar] = useState(true)
