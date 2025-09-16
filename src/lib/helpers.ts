@@ -12,9 +12,3 @@ export const formatDate = (dateString: number) => {
     export const truncateString = (text: string, maxLength: number): string => {
                 return text.length > maxLength ? text.slice(0, maxLength) + " . . ." : text;
               };
-
-  export const fetchClientSecret = async() => {
-  return fetch('api/create-checkout-session', {method: 'POST'})
-    .then((response) => response.json())
-    .then((json) => json.checkoutSessionClientSecret)
-};
