@@ -1,11 +1,14 @@
+"use server";
 import {ConvexClient} from "convex/browser";
 import { api } from "../../convex/_generated/api";
 import { User } from "./types";
 import { Id } from "../../convex/_generated/dataModel";
 import { OrderItem } from "./types";
 
-
-const convex = new ConvexClient("https://cheery-cod-687.convex.cloud");
+if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
+  throw new Error("CONVEX_URL is not defined");
+}
+const convex = new ConvexClient(process.env.NEXT_PUBLIC_CONVEX_URL);
 
 export async function getUserById(id:  Id<"customers">) {
   if (!id) return { user: null, loading: false, error: "No ID provided" };
