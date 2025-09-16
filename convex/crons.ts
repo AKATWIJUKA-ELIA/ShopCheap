@@ -240,13 +240,13 @@ crons.interval(
 );
 crons.interval(
   "Send recommended products",
-  { hours: 24 },
+  { hours: 168 },
   internal.crons.SendRecommendedProducts,
   {}
 );
 crons.interval(
   "Delete UnVerified Users",
-  { hours: 168 },
+  { hours: 24 },
   internal.crons.DeleteUnVerifiedUsers,
   {}
 );
