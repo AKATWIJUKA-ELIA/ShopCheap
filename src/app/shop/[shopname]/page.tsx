@@ -14,7 +14,7 @@ const SellerShop =  ({params}:PageProps)=> {
     <div className='flex flex-col mt-[15%]' >
         <div className='flex' >
                 <h1 className='text-3xl font-bold text-center' >
-                        {shop?.shop?.shop_name??"Shop"}'s Products
+                        {shop?.shop?.shop_name??"Shop"}&apos;s Products
                 </h1>
         </div>
 
