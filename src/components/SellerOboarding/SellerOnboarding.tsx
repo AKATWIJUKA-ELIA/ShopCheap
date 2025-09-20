@@ -22,7 +22,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
   const { CreateApplication } = useHandleSellerApplications();
   const {setNotification} = useNotification()
-        const {CheckStoreName,NameError} = useValidateStoreName();
+        const {CheckStoreName} = useValidateStoreName();
  
 //   console.log("selectedLocation: ",selectedLocation)
   const retrievedLocation = useRetrieveLocation(
