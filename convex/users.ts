@@ -257,6 +257,22 @@ export const GetAllCustomers = query({
                                 role: "seller",
                                 isVerified: true,
                         });
+                        await ctx.runMutation(api.shops.CreateShop,{
+                                shop_name: RetrievedApplication.store_name,
+                                description: RetrievedApplication.description,
+                                owner_id: args.user_id,
+                                location: RetrievedApplication.location,
+                                isOpen: false,
+                        }).then(async (res)=>{
+                                if(!res.success){
+                                        await ctx.db.patch(args.user_id, {
+                                        role: "user",
+                                        isVerified: true,
+                                });
+                                        return { success: false, status: 500, message: "Error creating shop" };
+                                }
+                                
+                        })
 
                         await ctx.runMutation(api.sendEmail.sendEmail, {
                                 receiverEmail: user.email,

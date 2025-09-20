@@ -8,6 +8,7 @@ import useRetrieveLocation from "@/hooks/useRetrieveLocation";
 import useHandleSellerApplications from "@/hooks/useHandleSellerApplications";
 import { Id } from "../../../convex/_generated/dataModel";
 import { useNotification } from "@/app/NotificationContext";
+import useValidateStoreName from "@/hooks/useValidateStoreName"
 
 
 
@@ -16,10 +17,12 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   const [storeName, setStoreName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+        const [StoreNameIsTaken, setStoreNameIsTaken] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
   const { CreateApplication } = useHandleSellerApplications();
   const {setNotification} = useNotification()
+        const {CheckStoreName,NameError} = useValidateStoreName();
  
 //   console.log("selectedLocation: ",selectedLocation)
   const retrievedLocation = useRetrieveLocation(
@@ -33,6 +36,27 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
         setDescription("");
         setSelectedLocation(null);
  }
+
+  const ValidateUsername = async (name:string)=>{
+        const response = await CheckStoreName(name)
+          if (!response.success) {
+                                setStoreNameIsTaken(true)
+                                return
+                        }
+                        setStoreNameIsTaken(false)
+                        // setusername(name)
+ }
+   const handleStoreNameChange =async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.toLowerCase().replace(/\s+/g, "-");
+        setStoreName(value)
+        if(value.length>3){
+              await ValidateUsername(value)
+        } else{
+                setStoreNameIsTaken(false)
+        }
+       
+        
+};
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -94,10 +118,12 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
             <input
               type="text"
               value={storeName}
-              onChange={(e) => setStoreName(e.target.value)}
+              onChange={ handleStoreNameChange}
               className="w-full p-2 border rounded"
               required
             />
+            {StoreNameIsTaken && <h1 className="text-red-600 text-xs "><span className="text-black dark:text-white" >{storeName}</span> is taken </h1>}
+           {!StoreNameIsTaken && storeName.length>4 &&  <h1 className="text-green-600 text-sm "><span className="text-black dark:text-white" >{storeName}</span> is available </h1>}
           </div>
           <div>
             <label className="block text-sm font-medium dark:text- ">Description</label>

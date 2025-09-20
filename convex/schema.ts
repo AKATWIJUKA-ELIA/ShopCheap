@@ -200,5 +200,17 @@ transactions: defineTable({
                 v.literal("approved"),
                 v.literal("rejected")
         )
-  }).index("by_user_id", ["user_id"])
+  }).index("by_user_id", ["user_id"]),
+  shops: defineTable({
+        owner_id: v.string(),
+        shop_name: v.string(),
+        description: v.string(),
+        location: v.optional(v.object({
+                lat: v.number(),
+                lng: v.number(),
+        })),
+        profile_image: v.optional(v.string()),
+        isOpen: v.boolean(),
+  }).index("by_owner_id", ["owner_id"])
+        .index("by_shop_name", ["shop_name"])
 });
