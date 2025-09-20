@@ -2,7 +2,6 @@
 
 import React from "react"
 import SellerOnboarding from "@/components/SellerOboarding/SellerOnboarding"
-import useValidateStoreName from "@/hooks/useValidateStoreName"
 import {
   Store,
 //   CreditCard,
@@ -14,9 +13,6 @@ export default function SellerRegistration() {
 
  const User = useAppSelector(state=> state.user.user)
  
-
-
-
   return (
     <div className="min-h-screen mt-16  dark:bg-gray-800 py-8 px-4">
       <div className="max-w-4xl mx-auto">
