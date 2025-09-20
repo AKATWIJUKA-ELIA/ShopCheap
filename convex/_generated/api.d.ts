@@ -19,6 +19,7 @@ import type * as orders from "../orders.js";
 import type * as products from "../products.js";
 import type * as reviews from "../reviews.js";
 import type * as sendEmail from "../sendEmail.js";
+import type * as shops from "../shops.js";
 import type * as transactions from "../transactions.js";
 import type * as users from "../users.js";
 
@@ -48,6 +49,7 @@ declare const fullApi: ApiFromModules<{
   products: typeof products;
   reviews: typeof reviews;
   sendEmail: typeof sendEmail;
+  shops: typeof shops;
   transactions: typeof transactions;
   users: typeof users;
 }>;

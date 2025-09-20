@@ -129,7 +129,7 @@ export default function SellerApplications() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Seller Applications</h1>
-          <p className="text-gray-500">Track your current orders and view order history</p>
+          <p className="text-gray-500">Track Seller Applications</p>
         </div>
 
         {/* Search and Filters */}
@@ -142,7 +142,7 @@ export default function SellerApplications() {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <Input
                     id="search"
-                    placeholder="Search by order number, restaurant, or item..."
+                    placeholder="Search applications"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
