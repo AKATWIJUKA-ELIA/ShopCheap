@@ -54,7 +54,7 @@ const Product = ({params}:PageProps) => {
                         <Carousel opts={{align: "start",loop: true,}} plugins={[carousel]} className="  w-full">
                                 <CarouselContent className=''>
                                         {relatedProducts? (relatedProducts.map((product, index) => (
-                                        <CarouselItem key={index} className='basis-[300px] md:basis-[250px] shrink-0'>
+                                        <CarouselItem key={index} className='basis-[300px] md:basis-[300px] shrink-0'>
                                                 <CardContent className="relative  bg-transparent flex items-center justify-center  h-96 overflow-hidden rounded-lg">
                                                 {/* Image */}
                                                 <HeroCard key={product._id} product={product} />
@@ -86,7 +86,7 @@ const Product = ({params}:PageProps) => {
                         <Carousel opts={{align: "start",loop: true,}} plugins={[carousel]} className="  w-full">
                                 <CarouselContent className=''>
                                         {SameSellerProducts? (SameSellerProducts.map((product, index) => (
-                                        <CarouselItem key={index} className='basis-[300px] md:basis-[250px] shrink-0'>
+                                        <CarouselItem key={index} className='basis-[300px] md:basis-[300px] shrink-0'>
                                                 <CardContent className="relative  bg-transparent flex items-center justify-center  h-96 overflow-hidden rounded-lg">
                                                 <HeroCard key={product._id} product={product} />
                                                 </CardContent>
