@@ -88,3 +88,21 @@ export const getUserByToken = async (token: string) => {
         return { success: false, message: "Internal Server Error", status: 500 };
     }
 }
+
+export async function getReviewsByProduct(product_id: string) {
+    if (!product_id) return { data: null, loading: false, error: "No product ID provided" };
+    try {
+        const reviews = await convex.query(api.reviews.getReviewsByProduct, { product_id });
+        return {
+            data: reviews,
+            loading: false,
+            error: null,
+        };
+    } catch (err) {
+        return {
+            data: null,
+            loading: false,
+            error: err,
+        };
+    }
+}

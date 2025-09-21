@@ -4,6 +4,8 @@ import HeroCard from '../HeroCards/page'
 import ProductSkeleton from '../ProductsSkeleton/page';
 import useGetTopRatings from '@/hooks/useGetTopRatings';
 import { Id } from '../../../convex/_generated/dataModel';
+import { Review } from '@/lib/types';
+import { getReviewsByProduct } from '@/lib/convex';
 
 interface Product {
   approved: boolean;
@@ -18,23 +20,39 @@ interface Product {
   _id: Id<"products">;
 }
 
-
+interface ProductWithReviews extends Product {
+  reviews: Review[];
+}
 const Main =  () => {
-        const { TopRatings:data } = useGetTopRatings();
-  const [products, setProducts] = useState<Product[]>([])
-
-useEffect(() => {
-                            if (data && data.length>0 ) {
-                                setProducts(data);
-                            }
-                        }, [data]);
+        const { TopRatings:products } = useGetTopRatings();
+        const [productsWithReviews, setProductsWithReviews] = useState<ProductWithReviews[]>([]);
+      
+      useEffect(() => {
+          const fetchReviews = async () => {
+              if (!products?.length) return;
+              
+              const enhanced = await Promise.all(
+                  products.map(async (product) => {
+                      const reviewData = await getReviewsByProduct(product._id);
+                      return {
+                          ...product,
+                          reviews: reviewData.data || []
+                      };
+                  })
+              );
+              
+              setProductsWithReviews(enhanced);
+          };
+          
+          fetchReviews();
+      }, [products]);
 
   return (
     <div className=' dark:bg-black'>
         <h1 className='font-bold text-3xl text-center'>Top Rated Products</h1>
         <div className='grid grid-cols-2 md:grid-cols-5 p-2 gap-2 dark:bg-black '>
        
-      {products&&products.length>0?( products.map((product) => (
+      {productsWithReviews&&productsWithReviews.length>0?( productsWithReviews.map((product) => (
         <HeroCard key={product._id} product={product} />
       ))):(
         Array.from({ length: 15 }).map((_, idx) => (
