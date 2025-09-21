@@ -165,3 +165,27 @@ export interface Application {
   status: "pending" | "approved" | "rejected";
   _creationTime:number
 }
+export interface ShopData {
+ _id: Id<"shops">;
+    _creationTime: number;
+    location?: {
+        lat: number;
+        lng: number;
+    } | undefined;
+    profile_image?: string | undefined;
+    cover_image?: string | undefined;
+    description: string;
+    owner_id: string;
+    shop_name: string;
+    isOpen: boolean;
+
+}
+export interface Review {
+        product_id: string,
+            reviewer_id: string,
+            title: string,
+            rating: number,
+            review: string,
+             verified?: boolean,
+            _creationTime: number,
+}

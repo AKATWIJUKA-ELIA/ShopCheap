@@ -5,6 +5,8 @@ import { useData } from '@/app/DataContext'
 import ProductSkeleton from '../ProductsSkeleton/page';
 import { Id } from '../../../convex/_generated/dataModel';
 import useGetSponsored from '@/hooks/useGetSponsored';
+import { getReviewsByProduct } from '@/lib/convex';
+import { Review } from '@/lib/types';
 
 interface Product {
   approved: boolean;
@@ -18,13 +20,45 @@ interface Product {
   _creationTime: number;
   _id: Id<"products">;
 }
-
+ interface ProductWithReviews extends Product {
+        reviews?: Review[];
+       }
 
 const Main =  () => {
         const {data} = useData()
           const { sponsored: sponsored } = useGetSponsored();
-  const [products, setProducts] = useState<Product[]>([])
-          const [Sponsored, setSponsored] = useState<Product[]>([]);
+          const [Sponsored, setSponsored] = useState<ProductWithReviews[]>([]);
+          const [productsWithReviews, setProductsWithReviews] = useState<ProductWithReviews[]>([]);
+              
+              useEffect(() => {
+                  const fetchReviews = async () => {
+                      if (!sponsored?.length && !data.Products.product?.length) return;
+                      
+                      const enhanced = await Promise.all(
+                          data.Products.product.map(async (product) => {
+                              const reviewData = await getReviewsByProduct(product._id);
+                              return {
+                                  ...product,
+                                  reviews: reviewData.data || []
+                              };
+                          })
+                      );
+
+                      setProductsWithReviews(enhanced);
+                       const enhancedSponsored = await Promise.all(
+                          sponsored ? sponsored.map(async (product) => {
+                              const reviewData = await getReviewsByProduct(product ? product._id : "" as Id<"products">);
+                              return {
+                                  ...product,
+                                  reviews: reviewData.data || []
+                              };
+                          }) : []
+                      );
+                            setSponsored(enhancedSponsored)
+                  };
+                  
+                  fetchReviews();
+              }, [data.Products.product, sponsored]);
 
           useEffect(() => {
                             if (sponsored && sponsored.length > 0) {
@@ -32,11 +66,6 @@ const Main =  () => {
                             }
                           }, [sponsored]);
 
-useEffect(() => {
-                            if (data.Products.product && data.Products.product.length>0 ) {
-                                setProducts(data.Products.product);
-                            }
-                        }, [data.Products.product]);
 
   return (
  <div className='flex flex-col' >
@@ -55,7 +84,7 @@ useEffect(() => {
       )}
     </div>
            <div className='grid grid-cols-2 md:grid-cols-5 p-2 gap-2 dark:bg-black '>
-      {products&&products.length>0?( products.map((product) => (
+      {productsWithReviews&&productsWithReviews.length>0?( productsWithReviews.map((product) => (
         <HeroCard key={product._id} product={product} />
       ))):(
         Array.from({ length: 15 }).map((_, idx) => (

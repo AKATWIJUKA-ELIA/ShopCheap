@@ -1,11 +1,12 @@
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { Product } from "@/lib/types";
 
 const useGetTopRatings = () => {
     const products = useQuery(api.products.getTopRatedProducts,{}); 
 
     return {
-        TopRatings: products, 
+        TopRatings: products as Product[] | null, 
         loading: products === undefined, // Convex returns `undefined` while loading
         error: null, // Convex doesn't provide an explicit error, so handle it elsewhere if needed
     };
