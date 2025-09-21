@@ -1,7 +1,6 @@
 "use client"
 import React, { use } from "react";
 import useGetShopByName from "@/hooks/useGetShopByName";
-import useGetProductsByOwnerApproved from "@/hooks/useGetProductsByOwnerApproved";
 import Shop from "@/components/Shop/page";
 
 interface PageProps {
