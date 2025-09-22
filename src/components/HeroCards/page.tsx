@@ -11,7 +11,8 @@ import { Card, CardContent } from '../ui/card';
 import useAddToCart from '../../hooks/useAddToCart';
 import {handleShare} from '@/lib/helpers';
 import { Review } from '@/lib/types';
-
+import useBookmark from '@/hooks/useBookmark';
+import { useNotification } from '@/app/NotificationContext';
 interface Product {
         approved: boolean;
          product_cartegory: string;
@@ -37,6 +38,8 @@ const HeroCard = ({ product }: HeroCardProps) => {
 
          const HandleAddToCart = useAddToCart();
          const [productData, setProductData] = useState<ProductWithReviews | null>(product)
+                const { createBookmark } = useBookmark()
+                const { setNotification } = useNotification();
         const truncateString = (text: string, maxLength: number): string => {
                 return text.length > maxLength ? text.slice(0, maxLength) + ".." : text;
               };
@@ -52,6 +55,22 @@ const HeroCard = ({ product }: HeroCardProps) => {
       ? reviews.reduce((acc, review) => acc + (review?.rating ?? 0), 0) / reviews.length
       : 0
   }
+
+                const handleBookmark = async (product_id:string) => {
+                if (!product_id) return;
+                const response = await createBookmark(product_id);
+                if (response.success) {
+                        setNotification({
+                                message: "Bookmark created successfully!",
+                                status: "success",
+                        });
+                } else {
+                        setNotification({
+                                message: response.message || "Failed to create bookmark",
+                                status: "info",
+                        });
+                }
+        }
 
   return (
         <div  >
@@ -82,7 +101,9 @@ const HeroCard = ({ product }: HeroCardProps) => {
                 
                         {/* Action buttons */}
                         <div className="absolute top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity ">
-                          <Button size="sm" variant="secondary" className="h-8 w-8 p-1">
+                          <Button size="sm" variant="secondary" className="h-8 w-8 p-1"
+                          onClick={() => handleBookmark(productData._id)}
+                          >
                            <Heart className="h-4 w-4" />{productData.product_likes} 
                           </Button>
                           

@@ -638,6 +638,7 @@ export const getImageUrl = query({
                                 notified: false, // Set notified to false initially
                                 duration: args.duration ? new Date(getFutureDate(args.duration)).getTime() : new Date(getFutureDate("weekly")).getTime(), // Default to 7 days if not provided
                         });
+                        
                         return { success: true, message: "Boost processed successfully" };
                         }
 
