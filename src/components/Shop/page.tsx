@@ -12,9 +12,10 @@ import {
   ShoppingCart,
   MessageCircle,
   Share2,
-  Award,
+  BadgeCheck,
   Truck,
   Shield,
+  X,
   RotateCcw,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -26,12 +27,14 @@ import { Separator } from "@/components/ui/separator"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import HeroCard from "../HeroCards/page"
-import { Product } from "@/lib/types"
+import { Product, User } from "@/lib/types"
 import { ShopData,Review } from "@/lib/types"
 import useGetProductsByOwnerApproved from "@/hooks/useGetProductsByOwnerApproved"
 import {getReviewsByProduct} from "@/lib/convex"
 import Image from "next/image"
 import Link from "next/link"
+import { getUserById } from "@/lib/convex"
+import { Id } from "../../../convex/_generated/dataModel"
 
 
 interface Seller {
@@ -94,6 +97,8 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
     const { data: SameSellerProducts } = useGetProductsByOwnerApproved(shop?.owner_id ?? "");
       const [productsWithReviews, setProductsWithReviews] = useState<ProductWithReviews[]>([]);
+      const [Seller, setSeller] = useState<User | null>(null);
+      
     
     useEffect(() => {
         const fetchReviews = async () => {
@@ -114,7 +119,17 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
         
         fetchReviews();
     }, [SameSellerProducts]);
-    
+
+  useEffect(() => {
+        const fetchSeller = async () => {
+                if (!shop?.owner_id) return;
+                const response = await getUserById(shop.owner_id as Id<"customers">);
+                if (response.user) {
+                        setSeller(response.user || null);       
+                }
+        }
+        fetchSeller();
+  }, [shop?.owner_id]);
   // Filter and sort products
   const filteredProducts = useMemo(() => {
     const filtered = productsWithReviews?.filter((product) => {
@@ -126,6 +141,8 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
 
       return matchesSearch && matchesCategory
     })
+
+
 
     // Sort products
     switch (sortBy) {
@@ -216,6 +233,12 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
       </CardContent>
     </Card>
   )
+      const allRatings = filteredProducts
+  .flatMap(product => product.reviews.map(review => review.rating));
+
+const averageRating = allRatings.length > 0
+  ? allRatings.reduce((sum, rating) => sum + rating, 0) / allRatings.length
+  : 0;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -246,20 +269,30 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
                     <div className="flex items-center gap-2 mb-2">
                       <h1 className="text-2xl font-bold">{shop.shop_name}</h1>
                       <div className="flex gap-1">
-                        {mockSeller.badges.map((badge, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            <Award className="h-3 w-3 mr-1" />
-                            {badge}
+                       {shop.isOpen?(<Badge  variant="secondary" className="text-xs bg-green-200 border border-green-600 ">
+                                Open Now
+                          </Badge>):(
+                                <Badge  variant="destructive" className="text-xs">
+                            <X className="h-3 w-3 mr-1" />
+                                Closed
                           </Badge>
-                        ))}
+                          )}
+
+                          {Seller?.isVerified ? (<Badge  variant="outline" className="text-xs bg-gray-200  border border-gold ">
+                                Verified Seller 
+                                <BadgeCheck fill="gold" className="h-5 w-5  ml-2 border  " />
+                          </Badge>):(
+                                <div>
+
+                                </div>
+                          )}
                       </div>
                     </div>
 
                     <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-2">
                       <div className="flex items-center gap-1">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="font-medium">{mockSeller.rating}</span>
-                        <span>({mockSeller.reviewCount} reviews)</span>
+                        <span className="font-medium">{averageRating.toFixed(2)} average Rating</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />
@@ -275,10 +308,13 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
                   </div>
 
                   <div className="flex gap-2">
+                        
+                    <Link href={`tel:${Seller?.phoneNumber}`} >
                     <Button variant="outline">
                       <MessageCircle className="h-4 w-4 mr-2" />
                       Contact Seller
                     </Button>
+                    </Link>
                     <Button>
                       <Heart className="h-4 w-4 mr-2" />
                       Follow Shop
