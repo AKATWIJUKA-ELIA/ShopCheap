@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react"
 import {
   Star,
   MapPin,
-  Clock,
+//   Clock,
   Grid,
   List,
   Search,
@@ -13,19 +13,14 @@ import {
   MessageCircle,
   Share2,
   BadgeCheck,
-  Truck,
-  Shield,
   X,
-  RotateCcw,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import HeroCard from "../HeroCards/page"
 import { Product, User } from "@/lib/types"
 import { ShopData,Review } from "@/lib/types"
@@ -35,51 +30,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { getUserById } from "@/lib/convex"
 import { Id } from "../../../convex/_generated/dataModel"
+import useRetrieveLocation from "@/hooks/useRetrieveLocation"
+import useGetCategories from "@/hooks/useGetCategories"
 
-
-interface Seller {
-  id: string
-  name: string
-  avatar: string
-  coverImage: string
-  rating: number
-  reviewCount: number
-  location: string
-  joinedDate: string
-  description: string
-  totalProducts: number
-  totalSales: number
-  responseTime: string
-  badges: string[]
-  policies: {
-    shipping: string
-    returns: string
-    warranty: string
-  }
-}
-
-// Mock data
-const mockSeller: Seller = {
-  id: "seller-1",
-  name: "TechGear Pro",
-  avatar: "/placeholder.svg?height=100&width=100&text=TG",
-  coverImage: "/placeholder.svg?height=300&width=1200&text=Shop+Cover",
-  rating: 4.8,
-  reviewCount: 2847,
-  location: "San Francisco, CA",
-  joinedDate: "2020-03-15",
-  description:
-    "Premium electronics and gadgets store specializing in cutting-edge technology. We pride ourselves on quality products and exceptional customer service.",
-  totalProducts: 156,
-  totalSales: 12450,
-  responseTime: "Within 2 hours",
-  badges: ["Verified Seller", "Top Rated", "Fast Shipping"],
-  policies: {
-    shipping: "Free shipping on orders over $50",
-    returns: "30-day return policy",
-    warranty: "1-year warranty on all products",
-  },
-}
 interface ProductWithReviews extends Product {
   reviews: Review[];
 }       
@@ -87,8 +40,6 @@ interface ShopProps {
         shop: ShopData;
 }
 
-
-const categories = ["All", "Audio", "Wearables", "Accessories", "Gaming"]
 
 const Shop:React.FC<ShopProps> = ({shop} ) =>{
   const [searchQuery, setSearchQuery] = useState("")
@@ -98,6 +49,12 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
     const { data: SameSellerProducts } = useGetProductsByOwnerApproved(shop?.owner_id ?? "");
       const [productsWithReviews, setProductsWithReviews] = useState<ProductWithReviews[]>([]);
       const [Seller, setSeller] = useState<User | null>(null);
+      const { data: categories } = useGetCategories();
+        const { retrievedLocation } = useRetrieveLocation(
+          shop.location?.lat ?? 0,
+          shop.location?.lng ?? 0
+        );
+        console.log("Shop Location:", shop.location);      
       
     
     useEffect(() => {
@@ -240,6 +197,8 @@ const averageRating = allRatings.length > 0
   ? allRatings.reduce((sum, rating) => sum + rating, 0) / allRatings.length
   : 0;
 
+  const productLikes = filteredProducts.reduce((acc, product) => acc + (product.product_likes || 0), 0);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Shop Header */}
@@ -296,15 +255,17 @@ const averageRating = allRatings.length > 0
                       </div>
                       <div className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />
-                        <span>{mockSeller.location}</span>
+                        <span>{retrievedLocation.map((loc)=>{
+                                return `${loc.address.label},${loc.resultType}`
+                        })}</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      {/* <div className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
                         <span>Responds {mockSeller.responseTime}</span>
-                      </div>
+                      </div> */}
                     </div>
 
-                    <p className="text-gray-600 dark:text-gray-400 max-w-2xl">{mockSeller.description}</p>
+                    <p className="text-gray-600 dark:text-gray-400 max-w-2xl">{shop.description}</p>
                   </div>
 
                   <div className="flex gap-2">
@@ -326,17 +287,19 @@ const averageRating = allRatings.length > 0
                 <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-blue-600">{productsWithReviews?.length}</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Products</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Total Products</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600">{mockSeller.totalSales.toLocaleString()}</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Sales</div>
+                    <div className="text-2xl font-bold text-green-600">{productLikes} </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Total Likes</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-600">
-                      {new Date().getFullYear() - new Date(mockSeller.joinedDate).getFullYear()}y
+                    <div className="font-bold text-purple-600">
+                       <h1 className="" > Joined:
+                        <span className="text-2xl  text-red-600 dark:text-white">{new Date(shop._creationTime).toLocaleDateString()}</span></h1>
+                      
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Experience</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">{(new Date().getFullYear() - new Date(shop._creationTime).getFullYear())>0?(<div>{new Date().getFullYear() - new Date(shop._creationTime).getFullYear()} yrs Experience</div>):""} </div>
                   </div>
                 </div>
               </div>
@@ -346,7 +309,7 @@ const averageRating = allRatings.length > 0
       </div>
 
       {/* Shop Policies */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-6">
+      {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-4 flex items-center gap-3">
             <Truck className="h-8 w-8 text-blue-600" />
@@ -370,18 +333,11 @@ const averageRating = allRatings.length > 0
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="products">Products ({productsWithReviews?.length})</TabsTrigger>
-            <TabsTrigger value="about">About Shop</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews ({mockSeller.reviewCount})</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="products" className="space-y-6">
+        <Card className="space-y-6">
             {/* Search and Filters */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
               <div className="flex flex-col md:flex-row gap-4">
@@ -403,9 +359,10 @@ const averageRating = allRatings.length > 0
                       <SelectValue placeholder="Category" />
                     </SelectTrigger>
                     <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category}
+                            <SelectItem value="All">All Categories</SelectItem>
+                      {categories?.map((category) => (
+                        <SelectItem key={category._id} value={category.cartegory}>
+                          {category.cartegory}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -472,70 +429,7 @@ const averageRating = allRatings.length > 0
                 )}
               </div>
             )}
-          </TabsContent>
-
-          <TabsContent value="about" className="space-y-6">
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4">About {mockSeller.name}</h3>
-                <div className="space-y-4">
-                  <p className="text-gray-600 dark:text-gray-400">{mockSeller.description}</p>
-                  <Separator />
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-medium mb-2">Shop Information</h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">Joined:</span>
-                          <span>{new Date(mockSeller.joinedDate).toLocaleDateString()}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">Location:</span>
-                          <span>{mockSeller.location}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600 dark:text-gray-400">Response Time:</span>
-                          <span>{mockSeller.responseTime}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-2">Shop Policies</h4>
-                      <div className="space-y-2 text-sm">
-                        <div>
-                          <span className="text-gray-600 dark:text-gray-400">Shipping: </span>
-                          <span>{mockSeller.policies.shipping}</span>
-                        </div>
-                        <div>
-                          <span className="text-gray-600 dark:text-gray-400">Returns: </span>
-                          <span>{mockSeller.policies.returns}</span>
-                        </div>
-                        <div>
-                          <span className="text-gray-600 dark:text-gray-400">Warranty: </span>
-                          <span>{mockSeller.policies.warranty}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="reviews" className="space-y-6">
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-center py-12">
-                  <Star className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Reviews Coming Soon</h3>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    Customer reviews and ratings will be displayed here
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+          </Card>
       </div>
     </div>
   )

@@ -9,7 +9,6 @@ interface PageProps {
 
 const SellerShop = ({ params }: PageProps) => {
   const { shopname } = use(params);
-  console.log("Shopname from params:", shopname);
   const { data: shop } = useGetShopByName(shopname);
 
 

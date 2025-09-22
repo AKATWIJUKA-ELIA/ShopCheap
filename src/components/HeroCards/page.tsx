@@ -112,14 +112,13 @@ const HeroCard = ({ product }: HeroCardProps) => {
                           >
                             <Share2 className="h-4 w-4" />
                           </Button>
-
-                           <Button className="h-10 w-10 mt-16 bg-gold transition duration-200"  size="sm"
-                                onClick={() => HandleAddToCart(productData)}
-                           >
-                            <ShoppingCart className="h-4 w-4 " />
-                          </Button>
                         </div>
                 
+                <Button className="absolute h-12 w-12  top-[70%] right-2  bg-gold border border-black rounded-full transition duration-200"  size="sm"
+                                onClick={() => HandleAddToCart(productData)}
+                           >
+                            <ShoppingCart className="h-8 w-8 " />
+                          </Button>
                         {/* {!product.inStock && (
                           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                             <Badge variant="secondary" className="text-sm">
