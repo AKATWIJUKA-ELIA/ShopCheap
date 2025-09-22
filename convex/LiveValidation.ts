@@ -1,4 +1,3 @@
-import { error } from "console";
 import { mutation } from "./_generated/server";
 import { ConvexError, v } from "convex/values";
 
