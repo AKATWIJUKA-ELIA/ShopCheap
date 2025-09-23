@@ -191,6 +191,8 @@ transactions: defineTable({
         user_id: v.string(),
         store_name: v.string(),
         description: v.string(),
+        profile_image: v.optional(v.string()),
+        cover_image: v.optional(v.string()),
         location: v.optional(v.object({
                 lat: v.number(),
                 lng: v.number(),
@@ -203,6 +205,7 @@ transactions: defineTable({
   }).index("by_user_id", ["user_id"]),
   shops: defineTable({
         owner_id: v.string(),
+        is_verified: v.boolean(),
         shop_name: v.string(),
         description: v.string(),
         location: v.optional(v.object({

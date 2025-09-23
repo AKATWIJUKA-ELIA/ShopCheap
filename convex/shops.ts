@@ -6,6 +6,8 @@ export const CreateShop = mutation({
                 shop_name: v.string(),
                 description: v.string(),
                 owner_id: v.string(),
+                cover_image: v.optional(v.string()),
+                is_verified: v.boolean(),
                 location: v.optional(v.object({
                 lat: v.number(),
                 lng: v.number(),
@@ -43,7 +45,11 @@ export const CreateShop = mutation({
                         if (!shop) {
                                return { success:false ,status: 404,message: "User not Found",user:null };
                         }
-                        return { success:true, status: 200, message: "User found", shop: shop };
+                        return { success:true, status: 200, message: "User found", shop: {
+                                ...shop,
+                                profile_image: shop.profile_image ? await ctx.storage.getUrl(shop.profile_image) : "",
+                                cover_image:  shop.cover_image ? await ctx.storage.getUrl(shop.cover_image) : "",
+                        } };
                 }
                 
         })
