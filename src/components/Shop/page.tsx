@@ -210,7 +210,7 @@ const averageRating = allRatings.length > 0
 
         <div className="relative -mt-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg    ">
-            <div className="flex flex-col  gap-3 ">
+            <div className="flex flex-col  ">
 
              <div className="flex  p-1 gap-2 md:space-x-10 " >
 
@@ -274,7 +274,7 @@ const averageRating = allRatings.length > 0
              
                 <div className="flex flex-col md:flex-row  md:items-center md:justify-between px-4  gap-4">
                   
-                  <div className=" md:ml-28 space-y-2 flex flex-col " >
+                  <div className=" md:ml-28  flex flex-col " >
                     <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-2">
                       <div className="flex items-center gap-1">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
