@@ -34,17 +34,13 @@ interface Shop{
 
 export default function SellerOnboarding({ user }: { user: { id: string; role: string } }) {
 
-        if (user.role === "seller") {
-    return <p className="p-4 bg-green-100 text-green-800 rounded">✅ You are already a seller!</p>;
-  }
-
   const [storeName, setStoreName] = useState("");
-        const [StoreNameIsTaken, setStoreNameIsTaken] = useState(false);
+  const [StoreNameIsTaken, setStoreNameIsTaken] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
   const { CreateApplication } = useHandleSellerApplications();
   const {setNotification} = useNotification()
-        const {CheckStoreName} = useValidateStoreName();
+  const {CheckStoreName} = useValidateStoreName();
   const [formData, setFormData] = useState<Shop>({
     shop_name: "",
     slogan: "",
@@ -53,7 +49,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
     cover_image: "",
     location: undefined,
   })
-const generateUploadUrl = useMutation(api.products.generateUploadUrl);
+  const generateUploadUrl = useMutation(api.products.generateUploadUrl);
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [profilePreview, setProfilePreview] = useState<string | null>(null)
   const [coverPreview, setCoverPreview] = useState<string | null>(null)
@@ -275,7 +271,9 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
   };
   
 
-
+if (user.role === "seller") {
+    return <p className="p-4 bg-green-100 text-green-800 rounded">✅ You are already a seller!</p>;
+  }
 
   return (
      <div className="min-h-screen rounded-lg shadow-md mt-10  bg-gold/5 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8 px-4">
