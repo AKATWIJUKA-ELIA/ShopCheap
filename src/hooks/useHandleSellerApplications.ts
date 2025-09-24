@@ -8,6 +8,7 @@ interface Application {
 user_id:Id<"customers">;
 storeName: string;
 description: string;
+slogan: string;
 profile_image: string;
 cover_image: string;
 location: { lat: number; lng: number };
@@ -24,6 +25,7 @@ const useHandleSellerApplications = () => {
                         user_id:Application.user_id,
                         store_name:Application.storeName,
                         description:Application.description,
+                        slogan:Application.slogan,
                         location:Application.location,
                         profile_image:Application.profile_image,
                         cover_image:Application.cover_image

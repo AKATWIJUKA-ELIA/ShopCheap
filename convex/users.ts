@@ -81,7 +81,7 @@ export const CreateUser = mutation({
                         .eq("reset_token", args.token)
                         .gt("reset_token_expires", Date.now()))
                         .unique();
-                        console.log("Customer by token:", customer);
+                        // console.log("Customer by token:", customer);
                         if (!customer) {
                                return { success:false ,status: 404,message: "User not Found",user:null };
                         }
@@ -187,6 +187,7 @@ export const GetAllCustomers = query({
                         store_name:v.string(),
                         description:v.string(),
                         profile_image:v.string(),
+                        slogan:v.string(),
                         cover_image:v.string(),
                         location:v.object({
                                 lat:v.number(),
@@ -212,8 +213,9 @@ export const GetAllCustomers = query({
                                 store_name: args.store_name,
                                 description: args.description,
                                 location: args.location,
-                                profile_image: "",
-                                cover_image: "",
+                                slogan: args.slogan,
+                                profile_image: args.profile_image,
+                                cover_image: args.cover_image,
                                 status: "pending",
                         });
                         return { success: true, status: 200, message: "Application submitted successfully! We will review your application and get back to you within 2-3 business days" };
@@ -265,6 +267,7 @@ export const GetAllCustomers = query({
                                 shop_name: RetrievedApplication.store_name,
                                 description: RetrievedApplication.description,
                                 owner_id: args.user_id,
+                                slogan: RetrievedApplication.slogan||"",
                                 location: RetrievedApplication.location,
                                 is_verified: false,
                                 profile_image: RetrievedApplication.profile_image || "",

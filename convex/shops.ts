@@ -6,13 +6,14 @@ export const CreateShop = mutation({
                 shop_name: v.string(),
                 description: v.string(),
                 owner_id: v.string(),
-                cover_image: v.optional(v.string()),
+                slogan: v.string(),
+                cover_image: v.string(),
                 is_verified: v.boolean(),
                 location: v.optional(v.object({
                 lat: v.number(),
                 lng: v.number(),
         })),
-                profile_image: v.optional(v.string()),
+                profile_image: v.string(),
                 isOpen: v.boolean(),
         },handler:async(ctx,args)=>{
                 try{

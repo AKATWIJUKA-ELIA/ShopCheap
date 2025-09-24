@@ -21,17 +21,17 @@ useEffect(() => {
                 const embeds = await EmbedImage(files);
                 
                 if(!embeds.success){
-                        console.log("Error while generating embeddings",embeds.status)
+                        // console.log("Error while generating embeddings",embeds.status)
                         return;
-                }
+                }       
                 let response;
                 if (ImageVectorSearch) {
                     response = await ImageVectorSearch(embeds.data?embeds.data[0] || []:[]);
-                    console.log("ImageVectorSearch response:", response);
+                //     console.log("ImageVectorSearch response:", response);
                     setData(response||[]);
                     setLoading(false);
                 } else {
-                    console.error("ImageVectorSearch is undefined");
+                //     console.error("ImageVectorSearch is undefined");
                 }
         }
          ImageEmbed(file);
