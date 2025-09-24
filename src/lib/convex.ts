@@ -106,3 +106,37 @@ export async function getReviewsByProduct(product_id: string) {
         };
     }
 }
+
+export const UploadImage = async (file: File): Promise<{ success: boolean; storageId?: string; error?: string }> => {
+        const generateUploadUrl = convex.mutation(api.products.generateUploadUrl,{});
+                const TIMEOUT_MS = 10000; // 10 seconds
+                const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
+                        return Promise.race([
+                          promise,
+                          new Promise<T>((_, reject) =>
+                            setTimeout(() => reject(new Error("Request timed out")), ms)
+                          ),
+                        ]);
+                      };
+
+                  try {
+                        const storageId = await withTimeout((async () => {
+                         // Step 1: Get a short-lived upload URL
+                        const postUrl = await generateUploadUrl;
+                        const result = await fetch(postUrl, {
+                                    method: "POST",
+                                    headers: { "Content-Type": file.type },
+                                    body: file,
+                                  });
+                            
+                                  if (!result.ok) throw new Error("Failed to upload image");
+                                 const responseData = await result.json();
+                                        console.log("responseData",responseData)
+                                 return responseData.storageId
+                                
+              })(), TIMEOUT_MS);
+                        return { success: true, storageId: storageId };
+                  } catch {
+                        return { success: false, error: "Failed to upload image" };
+                  }
+      }

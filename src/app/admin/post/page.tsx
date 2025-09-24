@@ -272,9 +272,9 @@ https://shopcheapug.com/</h3>
                       sendEmail( `${admin}` ,"New Product Created", `User ${user?.Username}, Added a product`,"sales");
                       sendEmail( `${user?.email}`,"New Product Created", html,"sales");
                 })(), TIMEOUT_MS);
-                  } catch (error) {
+                  } catch  {
                         setErrorProduct("Error creating product")
-                    console.error("Error creating product:", error);
+                //     console.error("Error creating product:", error);
                     setTimeout(()=>{
                         setErrorProduct("")
                     },4000)

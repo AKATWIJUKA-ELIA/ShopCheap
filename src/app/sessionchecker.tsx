@@ -11,14 +11,14 @@ export default function SessionChecker() {
         const data = await res.json();
 
         if (!data.valid) {
-          console.log("Session invalid. Clearing localStorage.");
+        //   console.log("Session invalid. Clearing localStorage.");
           logout();
           // Optionally redirect to login page
           window.location.href = "/sign-in";
         }
         
-      } catch (error) {
-        console.error("Error checking session validity", error);
+      } catch  {
+        // console.error("Error checking session validity", error);
         logout();
         window.location.href = "/sign-in"; // Redirect on error
       }

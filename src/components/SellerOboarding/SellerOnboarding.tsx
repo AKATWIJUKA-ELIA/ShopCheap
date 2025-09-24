@@ -17,8 +17,7 @@ import useHandleSellerApplications from "@/hooks/useHandleSellerApplications";
 import { Id } from "../../../convex/_generated/dataModel";
 import { useNotification } from "@/app/NotificationContext";
 import useValidateStoreName from "@/hooks/useValidateStoreName"
-import { useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import {UploadImage} from "@/lib/convex";
 
 
 interface Shop{
@@ -41,7 +40,13 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
   const { CreateApplication } = useHandleSellerApplications();
   const {setNotification} = useNotification()
   const {CheckStoreName} = useValidateStoreName();
-  const [formData, setFormData] = useState<Shop>({
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [profilePreview, setProfilePreview] = useState<string | null>(null)
+   const [profileImageFile, setProfileImageFile] = useState<File | null>(null)
+  const [coverPreview, setCoverPreview] = useState<string | null>(null)
+  const [coverImageFile, setCoverImageFile] = useState<File | null>(null)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+    const [formData, setFormData] = useState<Shop>({
     shop_name: "",
     slogan: "",
     description: "",
@@ -49,11 +54,6 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
     cover_image: "",
     location: undefined,
   })
-  const generateUploadUrl = useMutation(api.products.generateUploadUrl);
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [profilePreview, setProfilePreview] = useState<string | null>(null)
-  const [coverPreview, setCoverPreview] = useState<string | null>(null)
-  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const updateFormData = (field: keyof Shop, value: string|File|null) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -63,8 +63,8 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
     }
   }
 
-  const handleFileUpload = async (field: "profile_image" | "cover_image", file: File | null) => {
-    if (file) {
+  const handleFileUpload = async (field:"profile_image" | "cover_image", file: File | null) => {
+    if (file&&file !== null) {
               // Validate file type
       if (!file.type.startsWith("image/")) {
         setNotification({
@@ -81,58 +81,26 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
        })
         return
       }
-            updateFormData(field, file)
-
-      // Create preview
+      if(field==="profile_image"){
+        setProfileImageFile(file)
+        // Create preview
       const reader = new FileReader()
       reader.onload = (e) => {
-        if (field === "profile_image") {
-          setProfilePreview(e.target?.result as string)
-        } else {
-          setCoverPreview(e.target?.result as string)
-        }
+        setProfilePreview(e.target?.result as string)
       }
       reader.readAsDataURL(file)
+      }
+      if (field==="cover_image"){
+        setCoverImageFile(file)
+        // Create preview
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setCoverPreview(e.target?.result as string)
+      }
+      reader.readAsDataURL(file)
+      }
 
-        const TIMEOUT_MS = 10000; // 10 seconds
-const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
-                        return Promise.race([
-                          promise,
-                          new Promise<T>((_, reject) =>
-                            setTimeout(() => reject(new Error("Request timed out")), ms)
-                          
-                          ),
-                        ]);
-                      };
-
-                  try {
-                        await withTimeout((async () => {
-                         // Step 1: Get a short-lived upload URL
-                        const postUrl = await generateUploadUrl();
-                        const result = await fetch(postUrl, {
-                                    method: "POST",
-                                    headers: { "Content-Type": file.type },
-                                    body: file,
-                                  });
-                            
-                                  if (!result.ok) throw new Error("Failed to upload image");
-                                 const responseData = await result.json();
-                                 const storageId = responseData.storageId;
-                                 console.log("Uploaded image storageId:", storageId);
-                                 // Step 2: Update form data with the storage ID or URL
-                                 updateFormData(field, storageId);
-                              
-                 
-              
-                })(), TIMEOUT_MS);
-                  } catch (error) {
-                    console.error("Error uploading your image:", error);
-                   
-                  } finally {
-                    setIsSubmitting(false);
-                    return;
-                  }
-
+      
     }
   }
 
@@ -140,8 +108,10 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
     updateFormData(field, null)
     if (field === "profile_image") {
       setProfilePreview(null)
+        setProfileImageFile(null)
     } else {
       setCoverPreview(null)
+        setCoverImageFile(null)
     }
   }
 
@@ -154,6 +124,8 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
     if (!formData.description.trim()) newErrors.description = "Shop description is required"
         if (!selectedLocation) newErrors.location = "Shop location is required"
         if (StoreNameIsTaken) newErrors.storeName = "Shop name is already taken"
+        
+
 
     // Description length validation
     if (formData.description && formData.description.length < 50) {
@@ -169,8 +141,8 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
       storeName,
       formData.slogan,
       formData.description,
-      formData.profile_image,
-      formData.cover_image,
+      profileImageFile,
+      coverImageFile,
         selectedLocation ? JSON.stringify(selectedLocation) : "",
     ]
 
@@ -189,8 +161,19 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
 //   console.log("retrievedLocation: ",retrievedLocation)
   
  const clearForm= ()=>{
+         setFormData({
+        shop_name: "",
+        slogan: "",
+        description: "",
+        profile_image: null,
+        cover_image: null,
+      })
         setStoreName("");
         setSelectedLocation(null);
+        setProfilePreview(null)
+      setCoverPreview(null)
+      setCoverImageFile(null)
+        setProfileImageFile(null)
  }
 
   const ValidateUsername = async (name:string)=>{
@@ -215,7 +198,26 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
   }   
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    setIsSubmitting(true)
+        e.preventDefault();
+        // Upload images if new files are selected
+
+        let profileImageId = formData.profile_image ?? "";
+        let coverImageId = formData.cover_image ?? "";
+        if (profileImageFile && coverImageFile && profileImageFile !== null && coverImageFile !== null) {
+        
+        const profileResult: { success: boolean; storageId?: string } = await UploadImage(profileImageFile);
+        if (profileResult.success && profileResult.storageId) {
+                profileImageId = profileResult.storageId
+                // updateFormData("profile_image", profileResult.storageId)
+        }
+
+        const coverResult = await UploadImage(coverImageFile);
+        if (coverResult.success && coverResult.storageId) {
+                coverImageId = coverResult.storageId
+                // updateFormData("cover_image", coverResult.storageId)
+        }
+        }
 
     if (!validateForm()) {
       setNotification({
@@ -225,14 +227,15 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
       return
     }
 
-    setIsSubmitting(true)
+    
     try {
       const res = await CreateApplication({
         user_id: user.id as Id<"customers">,
         storeName,
         description: formData.description,
-        profile_image: formData.profile_image ?? "",
-        cover_image: formData.cover_image ?? "",
+        profile_image: profileImageId,
+        cover_image: coverImageId,
+        slogan: formData.slogan,
         location: selectedLocation ? selectedLocation : { lat: 0, lng: 0 }
       });
 
@@ -249,15 +252,7 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
        })
 
       // Reset form
-      setFormData({
-        shop_name: "",
-        slogan: "",
-        description: "",
-        profile_image: null,
-        cover_image: null,
-      })
-      setProfilePreview(null)
-      setCoverPreview(null)
+        clearForm();
     } catch {
       setNotification({
         status:"error",
@@ -266,6 +261,8 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
     } finally {
       setTimeout(()=>{
       clearForm();
+        setIsSubmitting(false)
+        setErrors({})
       },5000)
     }
   };
@@ -429,7 +426,7 @@ if (user.role === "seller") {
                               type="file"
                               className="sr-only"
                               accept="image/*"
-                              onChange={(e) => handleFileUpload("profile_image", e.target.files?.[0] || null)}
+                              onChange={(e) => handleFileUpload("profile_image",e.target.files?.[0] || null)}
                             />
                           </div>
                         </div>
@@ -472,7 +469,7 @@ if (user.role === "seller") {
                               type="file"
                               className="sr-only"
                               accept="image/*"
-                              onChange={(e) => handleFileUpload("cover_image", e.target.files?.[0] || null)}
+                              onChange={(e) => handleFileUpload("cover_image",e.target.files?.[0] || null)}
                             />
                             <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 5MB</p>
                           </div>
