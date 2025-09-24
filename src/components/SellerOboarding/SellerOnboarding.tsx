@@ -34,6 +34,10 @@ interface Shop{
 
 export default function SellerOnboarding({ user }: { user: { id: string; role: string } }) {
 
+        if (user.role === "seller") {
+    return <p className="p-4 bg-green-100 text-green-800 rounded">✅ You are already a seller!</p>;
+  }
+
   const [storeName, setStoreName] = useState("");
         const [StoreNameIsTaken, setStoreNameIsTaken] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
@@ -153,12 +157,7 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
     if (!formData.slogan.trim()) newErrors.slogan = "Shop slogan is required"
     if (!formData.description.trim()) newErrors.description = "Shop description is required"
         if (!selectedLocation) newErrors.location = "Shop location is required"
-
-
-    // Shop name length validation
-    if (storeName && storeName.length < 3) {
-      newErrors.storeName = "Shop name must be at least 3 characters long"
-    }
+        if (StoreNameIsTaken) newErrors.storeName = "Shop name is already taken"
 
     // Description length validation
     if (formData.description && formData.description.length < 50) {
@@ -214,6 +213,11 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
         }
         
 };
+  const handelLocationSelect = (loc: { lat: number; lng: number }) => {
+    setSelectedLocation(loc);
+//     setShowLocationPicker(false);
+  }   
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -226,35 +230,6 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
     }
 
     setIsSubmitting(true)
-
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
-      setNotification({
-        status:"success",
-        message:" Application submitted successfully! We will review your application and get back to you Asap"
-       })
-
-      // Reset form
-      setFormData({
-        shop_name: "",
-        slogan: "",
-        description: "",
-        profile_image: null,
-        cover_image: null,
-      })
-      setProfilePreview(null)
-      setCoverPreview(null)
-    } catch {
-     setNotification({
-        status:"info",
-        message:"error creating application"
-       })
-    } finally {
-      setIsSubmitting(false)
-    }
-
     try {
       const res = await CreateApplication({
         user_id: user.id as Id<"customers">,
@@ -272,10 +247,21 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
        })
        return
       }
-        setNotification({
+          setNotification({
         status:"success",
-        message:res.message||" Application submitted successfully! We will review your application and get back to you within 2-3 business days"
+        message:" Application submitted successfully! We will review your application and get back to you Asap"
        })
+
+      // Reset form
+      setFormData({
+        shop_name: "",
+        slogan: "",
+        description: "",
+        profile_image: null,
+        cover_image: null,
+      })
+      setProfilePreview(null)
+      setCoverPreview(null)
     } catch {
       setNotification({
         status:"error",
@@ -287,14 +273,9 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
       },5000)
     }
   };
-  const handelLocationSelect = (loc: { lat: number; lng: number }) => {
-    setSelectedLocation(loc);
-//     setShowLocationPicker(false);
-  }     
+  
 
-  if (user.role === "seller") {
-    return <p className="p-4 bg-green-100 text-green-800 rounded">✅ You are already a seller!</p>;
-  }
+
 
   return (
      <div className="min-h-screen rounded-lg shadow-md mt-10  bg-gold/5 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8 px-4">
