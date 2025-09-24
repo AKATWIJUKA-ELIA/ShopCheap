@@ -55,7 +55,7 @@ const generateUploadUrl = useMutation(api.products.generateUploadUrl);
   const [coverPreview, setCoverPreview] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const updateFormData = (field: keyof Shop, value: any) => {
+  const updateFormData = (field: keyof Shop, value: string|File|null) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
     // Clear error when user starts typing
     if (errors[field]) {
@@ -246,7 +246,7 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
       })
       setProfilePreview(null)
       setCoverPreview(null)
-    } catch (error) {
+    } catch {
      setNotification({
         status:"info",
         message:"error creating application"

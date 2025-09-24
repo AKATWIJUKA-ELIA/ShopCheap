@@ -2,10 +2,6 @@
 
 import React from "react"
 import SellerOnboarding from "@/components/SellerOboarding/SellerOnboarding"
-import {
-  Store,
-//   CreditCard,
-} from "lucide-react"
 import { useAppSelector } from "@/hooks"
 
 
