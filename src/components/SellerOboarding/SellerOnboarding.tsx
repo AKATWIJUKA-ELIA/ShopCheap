@@ -35,7 +35,6 @@ interface Shop{
 export default function SellerOnboarding({ user }: { user: { id: string; role: string } }) {
 
   const [storeName, setStoreName] = useState("");
-  const [loading, setLoading] = useState(false);
         const [StoreNameIsTaken, setStoreNameIsTaken] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
@@ -217,7 +216,6 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
 };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
     if (!validateForm()) {
       setNotification({
@@ -284,7 +282,6 @@ const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
         message:"error creating application"
        })
     } finally {
-        setLoading(false);
       setTimeout(()=>{
       clearForm();
       },5000)
