@@ -54,7 +54,7 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
           shop.location?.lat ?? 0,
           shop.location?.lng ?? 0
         );
-        console.log("Shop Location:", shop.location);      
+        // console.log("Shop Location:", shop.location);      
       
     
     useEffect(() => {
@@ -209,9 +209,13 @@ const averageRating = allRatings.length > 0
         </div>
 
         <div className="relative -mt-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <div className="flex flex-col md:flex-row gap-6">
-              <Avatar className="h-24 w-24 border-4 mx-auto border-white shadow-lg">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg    ">
+            <div className="flex flex-col  ">
+
+             <div className="flex  p-1 gap-2 md:space-x-10 " >
+
+                 <div className="flex flex-col md:flex-row  gap-2 md:space-x-4" >
+                        <Avatar className=" flex h-24 w-24 border-4  border-white shadow-lg">
                 <AvatarImage src={shop.profile_image || "/placeholder.svg"} alt={shop.shop_name} />
                 <AvatarFallback className="text-2xl font-bold">
                   {shop.shop_name
@@ -221,13 +225,17 @@ const averageRating = allRatings.length > 0
                     .join("")}
                 </AvatarFallback>
               </Avatar>
+              <div className="flex flex-col p-1" >
+                        <h1 className="flex text-2xl font-bold">{shop.shop_name}</h1>
+                        <div className="text-sm  font-sans text-gold dark:text-gray-400">{shop.slogan}</div>
+                </div>
 
-              <div className="flex-1">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div>
-                    <div className="flex flex-col md:flex-row  items-center gap-2 mb-2">
-                      <h1 className="flex text-2xl font-bold">{shop.shop_name}</h1>
-                      <div className="flex gap-1">
+                 </div>
+
+                  <div className="flex flex-col md:flex-row items-center justify-between space-x-4 mt-7 h-8  gap-5 md:gap-12 ">
+                      
+                      <div className="flex flex-col md:flex-row  h-8  gap-2" >
+                        <div className="flex gap-1 md:space-x-6">
                        {shop.isOpen?(<Badge  variant="secondary" className="text-xs bg-green-200 border border-green-600 ">
                                 Open Now
                           </Badge>):(
@@ -246,13 +254,33 @@ const averageRating = allRatings.length > 0
                                 </div>
                           )}
                       </div>
-                    </div>
+                      </div>
 
-                    <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      <div className="flex md:hidden gap-2">
+                          
+                    <Link href={`tel:${Seller?.phoneNumber}`} >
+                    <Button variant="outline">
+                      <MessageCircle className="h-4 w-4" />
+                      Contact
+                    </Button>
+                    </Link>
+                    <Button>
+                      <Heart className="h-4 w-4" />
+                      Follow
+                    </Button>
+                  </div>
+                    </div>
+             </div>
+             
+                <div className="flex flex-col md:flex-row  md:items-center md:justify-between px-4  gap-4">
+                  
+                  <div className=" md:ml-28  flex flex-col " >
+                    <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-2">
                       <div className="flex items-center gap-1">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                         <span className="font-medium">{averageRating.toFixed(2)} average Rating</span>
                       </div>
+
                       <div className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />
                         <span>{retrievedLocation.map((loc)=>{
@@ -264,25 +292,26 @@ const averageRating = allRatings.length > 0
                         <span>Responds {mockSeller.responseTime}</span>
                       </div> */}
                     </div>
-
                     <p className="text-gray-600 dark:text-gray-400 max-w-2xl">{shop.description}</p>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="hidden md:flex gap-2">
                         
                     <Link href={`tel:${Seller?.phoneNumber}`} >
                     <Button variant="outline">
                       <MessageCircle className="h-4 w-4 mr-2" />
-                      Contact Seller
+                      Contact
                     </Button>
                     </Link>
                     <Button>
                       <Heart className="h-4 w-4 mr-2" />
-                      Follow Shop
+                      Follow
                     </Button>
                   </div>
-                </div>
 
+                  
+                </div>
+              
                 {/* Shop Stats */}
                 <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t">
                   <div className="text-center">
@@ -302,7 +331,7 @@ const averageRating = allRatings.length > 0
                     <div className="text-sm text-gray-600 dark:text-gray-400">{(new Date().getFullYear() - new Date(shop._creationTime).getFullYear())>0?(<div>{new Date().getFullYear() - new Date(shop._creationTime).getFullYear()} yrs Experience</div>):""} </div>
                   </div>
                 </div>
-              </div>
+
             </div>
           </div>
         </div>
