@@ -8,6 +8,8 @@ interface Application {
 user_id:Id<"customers">;
 storeName: string;
 description: string;
+profile_image: string;
+cover_image: string;
 location: { lat: number; lng: number };
 }
 const useHandleSellerApplications = () => {
@@ -22,7 +24,11 @@ const useHandleSellerApplications = () => {
                         user_id:Application.user_id,
                         store_name:Application.storeName,
                         description:Application.description,
-                        location:Application.location});
+                        location:Application.location,
+                        profile_image:Application.profile_image,
+                        cover_image:Application.cover_image
+                });
+                        
                  if(!response?.success){
                         return { success: false, message: response?.message ,  status: 400 }
                 }

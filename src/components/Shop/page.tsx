@@ -211,7 +211,7 @@ const averageRating = allRatings.length > 0
         <div className="relative -mt-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
             <div className="flex flex-col md:flex-row gap-6">
-              <Avatar className="h-24 w-24 border-4 border-white shadow-lg">
+              <Avatar className="h-24 w-24 border-4 mx-auto border-white shadow-lg">
                 <AvatarImage src={shop.profile_image || "/placeholder.svg"} alt={shop.shop_name} />
                 <AvatarFallback className="text-2xl font-bold">
                   {shop.shop_name
@@ -225,8 +225,8 @@ const averageRating = allRatings.length > 0
               <div className="flex-1">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <h1 className="text-2xl font-bold">{shop.shop_name}</h1>
+                    <div className="flex flex-col md:flex-row  items-center gap-2 mb-2">
+                      <h1 className="flex text-2xl font-bold">{shop.shop_name}</h1>
                       <div className="flex gap-1">
                        {shop.isOpen?(<Badge  variant="secondary" className="text-xs bg-green-200 border border-green-600 ">
                                 Open Now
@@ -237,7 +237,7 @@ const averageRating = allRatings.length > 0
                           </Badge>
                           )}
 
-                          {Seller?.isVerified ? (<Badge  variant="outline" className="text-xs bg-gray-200  border border-gold ">
+                          {shop?.is_verified ? (<Badge  variant="outline" className="text-xs bg-gray-200  border border-gold ">
                                 Verified Seller 
                                 <BadgeCheck fill="gold" className="h-5 w-5  ml-2 border  " />
                           </Badge>):(
@@ -287,17 +287,17 @@ const averageRating = allRatings.length > 0
                 <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-blue-600">{productsWithReviews?.length}</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Total Products</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Products</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-600">{productLikes} </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Total Likes</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Likes</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-bold text-purple-600">
-                       <h1 className="" > Joined:
-                        <span className="text-2xl  text-red-600 dark:text-white">{new Date(shop._creationTime).toLocaleDateString()}</span></h1>
+                    <div className="">
                       
+                        <span className="md:text-2xl font-bold text-red-600 dark:text-white">{new Date(shop._creationTime).toLocaleDateString()}</span>
+                       <h1 className=" text-sm text-gray-600 dark:text-gray-400" > Joined</h1>
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">{(new Date().getFullYear() - new Date(shop._creationTime).getFullYear())>0?(<div>{new Date().getFullYear() - new Date(shop._creationTime).getFullYear()} yrs Experience</div>):""} </div>
                   </div>
