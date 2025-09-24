@@ -167,17 +167,19 @@ export interface Application {
 }
 export interface ShopData {
  _id: Id<"shops">;
+ slogan?: string;
     _creationTime: number;
     location?: {
         lat: number;
         lng: number;
     } | undefined;
-    profile_image?: string | undefined;
-    cover_image?: string | undefined;
+    profile_image?: string | null;
+    cover_image?: string | null;
     description: string;
     owner_id: string;
     shop_name: string;
     isOpen: boolean;
+        is_verified: boolean;
 
 }
 export interface Review {

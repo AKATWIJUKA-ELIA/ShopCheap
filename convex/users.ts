@@ -186,6 +186,8 @@ export const GetAllCustomers = query({
                 args:{user_id: v.id("customers"),
                         store_name:v.string(),
                         description:v.string(),
+                        profile_image:v.string(),
+                        cover_image:v.string(),
                         location:v.object({
                                 lat:v.number(),
                                 lng:v.number(),
@@ -210,6 +212,8 @@ export const GetAllCustomers = query({
                                 store_name: args.store_name,
                                 description: args.description,
                                 location: args.location,
+                                profile_image: "",
+                                cover_image: "",
                                 status: "pending",
                         });
                         return { success: true, status: 200, message: "Application submitted successfully! We will review your application and get back to you within 2-3 business days" };
@@ -262,6 +266,9 @@ export const GetAllCustomers = query({
                                 description: RetrievedApplication.description,
                                 owner_id: args.user_id,
                                 location: RetrievedApplication.location,
+                                is_verified: false,
+                                profile_image: RetrievedApplication.profile_image || "",
+                                cover_image: RetrievedApplication.cover_image || "",
                                 isOpen: false,
                         }).then(async (res)=>{
                                 if(!res.success){
