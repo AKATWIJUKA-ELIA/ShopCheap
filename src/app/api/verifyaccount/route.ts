@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUserByToken,UpdateUser } from "@/lib/convex";
+import { redirect } from "next/navigation";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -21,5 +22,5 @@ export async function GET(req: NextRequest) {
         reset_token: "",
         reset_token_expires: 0,});
 
-  return  NextResponse.json({ success: true, message: `Account verified successfully. you can now log in.` });
+  return NextResponse.redirect(new URL("/sign-up", req.url));
 }
