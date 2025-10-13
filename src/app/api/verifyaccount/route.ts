@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUserByToken,UpdateUser } from "@/lib/convex";
-import { redirect } from "next/navigation";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
