@@ -21,5 +21,5 @@ export async function GET(req: NextRequest) {
         reset_token: "",
         reset_token_expires: 0,});
 
-  return  NextResponse.json({ success: true, message: `Account verified successfully. you can now log in.` });
+  return NextResponse.redirect(new URL("/sign-up", req.url));
 }

@@ -515,9 +515,11 @@ export const getImageUrl = query({
                                 .filter((review) => review.rating > 2)
                                 .map((review) => review.product_id)
                         )];
+                        // console.log("Top rated Ids",TopRatedIds)
                         return await Promise.all(
                                 TopRatedIds.map((id) => ctx.db.query("products").filter((q) => q.eq(q.field("_id"), id)).first()
                                 .then(async (product) => {
+                                        // console.log("product: ", product)
                                         if (!product) return null; // Handle case where product is not found
                                         return {
                                                 ...product,

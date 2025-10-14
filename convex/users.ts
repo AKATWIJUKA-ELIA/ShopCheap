@@ -272,7 +272,7 @@ export const GetAllCustomers = query({
                                 is_verified: false,
                                 profile_image: RetrievedApplication.profile_image || "",
                                 cover_image: RetrievedApplication.cover_image || "",
-                                isOpen: false,
+                                isOpen: true,
                         }).then(async (res)=>{
                                 if(!res.success){
                                         await ctx.db.patch(args.user_id, {
