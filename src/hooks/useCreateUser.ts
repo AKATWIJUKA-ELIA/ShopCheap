@@ -24,7 +24,7 @@ const useCreateUser = () => {
                  const generateSecureToken = (length = 32): string=> {
                 return randomBytes(length).toString('hex');
 }
-        const CreateUser = async (User:user) =>{
+        const CreateUser = async (User:user,UsedGoogle?:boolean) =>{
                 try{
                 const token = generateSecureToken();
                 const res = await create({...User,
@@ -36,9 +36,9 @@ const useCreateUser = () => {
                  if(!res.success){
                         return { success: false, message: res.message , status: 400 };
                 }
-                sendEmail(`${User.email}`,"Welcome to ShopCheap", WelcomeEmail(User as User,token),"marketing");
+                sendEmail(`${User.email}`,"Welcome to ShopCheap", WelcomeEmail(User as User,token,UsedGoogle),"marketing");
                 sendEmail(`${Admin}`,"New User Created", `<html><body><h1>New User Created</h1><p>Username: ${User.username}</p><p>Email: ${User.email}</p></body></html>`,"marketing");
-                return { success: true, message:res.message ,  status: 200 };
+                return { success: true, message:res.message ,  status: 200, };
                 }catch(error){
                         return  { success: false, message: error as string , status: 500 };
                         
