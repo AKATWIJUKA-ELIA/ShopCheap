@@ -91,14 +91,19 @@ export const CreateUser = mutation({
         })
 
 export const GetCustomerByEmail = action({
-        args: { email: v.string() },
+        args: { email: v.string(),
+                usedGoogle: v.optional(v.boolean())
+         },
         handler: async (ctx, args): Promise<Response> => {
     // Call the registered query using ctx.runQuery
     const customer = await ctx.runQuery(api.users.GetCustomer, { email: args.email });
 
-    if (!customer.user) {
+    if (!customer.user && !args.usedGoogle) {
       return { success: false, status: 404, message: "Account not Found, please sign-Up first !", user: null };
     }
+        if (!customer.user && args.usedGoogle) {
+        return { success: false, status: 401, message: "Account not Found, user needs to sign-Up first !", user: null };
+        }
 
     return { success: true, status: 200, message: "Success !", user: customer.user };
   },
