@@ -21,5 +21,5 @@ export async function GET(req: NextRequest) {
         reset_token: "",
         reset_token_expires: 0,});
 
-  return NextResponse.redirect(new URL("/sign-up", req.url));
+  return NextResponse.redirect(new URL("/sign-in", req.url));
 }

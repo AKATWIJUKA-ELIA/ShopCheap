@@ -54,7 +54,7 @@ const useSignUpWithGoogle =()=>{
                                 updatedAt:0,
                                 lastLogin:0,
                         } 
-                        const res = await CreateUser(user);
+                        const res = await CreateUser(user,true);
                         
                         if(!res.success){
                     return { success: false, message: res.message ,  status: 400 };
