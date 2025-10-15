@@ -35,7 +35,7 @@ const useHandleSellerApplications = () => {
                         return { success: false, message: response?.message ,  status: 400 }
                 }
                 await sendEmail(user?.email||'', 'Application Received', `<p>Dear ${user?.Username||''},</p>
-                <p>Thank you for applying to become a seller on our platform. We have received your application for the store named "${Application.storeName}". Our team will review your application and get back to you shortly.</p>
+                <p>Thank you for applying to become a seller on our platform. We have received your application for the store named "${Application.storeName} \n Please Note: You are required to make a payment of  UGX:50,000 TO 0787357137 in the names of Akatwijuka Elia to have your Shop Registered". Our team will review your application and get back to you shortly.</p>
                 <p>Best regards,<br/>Shop Cheap Team</p>`, 'Support')
 
                 await sendEmail(admin, 'Seller Application Received', `User ${user?.Username||''} has applied to become a seller.`, 'Support')
