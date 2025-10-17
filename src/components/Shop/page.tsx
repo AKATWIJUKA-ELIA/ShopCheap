@@ -206,10 +206,10 @@ const averageRating = allRatings.length > 0
     <div className="min-h-screen md:px-4 bg-gray-50 dark:bg-gray-900">
       {/* Shop Header */}
 
-      <Card className="mt-32 " >
+      <Card className="mt-20 " >
         <CardContent className="p-0">
           {/* Banner */}
-          <div className="relative h-48  w-full border-2 border-b-gold overflow-hidden rounded-t-xl bg-gradient-to-r from-primary to-accent">
+          <div className="relative h-44 md:h-60  w-full border-2 border-b-gold overflow-hidden rounded-t-xl bg-gradient-to-r from-primary to-accent">
             {shop.cover_image && (
                 <Image src={shop.cover_image || "/placeholder.svg?height=300&width=1200&text=Shop+Cover"}  fill alt={shop.shop_name} priority/>
             )}
@@ -245,7 +245,7 @@ const averageRating = allRatings.length > 0
                           )}
 
                           {shop?.is_verified ? (<Badge  variant="outline" className="flex text-xs bg-gray-200  border border-gold ">
-                                Verified
+                                Verified seller
                                 <BadgeCheck fill="gold" className="h-5 w-5  ml-2 border  " />
                           </Badge>):(
                                 <div>
