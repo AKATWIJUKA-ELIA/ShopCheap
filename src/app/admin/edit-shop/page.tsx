@@ -186,7 +186,7 @@ const handleUpload = async (file:File|null) => {
       <Card>
         <CardHeader>
           <CardTitle>Shop Branding</CardTitle>
-          <CardDescription>Customize your shop's visual identity</CardDescription>
+          <CardDescription>Customize your shop&apos;s visual identity</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <Field>
@@ -197,7 +197,7 @@ const handleUpload = async (file:File|null) => {
                 onChange={(e) => handleChange("shop_name", e.target.value)}
                 placeholder="Enter your shop name"
               />
-              <FieldDescription>This will be displayed as your shop's main title</FieldDescription>
+              <FieldDescription>This will be displayed as your shop&apos;s main title</FieldDescription>
             </FieldContent>
           </Field>
 
