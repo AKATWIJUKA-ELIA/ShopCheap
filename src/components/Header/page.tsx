@@ -60,7 +60,14 @@ const Header = () => {
         }, [User]);
 
         useEffect(()=>{
-                if(pathname ==="/sign-up" || pathname === "/sign-in" ||pathname.includes("register") || pathname.includes("profile") || pathname.includes("admin") || pathname.includes("sudo")){
+                if(pathname ==="/sign-up" || 
+                        pathname === "/sign-in" ||
+                        pathname.includes("register") ||
+                        pathname.includes("profile") ||
+                        pathname.includes("admin") ||
+                        pathname.includes("sudo")||
+                        pathname.includes("shops")
+                        ){
                         setshowlowerBar(false)
                 }
                 else{

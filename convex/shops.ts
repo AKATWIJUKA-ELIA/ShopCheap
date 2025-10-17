@@ -60,7 +60,7 @@ export const CreateShop = mutation({
                         if (!shop) {
                                return { success:false ,status: 404,message: "User not Found",shop:null };
                         }
-                        console.log("shop: ",shop);
+                        // console.log("shop: ",shop);
                         return { success:true, status: 200, message: "User found", shop: {
                                 ...shop,
                         } };
@@ -85,9 +85,9 @@ export const UpdateShop = mutation({
                                 if(!shop){
                                         return {success:false,message:"Shop not found",status:404};
                                 }
-                                console.log("id: ",args.shop.profile_image);
+                                // console.log("id: ",args.shop.profile_image);
                                 const profile_image = args.shop.profile_image?.startsWith("https")? args.shop.profile_image: await ctx.storage.getUrl(args.shop.profile_image||"")
-                                console.log(profile_image);
+                                // console.log(profile_image);
 
                                 const cover_image = args.shop.cover_image?.startsWith("https")? args.shop.cover_image
                                 : await ctx.storage.getUrl(args.shop.cover_image||"");
