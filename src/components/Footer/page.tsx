@@ -139,7 +139,7 @@ setTimeout(() => {
 //   console.log(useremail)
 
   return (
-        <footer className="bg-dark border-t dark:bg-gray-900 dark:border-gray-700">
+        <footer className="bg-dark  border-t dark:bg-gray-900 dark:border-gray-700">
         <div className="container mx-auto px-4 py-12">
           {/* Newsletter Section */}
           <div className="bg-white p-6 rounded-lg shadow-sm mb-10 dark:bg-gray-800 dark:shadow-md">

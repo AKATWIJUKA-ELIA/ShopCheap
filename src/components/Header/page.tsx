@@ -45,6 +45,7 @@ const Header = () => {
         // const {Embed} = useGenerateEmbeddings();
         // const vectorSearchHook = useVectorSearch();
         // const vectorSearch = vectorSearchHook?.vectorSearch;
+        const pathNames = ["/sign-up", "/sign-in", "/register", "/profile", "/admin", "/sudo","shops"];
 
         const [comingSoon, setcomingSoon] = useState(false)
         const carousel = Autoplay({ delay: 6000})
@@ -60,7 +61,14 @@ const Header = () => {
         }, [User]);
 
         useEffect(()=>{
-                if(pathname ==="/sign-up" || pathname === "/sign-in" ||pathname.includes("register") || pathname.includes("profile") || pathname.includes("admin") || pathname.includes("sudo")){
+                if(pathname ==="/sign-up" || 
+                        pathname === "/sign-in" ||
+                        pathname.includes("register") ||
+                        pathname.includes("profile") ||
+                        pathname.includes("admin") ||
+                        pathname.includes("sudo")||
+                        pathname.includes("shops")
+                        ){
                         setshowlowerBar(false)
                 }
                 else{
