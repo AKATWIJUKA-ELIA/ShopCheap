@@ -7,6 +7,7 @@ interface PageProps {
   params: Promise<{ shopname: string }>
 }
 import { ShopData } from "@/lib/types";
+import { Metadata } from 'next';
 
 const SellerShop = ({ params }: PageProps) => {
   const { shopname } = use(params);
@@ -17,6 +18,21 @@ const SellerShop = ({ params }: PageProps) => {
   useEffect(() => {
         if(shop?.shop) {
                setShopData(shop.shop); 
+                 const generateMetadata = async (): Promise<Metadata> => {
+                        return {
+                                title: shopData?.shop_name,
+                                description: shopData?.description || "Shop on ShopCheapUG!",
+                                openGraph: {
+                                title: shopData?.shop_name,
+                                description: shopData?.description || "Shop on ShopCheapUG!",
+                                images: [shopData?.cover_image || '/default-og-image.jpg'],
+                                url: `https://shopcheapug.com/shops/${shopData?.shop_name}`,
+                                type: "website"
+                                }
+                                // Optionally: twitter, etc.
+                                }
+                        };
+generateMetadata();
         }
   },[shop]);
 
