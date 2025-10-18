@@ -140,3 +140,16 @@ export const UploadImage = async (file: File): Promise<{ success: boolean; stora
                         return { success: false, error: "Failed to upload image" };
                   }
       }
+
+export const getShopByName = async(shopName:string)=>{
+        try{
+                const shop = await convex.query(api.shops.GetShopByName, { shop_name: shopName });
+                if (!shop) {
+                        return { success: false, message: "Shop not found", status: 404 };
+                }
+                return { success: true, shop: shop.shop };
+        }catch(error){
+                console.error("Error fetching shop by name:", error);
+                return { success: false, message: "Internal Server Error", status: 500 };
+        }
+}
