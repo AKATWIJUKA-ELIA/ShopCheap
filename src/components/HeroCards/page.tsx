@@ -13,6 +13,7 @@ import {handleShare} from '@/lib/helpers';
 import { Review } from '@/lib/types';
 import useBookmark from '@/hooks/useBookmark';
 import { useNotification } from '@/app/NotificationContext';
+import { Badge } from '../ui/badge';
 interface Product {
         approved: boolean;
          product_cartegory: string;
@@ -89,15 +90,13 @@ const HeroCard = ({ product }: HeroCardProps) => {
                         
                 
                         {/* Badges */}
-                        {/* <div className="absolute top-2 left-2 flex flex-col gap-1">
-                          {product.discount && (
-                            <Badge variant="destructive" className="text-xs">
-                              -{product.discount}%
+                        <div className="absolute top-2 left-2 flex flex-col gap-1">
+                          { (
+                            <Badge  className={`${product?.product_condition==="Used" || product?.product_condition==="used"? "bg-red-600":product?.product_condition==="new"|| product?.product_condition==="Brand New"?"bg-gold":"bg-blue-400"} text-xs`}>
+                              {product?.product_condition}
                             </Badge>
                           )}
-                          {product.isNew && <Badge className="bg-green-500 hover:bg-green-600 text-xs">New</Badge>}
-                          {product.isBestseller && <Badge className="bg-orange-500 hover:bg-orange-600 text-xs">Bestseller</Badge>}
-                        </div> */}
+                        </div>
                 
                         {/* Action buttons */}
                         <div className="absolute top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity ">
