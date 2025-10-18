@@ -11,7 +11,7 @@ export default function SellerRegistration() {
  
   return (
     <div className="min-h-screen  dark:bg-gray-800 py-8 ">
-     <div className="flex rounded-lg border border-gold mx-auto mt-4 bg-slate-100 p-3 items-center  justify-center " >
+     <div className="flex rounded-lg border border-gold mx-auto mt-4 bg-slate-100 dark:bg-gray-700 p-3 items-center  justify-center " >
          {User && (
           <SellerOnboarding user={{ id: User.User_id, role: User.role }} />
         )}

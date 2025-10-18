@@ -289,7 +289,7 @@ if (user.role === "seller") {
             </div>
     
             {/* Progress Bar */}
-            <Card className="mb-6 bg-green-50 border-green-200 ">
+            <Card className="mb-6 bg-green-50 border-green-200 dark:bg-dark ">
               <CardContent className="pt-6 ">
                 <div className="flex items-center justify-between mb-2 ">
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Registration Progress</span>
@@ -301,7 +301,7 @@ if (user.role === "seller") {
     
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Shop Information */}
-              <Card className="bg-green-50 border border-green-600" >
+              <Card className="bg-green-50 border border-green-600 dark:bg-dark" >
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Store className=" text-gold w-5 h-5" />
@@ -383,7 +383,7 @@ if (user.role === "seller") {
               </Card>
     
               {/* Shop Images */}
-              <Card className="bg-green-50 border border-green-600">
+              <Card className="bg-green-50 border border-green-600 dark:bg-dark">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <ImageIcon className="w-5 h-5" />

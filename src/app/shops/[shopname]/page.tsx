@@ -19,7 +19,7 @@ const { shopname } = await(params);
                                 openGraph: {
                                 title: shop?.shop?.shop_name,
                                 description: shop?.shop?.description || "Shop on ShopCheapUG!",
-                                images: [shop?.shop?.cover_image || '/default-og-image.jpg'],
+                                images: [shop?.shop?.profile_image||shop?.shop?.cover_image || '/default-og-image.jpg'],
                                 url: `https://shopcheapug.com/shops/${shop?.shop?.shop_name}`,
                                 type: "website"
                                 }
