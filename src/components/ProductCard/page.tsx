@@ -17,6 +17,7 @@ import { Id } from "../../../convex/_generated/dataModel";
 import useBookmark from '@/hooks/useBookmark';
 import { useNotification } from '@/app/NotificationContext';
 
+import { Phone, Mail } from "lucide-react";
 interface ProductProps {
   product: {
     _id: Id<"products">;
@@ -195,10 +196,10 @@ const ProductCard: React.FC<ProductProps> = ({ product }) => {
                         <h1  > <span className="font-bold" > UserName </span> : {UserName}</h1>
                         </li>
                         <li>
-                        <h1 > <span className="font-bold" > Phone Number : </span>  <a href={`tel:${PhoneNumber}`}>{PhoneNumber}</a>  </h1>
+                        <h1 className="flex space-x-3 text-blue-500" > <span className="font-bold flex text-black" > Phone Number :</span> <Phone className="w-5 h-5" />  <a href={`tel:${PhoneNumber}`}>{PhoneNumber}</a>  </h1>
                         </li>
                         <li>
-                        <h1   > <span className="font-bold" > Email : </span>  <a href={`mailto: ${UserEmail}`}>{UserEmail}</a></h1>
+                        <h1 className=" text-blue-500 flex space-x-3"  > <span className="font-bold text-black" > Email : </span> <Mail/> <a href={`mailto: ${UserEmail}`}>{UserEmail}</a></h1>
                         </li>
                 </ul>
                 
