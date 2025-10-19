@@ -41,6 +41,7 @@ interface ShopProps {
 
 
 const Shop:React.FC<ShopProps> = ({shop} ) =>{
+        const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [sortBy, setSortBy] = useState("featured")
@@ -53,12 +54,16 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
           shop.location?.lat ?? 0,
           shop.location?.lng ?? 0
         );
+        
         // console.log("Shop Location:", shop.location);      
   
     
     useEffect(() => {
         const fetchReviews = async () => {
-            if (!SameSellerProducts?.length) return;
+            if (!SameSellerProducts?.length) {
+                setLoading(false);
+                return;
+            }
             setViewMode("grid");
             const enhanced = await Promise.all(
                 SameSellerProducts.map(async (product) => {
@@ -71,6 +76,7 @@ const Shop:React.FC<ShopProps> = ({shop} ) =>{
             );
             
             setProductsWithReviews(enhanced);
+                setLoading(false);
         };
         
         fetchReviews();
@@ -206,7 +212,7 @@ const averageRating = allRatings.length > 0
     <div className="min-h-screen md:px-4 bg-gray-50 dark:bg-gray-900">
       {/* Shop Header */}
 
-      <Card className="mt-20 " >
+      <Card className="mt-20 bg-gray-700 " >
         <CardContent className="p-0">
           {/* Banner */}
           <div className="relative h-44 md:h-60  w-full border-2 border-b-gold overflow-hidden rounded-t-xl bg-gradient-to-r from-primary to-accent">
@@ -235,18 +241,18 @@ const averageRating = allRatings.length > 0
               <div className="mb-2 flex gap-3">
                 {/* Add category */}
                 {/* <Badge variant="secondary">{shop.category}</Badge> */} 
-                 {shop.isOpen?(<Badge  variant="secondary" className="text-xs flex bg-green-200 border border-green-600 ">
+                 {shop.isOpen?(<Badge  variant="secondary" className="text-xs flex dark:text-black bg-green-200 border border-green-600 ">
                                 Open
                           </Badge>):(
-                                <Badge  variant="destructive" className="text-xs">
+                                <Badge  variant="destructive" className="text-xs dark:text-black">
                             <X className="h-3 w-3 mr-1" />
                                 Closed
                           </Badge>
                           )}
 
-                          {shop?.is_verified ? (<Badge  variant="outline" className="flex text-xs bg-gray-200  border border-gold ">
+                          {shop?.is_verified ? (<Badge  variant="outline" className="flex text-xs dark:text-black bg-gray-200   border-gold ">
                                 Verified seller
-                                <BadgeCheck fill="gold" className="h-5 w-5  ml-2 border  " />
+                                <BadgeCheck fill="gold" className="h-5 w-5  ml-2   " />
                           </Badge>):(
                                 <div>
 
@@ -362,8 +368,8 @@ const averageRating = allRatings.length > 0
       </div> */}
 
       {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <Card className="space-y-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-4 py-8">
+        <Card className="space-y-6 dark:bg-gray-800 bg-white p-4">
             {/* Search and Filters */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4">
               <div className="flex flex-col md:flex-row gap-4">
@@ -430,7 +436,13 @@ const averageRating = allRatings.length > 0
             </div>
 
             {/* Products Grid/List */}
-            {productsWithReviews?.length === 0 ? (
+            {loading ? (
+                <div className=" flex items-center justify-center">
+                        <Loader />
+                        </div>  
+                        ):(
+                                <div>
+                                        {productsWithReviews?.length === 0 ? (
               <div className="text-center py-12">
                 <div className="text-gray-400 mb-4">
                   <Search className="h-12 w-12 mx-auto" />
@@ -442,7 +454,7 @@ const averageRating = allRatings.length > 0
               <div
                 className={
                   viewMode === "grid"
-                    ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                    ? "grid grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-6"
                     : "space-y-4"
                 }
               >
@@ -455,6 +467,8 @@ const averageRating = allRatings.length > 0
                 )}
               </div>
             )}
+                                </div>
+                        ) }
           </Card>
       </div>
     </div>

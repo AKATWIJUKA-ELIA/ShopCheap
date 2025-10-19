@@ -17,7 +17,7 @@ import { Badge } from '../ui/badge';
 interface Product {
         approved: boolean;
          product_cartegory: string;
-         product_condition: string;
+         product_condition: "new" | "used" | "refurbished";
          product_description: string;
          product_image: string[];
          product_name: string;
@@ -92,7 +92,7 @@ const HeroCard = ({ product }: HeroCardProps) => {
                         {/* Badges */}
                         <div className="absolute top-2 left-2 flex flex-col gap-1">
                           { (
-                            <Badge  className={`${product?.product_condition==="Used" || product?.product_condition==="used"? "bg-red-600":product?.product_condition==="new"|| product?.product_condition==="Brand New"?"bg-gold":"bg-blue-400"} text-xs`}>
+                            <Badge  className={`${product?.product_condition==="used"? "bg-red-600":product?.product_condition==="new"?"bg-gold":"bg-blue-400"} text-xs`}>
                               {product?.product_condition}
                             </Badge>
                           )}

@@ -14,7 +14,7 @@ import Image from 'next/image';
   interface Product {
                 approved: boolean,
                 product_cartegory: string,
-                product_condition: string,
+                product_condition: "new"|"used"| "refurbished",
                 product_description: string,
                 product_image: string[],
                 product_name: string,
@@ -45,7 +45,7 @@ const AddProduct =  () => {
         const [product, setProduct] = useState<Product>({
                 approved: false,
                 product_cartegory: "",
-                product_condition: "",
+                product_condition: "new",
                 product_description: "",
                 product_image: [],
                 product_name: "",
@@ -106,7 +106,7 @@ const AddProduct =  () => {
                 setProduct({
                         approved: false,
                         product_cartegory: "",
-                        product_condition: "",
+                        product_condition: "new",
                         product_description: "",
                         product_image: [],
                         product_name: "",

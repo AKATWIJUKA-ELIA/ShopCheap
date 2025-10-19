@@ -26,8 +26,8 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
+//   SidebarHeader,
+//   SidebarMenu,
 } from "@/components/ui/sidebar"
 
 const data = {
@@ -150,10 +150,10 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props} className="h-[90%] mt-20 bg-blue-400" >
-      <SidebarHeader>
+      {/* <SidebarHeader>
         <SidebarMenu>
         </SidebarMenu>
-      </SidebarHeader>
+      </SidebarHeader> */}
       <SidebarContent>
         <NavMain  />
         {/* <NavDocuments items={data.documents} /> */}
