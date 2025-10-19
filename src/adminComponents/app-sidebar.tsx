@@ -26,8 +26,8 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
+//   SidebarHeader,
+//   SidebarMenu,
 } from "@/components/ui/sidebar"
 
 const data = {
