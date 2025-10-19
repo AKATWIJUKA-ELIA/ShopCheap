@@ -49,7 +49,7 @@ interface Order {
         product?: {
                 approved: boolean;
                 product_cartegory: string;
-                product_condition: string;
+                product_condition: "new" | "used" | "refurbished";
                 product_description: string;
                 product_image: string[];
                 product_name: string;
