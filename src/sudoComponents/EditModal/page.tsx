@@ -13,7 +13,7 @@ import Image from "next/image"
 interface Product {
   _id: string
   product_cartegory?: string
-  product_condition?: string
+  product_condition?: "new" | "used" | "refurbished"
   product_description?: string
   product_image?: string[]
   product_name?: string
@@ -114,7 +114,7 @@ const handleclose =()=>{
       setProduct({
         _id: product?._id || "",
         product_cartegory: "",
-        product_condition: "",
+        product_condition: "new",
         product_description: "",
         product_image: [],
         product_name: "",
@@ -163,7 +163,7 @@ const handleclose =()=>{
         // If we have new images, use those, otherwise keep the existing ones
         product_image: storageIds.length > 0 ? storageIds :[],
         product_name: product?.product_name || "",
-        product_condition: product?.product_condition || "",
+        product_condition: product?.product_condition || "new",
         product_description: product?.product_description || "",
         product_cartegory: product?.product_cartegory || "",
         approved: false,
