@@ -9,7 +9,7 @@ interface RelatedProduct {
     _creationTime: number;
     product_embeddings?: number[] | undefined;
     product_cartegory: string;
-    product_condition: string;
+    product_condition: "new" | "used" | "refurbished";
     product_description: string;
     product_image: string[];
     product_name: string;

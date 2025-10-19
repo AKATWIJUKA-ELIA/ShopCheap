@@ -14,13 +14,14 @@ import Image from 'next/image';
   interface Product {
                 approved: boolean,
                 product_cartegory: string,
-                product_condition: string,
+                product_condition: "new" | "used" | "refurbished",
                 product_description: string,
                 product_image: string[],
                 product_name: string,
                 product_owner_id: string,
                 product_price: string,
                 product_embeddings:number[],
+                product_discount?:number,
                 product_image_embeddings:number[]
                 }
 
@@ -45,12 +46,13 @@ const AddProduct =  () => {
         const [product, setProduct] = useState<Product>({
                 approved: false,
                 product_cartegory: "",
-                product_condition: "",
+                product_condition: "new",
                 product_description: "",
                 product_image: [],
                 product_name: "",
                 product_owner_id: "",
                 product_price: "",
+                product_discount: 0,
                 product_embeddings:[],
                 product_image_embeddings:[]
         });
@@ -106,12 +108,13 @@ const AddProduct =  () => {
                 setProduct({
                         approved: false,
                         product_cartegory: "",
-                        product_condition: "",
+                        product_condition: "new",
                         product_description: "",
                         product_image: [],
                         product_name: "",
                         product_owner_id: "",
                         product_price: "",
+                        product_discount: 0,
                         product_embeddings:[],
                         product_image_embeddings:[]
                 });
@@ -326,7 +329,7 @@ https://shopcheapug.com/</h3>
         ></textarea>
       </div>
 
-      <div className='flex md:flex gap-2 md:gap-12'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-12'>
       <div>
         <label htmlFor="cartegory" className="flex text-sm font-medium text-gray-700 dark:text-white ">
           Cartegory
@@ -351,12 +354,39 @@ https://shopcheapug.com/</h3>
         <label htmlFor="condition" className="flex text-sm font-medium text-gray-700 dark:text-white">
           Condition
         </label>
-        <input
-          type="text"
-          id="product_condition"
+        <select 
+        id="product_condition"
           name="product_condition"
-          value={product.product_condition}
           onChange={handleChange}
+          required 
+           className="bg-transparent rounded-lg relative block w-full px-3 py-2
+            border border-double border-gray-300 placeholder-gray-500 text-gray-900 
+           rounded-b-md focus:outline-none focus:border-4  focus:border-gray-500 focus:z-10
+            sm:text-sm dark:text-white "
+          >
+                 <option value=""  >Select category</option>
+                        <option value="new"  >New</option>
+                        <option value="used"  >Used</option>
+                        <option value="refurbished"  >Refurbished</option>
+                
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="product_discount" className="flex text-sm font-medium text-gray-700 dark:text-white">
+          Discount (Optional)
+        </label>
+               <input
+          type="number"
+          id="product_discount"
+          name="product_discount"
+          value={product.product_discount }
+          onChange={handleChange}
+          onKeyDown={(e) => {
+    if (["e", "E", "+", "-"].includes(e.key)) {
+      e.preventDefault();
+    }
+  }}
           required
            className="bg-transparent rounded-lg relative block w-full px-3 py-2 border border-double border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:border-4  focus:border-gray-500 focus:z-10 sm:text-sm dark:text-white "
         />

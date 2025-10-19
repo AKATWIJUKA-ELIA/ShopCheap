@@ -15,12 +15,13 @@ interface Product {
         _id:string,
   approved: boolean,
   product_cartegory: string,
-  product_condition: string,
+  product_condition: "new"|"used"| "refurbished",
   product_description: string,
   product_image: string|null,
   product_name: string,
   product_owner_id: string,
   product_price: string,
+        product_discount?: number,
   _creationTime:number
       }
       type products = Product[]
