@@ -17,6 +17,7 @@ import { useMutation } from "convex/react"
 import { api } from "../../../../convex/_generated/api"
 import { useNotification } from "@/app/NotificationContext"
 import useUpdateShop from "@/hooks/useUpdateShop"
+// import ImageCropper from "@/components/ImageCropper/ImageCropper"
 
 
 
@@ -261,7 +262,7 @@ const handleUpload = async (file:File|null) => {
             <FieldLabel>Shop Logo</FieldLabel>
             <FieldContent>
               <div className="flex items-center gap-4">
-                <div className="flex h-24 w-24 items-center justify-center rounded-lg border-2 border-dashed bg-muted hover:cursor-pointer "
+                <div className="flex h-24 w-24 items-center justify-center rounded-lg border-2 border-gray-600 border-dashed bg-muted hover:cursor-pointer "
                 onClick={() => ImageSelect("profile")}
                 >
                   {profilepreview ? (
@@ -291,24 +292,26 @@ const handleUpload = async (file:File|null) => {
             <FieldLabel>Shop Banner</FieldLabel>
             <FieldContent>
               <div className="space-y-4 mt-2">
-                <div className="flex h-32 w-full items-center justify-center rounded-lg border-2 border-dashed bg-muted hover:cursor-pointer "
+                <div className="flex h-32 w-full items-center justify-center rounded-lg border-2 border-gray-600 border-dashed bg-muted hover:cursor-pointer "
                 onClick={() => ImageSelect("cover")}
                 >
                   {coverpreview && coverpreview.length >0 ? (
                     <img
                       src={coverpreview || "/placeholder.svg"}
+                      width={1024}
+                      height={300}
                       alt="Banner"
                       className="h-full w-full rounded-lg object-cover"
                     />
                     
                   ) : formData?.cover_image?(
-                    <div>
-                        <img
+                     <img
                       src={formData?.cover_image || "/placeholder.svg"}
+                      width={1024}
+                      height={200}
                       alt="Banner"
                       className="h-full w-full rounded-lg object-cover"
                     />
-                    </div>
                   ):(
                         <ImageIcon className="h-12 w-12 text-muted-foreground" />
                   )}

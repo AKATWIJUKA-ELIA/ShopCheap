@@ -21,6 +21,7 @@ interface Product {
   product_name: string,
   product_owner_id: string,
   product_price: string,
+        product_discount?: number,
   _creationTime:number
       }
       type products = Product[]

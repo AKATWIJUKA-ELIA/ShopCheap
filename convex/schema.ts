@@ -58,12 +58,17 @@ export default defineSchema({
   products: defineTable({
     approved: v.boolean(),
     product_cartegory: v.string(),
-    product_condition: v.string(),
+    product_condition: v.union(
+        v.literal("new"),
+        v.literal("used"),
+        v.literal("refurbished")
+    ),
     product_description: v.string(),
     product_image: v.array(v.string()),
     product_name: v.string(),
     product_owner_id: v.string(),
     product_price: v.string(),
+    product_discount: v.optional(v.number()),
     product_embeddings:v.optional(v.array(v.number())),
     product_image_embeddings:v.optional(v.array(v.number())),
     product_sponsorship:v.optional(v.object({

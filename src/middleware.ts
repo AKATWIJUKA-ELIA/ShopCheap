@@ -10,16 +10,17 @@ const isProtected = [
         "/sudo",
         
 ]
-const publicRoutes = ['/sign-in', '/sign-up']
+const publicRoutes = ['/sign-in', '/sign-up','/home','/passwordChange', '/password-reset'];
 const RoleProtected = ['/admin(.*)', '/sudo(.*)', ];
 const Middleware = async (req: NextRequest) => {
         
         const path = req.nextUrl.pathname
+        // console.log("Middleware path:",path)
         const isProtectedPath = isProtected.some(route => path.startsWith(route));
         const isPublicRoute = publicRoutes.includes(path)
         const isRoleProtected = RoleProtected.some((pattern) => new RegExp(pattern).test(path));
 
-        const cookie = (await cookies()).get("session")?.value
+        const cookie = (await cookies()).get("ShopCheapSession")?.value
         // console.log("session",cookie)
         const session = cookie ?await decrypt(cookie):null
         
@@ -32,8 +33,8 @@ const Middleware = async (req: NextRequest) => {
                         return NextResponse.redirect(new URL('/unauthorized', req.url));
                 }
 
-        if (isPublicRoute && session?.userId && req.nextUrl.pathname != '/') {
-                return NextResponse.redirect(new URL('/', req.nextUrl))
+        if (isPublicRoute && session?.userId && req.nextUrl.pathname != '/home') {
+                return NextResponse.redirect(new URL('/home', req.nextUrl))
   }
  
   return NextResponse.next()
