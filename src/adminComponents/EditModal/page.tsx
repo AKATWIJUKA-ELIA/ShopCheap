@@ -13,11 +13,12 @@ import Image from "next/image"
 interface Product {
   _id: string
   product_cartegory?: string
-  product_condition?: string
+  product_condition?: "new" | "used" | "refurbished"
   product_description?: string
   product_image?: string[]
   product_name?: string
   product_price?: string
+  product_discount?: number
   approved: boolean
 }
 
@@ -114,7 +115,7 @@ const handleclose =()=>{
       setProduct({
         _id: product?._id || "",
         product_cartegory: "",
-        product_condition: "",
+        product_condition: "new",
         product_description: "",
         product_image: [],
         product_name: "",
@@ -163,7 +164,7 @@ const handleclose =()=>{
         // If we have new images, use those, otherwise keep the existing ones
         product_image: storageIds.length > 0 ? storageIds :[],
         product_name: product?.product_name || "",
-        product_condition: product?.product_condition || "",
+        product_condition: product?.product_condition || "new",
         product_description: product?.product_description || "",
         product_cartegory: product?.product_cartegory || "",
         approved: false,
@@ -318,7 +319,9 @@ https://shopcheapug.com/</h3>
                 value={product?.product_cartegory || ""}
                 onChange={handleChange}
                 required
-                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-double border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-4 focus:border-gray-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-lg relative block w-full px-3 py-2 
+                border border-double border-gray-300 placeholder-gray-500 
+                text-gray-900 focus:outline-none focus:border-4 focus:border-gray-500 focus:z-10 sm:text-sm"
               >
                 <option value="">Select category</option>
                 {categories?.map((category, index) => (
@@ -329,20 +332,46 @@ https://shopcheapug.com/</h3>
               </select>
             </div>
 
-            <div className="w-full md:w-1/2 mt-4 md:mt-0">
-              <label htmlFor="product_condition" className="block text-sm font-medium text-gray-700">
-                Condition
-              </label>
-              <input
-                type="text"
-                id="product_condition"
-                name="product_condition"
-                value={product?.product_condition || ""}
-                onChange={handleChange}
-                required
-                className="bg-transparent rounded-lg relative block w-full px-3 py-2 border border-double border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:border-4 focus:border-gray-500 focus:z-10 sm:text-sm dark:text-white"
-              />
-            </div>
+            <div>
+        <label htmlFor="condition" className="flex text-sm font-medium text-gray-700 dark:text-white">
+          Condition
+        </label>
+        <select 
+        id="product_condition"
+          name="product_condition"
+          onChange={handleChange}
+          required 
+           className="appearance-none rounded-lg relative block w-full px-3 py-2 
+                border border-double border-gray-300 placeholder-gray-500 
+                text-gray-900 focus:outline-none focus:border-4 focus:border-gray-500 focus:z-10 sm:text-sm"
+          >
+                 <option value=""  >Select category</option>
+                        <option className="dark:bg-dark dark:text-white" value="new"  >New</option>
+                        <option className="dark:bg-dark dark:text-white" value="used"  >Used</option>
+                        <option className="dark:bg-dark dark:text-white" value="refurbished"  >Refurbished</option>
+                
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="product_discount" className="flex text-sm font-medium text-gray-700 dark:text-white">
+          Discount (Optional)
+        </label>
+               <input
+          type="number"
+          id="product_discount"
+          name="product_discount"
+          value={product?.product_discount }
+          onChange={handleChange}
+          onKeyDown={(e) => {
+    if (["e", "E", "+", "-"].includes(e.key)) {
+      e.preventDefault();
+    }
+  }}
+          required
+           className="bg-transparent rounded-lg relative block w-full px-3 py-2 border border-double border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:border-4  focus:border-gray-500 focus:z-10 sm:text-sm dark:text-white "
+        />
+      </div>
           </div>
 
           <div>
@@ -390,6 +419,8 @@ https://shopcheapug.com/</h3>
                     <div key={index} className="relative">
                       <Image
                         src={src || "/placeholder.svg"}
+                        width={100}
+                        height={100}
                         alt={`Preview ${index + 1}`}
                         className="h-20 w-20 object-cover rounded-md border border-gray-300"
                       />
