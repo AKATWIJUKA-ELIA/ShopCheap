@@ -22,4 +22,6 @@ export async function GET(req: NextRequest) {
         reset_token_expires: 0,});
 
   return NextResponse.redirect(new URL("/sign-in", req.url));
+
 }
+
