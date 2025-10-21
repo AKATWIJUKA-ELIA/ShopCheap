@@ -289,9 +289,9 @@ const Header = () => {
                 <div className={`flex rounded-full   p-2 ${Hovered?"bg-gray-100":"bg-gray-500 "} transition duration-500  hover:cursor-pointer  gap-2 dark:bg-transparent dark:hover:bg-gray-700`}   onMouseOver={showDropDownMenu} >
                          <BsList className=' font-bold text-2xl ' /> <h1 className='flex '>Categories</h1>
                 </div  >
-                {User ?(<div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
-                        <Link href="/register" className='hidden md:flex'>Become a Seller?</Link>
-                        <Link href="/register" className='flex md:hidden'>sell ?</Link>
+                {User && User.role === "seller" ?(<div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
+                        <Link href="/admin" className='hidden md:flex'>Sellers DashBoard</Link>
+                        <Link href="/admin" className='flex md:hidden'>sell here </Link>
                 </div>):(
                          <div className='flex rounded-full bg-gold   p-2   hover:cursor-pointer hover:bg-yellow-400 dark:hover:bg-gray-700' onMouseOver={() => setHovered(false)} >
                         <Link href="/register" className='hidden md:flex'>Become a Seller?</Link>
