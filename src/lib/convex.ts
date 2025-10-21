@@ -109,7 +109,14 @@ export async function getReviewsByProduct(product_id: string) {
 
 export const UploadImage = async (file: File): Promise<{ success: boolean; storageId?: string; error?: string }> => {
         const generateUploadUrl = convex.mutation(api.products.generateUploadUrl,{});
-                const TIMEOUT_MS = 10000; // 10 seconds
+                const TIMEOUT_MS = 30000; // Increased to 30 seconds
+                
+                // Add file size validation
+                const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+                if (file.size > MAX_FILE_SIZE) {
+                        return { success: false, error: "File size too large. Maximum 5MB allowed." };
+                }
+                
                 const withTimeout = <T,>(promise: Promise<T>, ms: number): Promise<T> => {
                         return Promise.race([
                           promise,
@@ -123,11 +130,19 @@ export const UploadImage = async (file: File): Promise<{ success: boolean; stora
                         const storageId = await withTimeout((async () => {
                          // Step 1: Get a short-lived upload URL
                         const postUrl = await generateUploadUrl;
+                        
+                        // Add AbortController for better timeout handling
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+                        
                         const result = await fetch(postUrl, {
                                     method: "POST",
                                     headers: { "Content-Type": file.type },
                                     body: file,
+                                    signal: controller.signal
                                   });
+                        
+                        clearTimeout(timeoutId);
                             
                                   if (!result.ok) throw new Error("Failed to upload image");
                                  const responseData = await result.json();
@@ -136,8 +151,9 @@ export const UploadImage = async (file: File): Promise<{ success: boolean; stora
                                 
               })(), TIMEOUT_MS);
                         return { success: true, storageId: storageId };
-                  } catch {
-                        return { success: false, error: "Failed to upload image" };
+                  } catch (error) {
+                        console.error("Upload error:", error);
+                        return { success: false, error: error instanceof Error ? error.message : "Failed to upload image" };
                   }
       }
 
