@@ -55,7 +55,7 @@ class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h2>
             <p className="text-sm text-gray-500 text-center mb-4">
-              We&apos;re sorry, but something unexpected happened. Please try refreshing the page.
+              We're sorry, but something unexpected happened. Please try refreshing the page.
             </p>
             <div className="flex space-x-3">
               <button
