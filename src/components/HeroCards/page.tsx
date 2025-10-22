@@ -23,6 +23,7 @@ interface Product {
          product_name: string;
          product_owner_id: string;
          product_price: string;
+         product_discount?: number|undefined;
          product_likes?: number;
          _creationTime: number;
          _id: Id<"products">;
@@ -148,8 +149,9 @@ const HeroCard = ({ product }: HeroCardProps) => {
                             <span className="text-xs text-gray-600">({averageRating(productData.reviews?productData.reviews:[])})</span>
                           </div>
                 
-                          <div className="flex items-center text-red-600">
+                          <div className="flex items-center gap-3 text-red-600">
                             Ugx:<span className="font-bold text-red-600 text-lg">{(parseFloat(productData.product_price) || 0).toLocaleString()}</span>
+                            Ugx:<span className="font-bold text-red-600 text-lg">{(productData.product_discount || 0)}</span>
                             {/* {product.originalPrice && (
                               <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
                             )} */}
