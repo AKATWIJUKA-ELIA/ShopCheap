@@ -224,6 +224,7 @@ export default function SellerOnboarding({ user }: { user: { id: string; role: s
         status:"error",
         message:"Please fix the errors in the form before submitting."
        })
+       setIsSubmitting(false)
       return
     }
 
