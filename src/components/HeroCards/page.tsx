@@ -23,7 +23,7 @@ interface Product {
          product_name: string;
          product_owner_id: string;
          product_price: string;
-         product_discount: number;
+         product_discount?: number|undefined;
          product_likes?: number;
          _creationTime: number;
          _id: Id<"products">;
