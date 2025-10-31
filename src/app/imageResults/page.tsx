@@ -27,7 +27,7 @@ useEffect(() => {
                 let response;
                 if (ImageVectorSearch) {
                     response = await ImageVectorSearch(embeds.data?embeds.data[0] || []:[]);
-                //     console.log("ImageVectorSearch response:", response);
+                    console.log("ImageVectorSearch response:", response);
                     setData(response||[]);
                     setLoading(false);
                 } else {

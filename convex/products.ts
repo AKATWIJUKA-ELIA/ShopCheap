@@ -293,7 +293,7 @@ export const getImageUrl = query({
                                         }
                                 }
                         ))
-                        return products.filter((b)=> b!= null && b.score > 0.256);
+                        return products.filter((b)=> b!= null && b.score > 0.356);
                 }
         })
 
@@ -322,6 +322,7 @@ export const getImageUrl = query({
                                         }
                                 }
                         ))
+                        // console.log("products", products)
                         return products.filter((b)=> b!= null && b.score > 0.256);
                 }
         })
@@ -346,7 +347,7 @@ export const getImageUrl = query({
                 handler: async (ctx, args) => {
                         const results = await ctx.vectorSearch("products", "product_image_embeddings", {
                                 vector: args.embeding,
-                                limit: 6
+                                limit: 2
                         });
                         return await ctx.runQuery(
                                 internal.products.ImagesearchResults, { results }

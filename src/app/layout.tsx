@@ -7,7 +7,7 @@ import ConditionalFooter from "@/components/ConditionalFooter/page"
 import MessagePop from "@/components/MessagePop/page";
 import ClientProviders from "./Providers";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+// import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className=" " >
-        <ErrorBoundary>
+        {/* <ErrorBoundary> */}
           <GoogleOAuthProvider clientId={CLIENT_ID}>
           <ClientProviders>
                   <Header  />
@@ -34,7 +34,7 @@ export default function RootLayout({
                   <ConditionalFooter/>
           </ClientProviders>
           </GoogleOAuthProvider>
-        </ErrorBoundary>
+        {/* </ErrorBoundary> */}
       </body>
       <script src="https://accounts.google.com/gsi/client" async defer></script>
     </html>

@@ -19,9 +19,10 @@ import { usePathname } from 'next/navigation';
 import {useData} from  '../../app/DataContext';
 import useGetCart from '@/hooks/useGetCart';
 import useCart from '@/hooks/useCart';
-// import useGenerateEmbeddings from '@/hooks/useGenerateEmbeddings';
-// import useVectorSearch from '@/hooks/useVectorSearch';
+import useGenerateEmbeddings from '@/hooks/useGenerateEmbeddings';
+import useVectorSearch from '@/hooks/useVectorSearch';
 import { useWindowResize } from '@/hooks/useWindowResize';
+import { MdPhotoCamera } from 'react-icons/md';
 
 const Header = () => {
         const { data} = useData();
@@ -42,9 +43,9 @@ const Header = () => {
         
 
         // console.log("Data from DataContext :",data.Products)
-        // const {Embed} = useGenerateEmbeddings();
-        // const vectorSearchHook = useVectorSearch();
-        // const vectorSearch = vectorSearchHook?.vectorSearch;
+        const {Embed} = useGenerateEmbeddings();
+        const vectorSearchHook = useVectorSearch();
+        const vectorSearch = vectorSearchHook?.vectorSearch;
 
         const [comingSoon, setcomingSoon] = useState(false)
         const carousel = Autoplay({ delay: 6000})
@@ -92,9 +93,9 @@ const Header = () => {
                 setcomingSoon(true)
         }
 
-        // const handleImageSearch = () =>{
-        //         setShowImageModal(true)
-        // }
+        const handleImageSearch = () =>{
+                setShowImageModal(true)
+        }
         useEffect(() => {
                
                 //  ============================================================
@@ -175,8 +176,8 @@ const Header = () => {
                                  type="text"
                                   className=' flex p-5 h-10 rounded-full border   border-gray-500 w-[100%] dark:bg-black dark:text-white ' 
                                   placeholder='Search Categories & product names'  />
-                                  { searchTerm.length>1 && (<BiX onClick={HandleClose} className="absolute hover:cursor-pointer border top-[16%] right-[41%]  bg-gray-100 text-dark text-3xl   rounded-lg"/>)
-                                //   :(<MdPhotoCamera onClick={handleImageSearch}  className="absolute hover:cursor-pointer top-[16%]   right-[41%]  bg-gray-100 text-black/70 dark:text-white/70 dark:bg-transparent text-3xl " />)
+                                  { searchTerm.length>1 ? (<BiX onClick={HandleClose} className="absolute hover:cursor-pointer border top-[16%] right-[41%]  bg-gray-100 text-dark text-3xl   rounded-lg"/>)
+                                  :(<MdPhotoCamera onClick={handleImageSearch}  className="absolute hover:cursor-pointer top-[16%]   right-[41%]  bg-gray-100 text-black/70 dark:text-white/70 dark:bg-transparent text-3xl " />)
                                 }
                         </div>
                 </div>

@@ -35,6 +35,8 @@ const Categories = ({relatedProducts,category,image}:PageProps) => {
                                 <div className=' flex  '>
                                         <Image
                                          src={URL.createObjectURL(image)}
+                                         width={200}
+                                         height={200}
                                           alt="Uploaded"
                                            className=' w-16 h-16 md:w-32 md:h-32 rounded-md object-cover' />
                                 </div>
