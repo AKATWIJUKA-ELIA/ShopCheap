@@ -10,21 +10,21 @@ import Autoplay from "embla-carousel-autoplay"
 import Image from 'next/image';
 import Link from 'next/link';
 import useGetSponsored from '@/hooks/useGetSponsored';
-import { Oval } from 'react-loader-spinner';
+// import { Oval } from 'react-loader-spinner';
 import { Id } from '../../../convex/_generated/dataModel';
 import { Button } from '../ui/button';
 import { MdAddShoppingCart } from "react-icons/md";
 import { Eye } from 'lucide-react';
 import useAddToCart from "@/hooks/useAddToCart"
 import HeroCard from '../HeroCards/page';
-type Producst = {
-  id: string;
-  name: string;
-  price: number;
-  oldPrice?: number;
-  image?: string; // optional; we’ll show a gradient placeholder if missing
-  badge?: string;
-};
+// type Producst = {
+//   id: string;
+//   name: string;
+//   price: number;
+//   oldPrice?: number;
+//   image?: string; // optional; we’ll show a gradient placeholder if missing
+//   badge?: string;
+// };
 
 // const FEATURED: Producst[] = [
 //   { id: "1", name: "Silver Chain", price: 50000, oldPrice: 150000, badge: "🔥 67% off" },
