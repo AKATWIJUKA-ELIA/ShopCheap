@@ -10,13 +10,15 @@ import Autoplay from "embla-carousel-autoplay"
 import Image from 'next/image';
 import Link from 'next/link';
 import useGetSponsored from '@/hooks/useGetSponsored';
-// import { Oval } from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
 import { Id } from '../../../convex/_generated/dataModel';
 import { Button } from '../ui/button';
 import { MdAddShoppingCart } from "react-icons/md";
 import { Eye } from 'lucide-react';
 import useAddToCart from "@/hooks/useAddToCart"
-import HeroCard from '../HeroCards/page';
+import Recommended from "../Recommended/page"
+import { useData } from '@/app/DataContext';
+
 // type Producst = {
 //   id: string;
 //   name: string;
@@ -72,6 +74,7 @@ const MainHero = () => {
   const [products, setproducts] = useState<Product[]>([]);
   const HandleAddToCart = useAddToCart();
   const { sponsored: sponsored } = useGetSponsored();
+  const { data} = useData();
 
 //   const images = [
 //                 {
@@ -89,15 +92,33 @@ const MainHero = () => {
                         
 useEffect(() => {
   if (sponsored && sponsored.length > 0) {
-    setproducts(sponsored.filter((item): item is Product => item !== null && item.product_sponsorship?.type==="platinum" && item.product_sponsorship?.status==="active"));
+    setproducts(sponsored.filter((item): item is Product => item !== null && item.product_sponsorship?.type==="platinum" 
+//     && item.product_sponsorship?.status==="active"
+));
   }
 }, [sponsored]);
         
   return (
-        <div className= ' bg-pin k-200 flex  mt-36 h-[300px]  md:h-[550px]'  >
+        <div className= ' bg-pin k-500 flex  mt-36 h-[300px]  md:h-[550px]'  >
 
-       <div className=' w-full p-2 h-full gap-2 bg-white  flex items-center justify-center  '>
-        <Carousel opts={{ align: "start", loop: true }} plugins={[carousel1]} className="grid grid-cols-1 w-[65%] h-full ">
+       <div className=' w-full p-2 h-full gap-2 bg-green-900  flex  '>
+       <div className="w-[15%] flex flex-col items-start px-2 bg-gold/70 ">
+  <h1 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-4 border-b-2 border-gray-300 pb-2">
+    Categories
+  </h1>
+
+   {data.Categories? (data.Categories.categories.slice(0,10).map(({_id, cartegory}) =>
+                                                <div key={_id} className=" w-full cursor-pointer mr-2  p-2 slider slide--fast 
+                                                hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-300 ">
+                                                
+                                                <Link href={`/category/${encodeURIComponent(cartegory)}`}  >
+                                                <h1   className='animated  main '  > <span id='main' className='animated current   '>{cartegory}</span></h1> 
+                                                </Link>
+                                                </div>
+                                        )):(<div className="vertical-line ml-2  fade-in "  > Loading . . .  </div>)}
+</div>
+        <div className=' flex flex-col  w-[65%] h-full bg-green-400  ' >
+        <Carousel opts={{ align: "start", loop: true }} plugins={[carousel1]} className="grid grid-cols-1  w-[100%] h-[60%] ">
                 <CarouselContent className='h-full w-full '>
                 {products && products.length > 0 &&
                         products.map((product, index) => (
@@ -114,7 +135,7 @@ useEffect(() => {
                                 
                                 <div className="flex left-0 md:left-16   absolute top-10 bottom-0  w-[65%] h-[50%]">
                                 
-                                <div className="absolute top-32 left-1 md:left-16 text-2xl md:text-7xl flex items-center justify-center text-gold  font-semibold">
+                                <div className="absolute top-20 left-1 md:left-16 text-2xl md:text-4xl flex items-center justify-center text-gold  font-semibold">
                                 <Link href={`/category/${product.product_cartegory}`} className='flex flex-col gap-2' >
                                         <span className='font-bold'>{product.product_cartegory}</span>
                                         <div className='flex flex-col md:flex-row ' >
@@ -124,7 +145,7 @@ useEffect(() => {
                                 </Link>
                                 </div>
                                  <div className="absolute md:opacity-70 group-hover:opacity-100 
-                                 transition-all duration-300  mt-4 -bottom-32
+                                 transition-all duration-300  mt-4 -bottom-20
                                   md:left-28 gap-12  flex items-center justify-center text-white text-2xl font-semibold">
                                 <Button className="bg-blue-600 hover:bg-blue-800 rounded-full md:p-6 text-white">
                                         <Link href={`/product/${product._id}`} className='flex gap-2' > <Eye/> View Product</Link>
@@ -160,11 +181,34 @@ useEffect(() => {
                 }
                 </CarouselContent>
         </Carousel>
-         <div className="h-full w-[35%] bg-gradient-to-br from-gold to-black text-white  p-4 md:p-6 flex flex-col">
+        <div className=' grid grid-cols-3 gap-3 p-2 w-[100%] h-[40%]  bg-blue-500  ' >
+                {products.slice(0,3).map((product) => (
+                        <div className='border flex items-center justify-center h-full'>
+                <Link key={product._id} href={`/product/${product._id}`} className='bg-red-500'>
+                         <Image
+                        src={
+                                        Array.isArray(product.product_image)
+                                        ? (product.product_image.length > 0 ? product.product_image[0] : "")
+                                        : product.product_image
+                        }
+                        alt={product.product_name}
+                        width={100}
+                        height={100}
+
+                        className="w-full h-full "
+                        />
+                
+                </Link>
+                </div>
+                ))}
+        </div>
+        </div>
+
+         <div className="h-full w-[20%] bg-green-600/70 text-white  p-4 md:p-6 flex flex-col">
       {/* Header + timer */}
-      <div className="flex items-start justify-between gap-3">
-        <h2 className="text-xl md:text-2xl font-extrabold tracking-tight">
-          Featured Products
+      <div className="flex flex-col items-start justify-between gap-3">
+        <h2 className="text-xl md:text-xl font-extrabold tracking-tight">
+          You may also like
         </h2>
 
         <div className="shrink-0">
@@ -192,10 +236,8 @@ useEffect(() => {
       {/* Scrollable featured list */}
       <div className="mt-4 md:mt-6 space-y-3 overflow-y-auto pr-1">
         {/* Horizontal carousel on small screens; grid on md+ */}
-        <div className="flex md:grid md:grid-cols-1 xl:grid-cols-2 gap-3 overflow-x-auto snap-x snap-mandatory pb-1">
-          {products.map((p) => (
-            <HeroCard key={p._id} product={p} />
-          ))}
+        <div className="flex md:grid md:grid-cols-1 xl:grid-cols-1 gap-3 overflow-x-auto snap-x snap-mandatory pb-1">
+          <Recommended type='view'/>
         </div>
       </div>
 
