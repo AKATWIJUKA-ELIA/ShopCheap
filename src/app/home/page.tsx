@@ -30,7 +30,7 @@ export default function Home() {
                 <Provider store={store}>
                 <PersistGate persistor={persistor}>
                         <MainHero />
-                        <SecondHero />
+                        {/* <SecondHero /> */}
                         <FisrtHero />
                         <TopRatings />
                         <Main />
