@@ -38,20 +38,20 @@ interface Product {
   }
 }
 
-function useCountdown(target: Date) {
-  const [now, setNow] = useState(() => new Date())
-  useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 1000)
-    return () => clearInterval(t)
-  }, [])
-  const diff = Math.max(0, target.getTime() - now.getTime())
-  const s = Math.floor(diff / 1000)
-  const d = Math.floor(s / 86400)
-  const h = Math.floor((s % 86400) / 3600)
-  const m = Math.floor((s % 3600) / 60)
-  const sec = s % 60
-  return { d, h, m, s: sec, done: diff === 0 }
-}
+// function useCountdown(target: Date) {
+//   const [now, setNow] = useState(() => new Date())
+//   useEffect(() => {
+//     const t = setInterval(() => setNow(new Date()), 1000)
+//     return () => clearInterval(t)
+//   }, [])
+//   const diff = Math.max(0, target.getTime() - now.getTime())
+//   const s = Math.floor(diff / 1000)
+//   const d = Math.floor(s / 86400)
+//   const h = Math.floor((s % 86400) / 3600)
+//   const m = Math.floor((s % 3600) / 60)
+//   const sec = s % 60
+//   return { d, h, m, s: sec, done: diff === 0 }
+// }
 
 const MobileHero: React.FC = () => {
   // Only show on mobile/tablet
@@ -62,14 +62,14 @@ const MobileHero: React.FC = () => {
     return t
   }, [])
 
-  const { d, h, m, s, done } = useCountdown(saleEnd)
+//   const { d, h, m, s, done } = useCountdown(saleEnd)
   const autoplayFast = Autoplay({ delay: 3800 })
   const autoplaySlow = Autoplay({ delay: 5200 })
 
   const { sponsored } = useGetSponsored()
   const [products, setProducts] = useState<Product[]>([])
   const HandleAddToCart = useAddToCart()
-  const { data } = useData()
+//   const { data } = useData()
 
   useEffect(() => {
     if (sponsored && sponsored.length > 0) {

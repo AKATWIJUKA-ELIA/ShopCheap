@@ -32,9 +32,9 @@ const Recommended = ({ type }: RecommendedProps) => {
         // const { createBookmark } = useBookmark()
          const addToCart = useAddToCart()
          const [productData, setProductData] = useState<Product[] | null>([])
-        const truncateString = (text: string, maxLength: number): string => {
-                return text.length > maxLength ? text.slice(0, maxLength) + " . . ." : text;
-              };
+        // const truncateString = (text: string, maxLength: number): string => {
+        //         return text.length > maxLength ? text.slice(0, maxLength) + " . . ." : text;
+        //       };
               useEffect(() => {
                 if (products && products.length > 0) {
                         setProductData(products)

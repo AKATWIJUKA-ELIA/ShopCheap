@@ -40,20 +40,20 @@ import { useWindowResize } from '@/hooks/useWindowResize';
 //   { id: "4", name: "Pendant Set", price: 90000, oldPrice: 120000, badge: "New" },
 // ];
 
-function useCountdown(target: Date) {
-  const [now, setNow] = useState(() => new Date());
-  useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(t);
-  }, []);
-  const diff = Math.max(0, target.getTime() - now.getTime());
-  const s = Math.floor(diff / 1000);
-  const d = Math.floor(s / 86400);
-  const h = Math.floor((s % 86400) / 3600);
-  const m = Math.floor((s % 3600) / 60);
-  const sec = s % 60;
-  return { d, h, m, s: sec, done: diff === 0 };
-}
+// function useCountdown(target: Date) {
+//   const [now, setNow] = useState(() => new Date());
+//   useEffect(() => {
+//     const t = setInterval(() => setNow(new Date()), 1000);
+//     return () => clearInterval(t);
+//   }, []);
+//   const diff = Math.max(0, target.getTime() - now.getTime());
+//   const s = Math.floor(diff / 1000);
+//   const d = Math.floor(s / 86400);
+//   const h = Math.floor((s % 86400) / 3600);
+//   const m = Math.floor((s % 3600) / 60);
+//   const sec = s % 60;
+//   return { d, h, m, s: sec, done: diff === 0 };
+// }
 interface Product {
   approved: boolean;
   product_cartegory: string;
@@ -75,7 +75,7 @@ const MainHero = () => {
     return t;
   }, []);
   const { width } = useWindowResize();
-  const { d, h, m, s, done } = useCountdown(saleEnd);
+//   const { d, h, m, s, done } = useCountdown(saleEnd);
   const carousel = Autoplay({ delay: 4000 });
   const carousel1 = Autoplay({ delay: 6000 });
   const [products, setproducts] = useState<Product[]>([]);
