@@ -1,22 +1,29 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 
 } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 import Image from 'next/image';
 import Link from 'next/link';
 import useGetSponsored from '@/hooks/useGetSponsored';
-// import { Oval } from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
 import { Id } from '../../../convex/_generated/dataModel';
 import { Button } from '../ui/button';
 import { MdAddShoppingCart } from "react-icons/md";
 import { Eye } from 'lucide-react';
 import useAddToCart from "@/hooks/useAddToCart"
-import HeroCard from '../HeroCards/page';
+import Recommended from "../Recommended/page"
+import { useData } from '@/app/DataContext';
+// import HeroCardImage from '../HeroCards/HeroImagaOnly';
+import MobileHero from './MobileHero';
+import { useWindowResize } from '@/hooks/useWindowResize';
+
 // type Producst = {
 //   id: string;
 //   name: string;
@@ -33,20 +40,20 @@ import HeroCard from '../HeroCards/page';
 //   { id: "4", name: "Pendant Set", price: 90000, oldPrice: 120000, badge: "New" },
 // ];
 
-function useCountdown(target: Date) {
-  const [now, setNow] = useState(() => new Date());
-  useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(t);
-  }, []);
-  const diff = Math.max(0, target.getTime() - now.getTime());
-  const s = Math.floor(diff / 1000);
-  const d = Math.floor(s / 86400);
-  const h = Math.floor((s % 86400) / 3600);
-  const m = Math.floor((s % 3600) / 60);
-  const sec = s % 60;
-  return { d, h, m, s: sec, done: diff === 0 };
-}
+// function useCountdown(target: Date) {
+//   const [now, setNow] = useState(() => new Date());
+//   useEffect(() => {
+//     const t = setInterval(() => setNow(new Date()), 1000);
+//     return () => clearInterval(t);
+//   }, []);
+//   const diff = Math.max(0, target.getTime() - now.getTime());
+//   const s = Math.floor(diff / 1000);
+//   const d = Math.floor(s / 86400);
+//   const h = Math.floor((s % 86400) / 3600);
+//   const m = Math.floor((s % 3600) / 60);
+//   const sec = s % 60;
+//   return { d, h, m, s: sec, done: diff === 0 };
+// }
 interface Product {
   approved: boolean;
   product_cartegory: string;
@@ -62,16 +69,19 @@ interface Product {
 
 
 const MainHero = () => {
-          const saleEnd = useMemo(() => {
-    const t = new Date();
-    t.setHours(23, 59, 59, 999);
-    return t;
-  }, []);
-  const { d, h, m, s, done } = useCountdown(saleEnd);
+//           const saleEnd = useMemo(() => {
+//     const t = new Date();
+//     t.setHours(23, 59, 59, 999);
+//     return t;
+//   }, []);
+  const { width } = useWindowResize();
+//   const { d, h, m, s, done } = useCountdown(saleEnd);
+  const carousel = Autoplay({ delay: 4000 });
   const carousel1 = Autoplay({ delay: 6000 });
   const [products, setproducts] = useState<Product[]>([]);
   const HandleAddToCart = useAddToCart();
   const { sponsored: sponsored } = useGetSponsored();
+  const { data} = useData();
 
 //   const images = [
 //                 {
@@ -89,15 +99,36 @@ const MainHero = () => {
                         
 useEffect(() => {
   if (sponsored && sponsored.length > 0) {
-    setproducts(sponsored.filter((item): item is Product => item !== null && item.product_sponsorship?.type==="platinum" && item.product_sponsorship?.status==="active"));
+    setproducts(sponsored.filter((item): item is Product => item !== null && item.product_sponsorship?.type==="platinum" 
+//     && item.product_sponsorship?.status==="active"
+));
   }
 }, [sponsored]);
+ if (width < 768) {
+    return <MobileHero />;
+  }
         
   return (
-        <div className= ' bg-pin k-200 flex  mt-36 h-[300px]  md:h-[550px]'  >
+        <div className= ' bg-pin k-500 flex  mt-36 h-[300px]  md:h-[550px]'  >
 
-       <div className=' w-full p-2 h-full gap-2 bg-white  flex items-center justify-center  '>
-        <Carousel opts={{ align: "start", loop: true }} plugins={[carousel1]} className="grid grid-cols-1 w-[65%] h-full ">
+       <div className=' w-full p-2 h-full gap-2   flex  '>
+       <div className=" md:hidden w-[15%]  lg:flex flex-col items-start px-2 bg-gray-300 rounded-md ">
+  <h1 className="text-2xl md:text-sm lg:text-3xl font-extrabold text-gray-800 mb-4 border-b-2 border-gray-300 pb-2">
+    Categories
+  </h1>
+
+   {data.Categories? (data.Categories.categories.slice(0,10).map(({_id, cartegory}) =>
+                                                <div key={_id} className=" w-full cursor-pointer mr-2  p-2 slider slide--fast 
+                                                hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-300 ">
+                                                
+                                                <Link href={`/category/${encodeURIComponent(cartegory)}`}  >
+                                                <h1   className='animated md:text-sm lg:text-md '  > <span id='main' className='animated current   '>{cartegory}</span></h1> 
+                                                </Link>
+                                                </div>
+                                        )):(<div className="vertical-line ml-2  fade-in "  > Loading . . .  </div>)}
+</div>
+        <div className=' flex flex-col w-[65%] h-full ' >
+        <Carousel opts={{ align: "start", loop: true }} plugins={[carousel1]} className="grid grid-cols-1  w-[100%] h-[60%] ">
                 <CarouselContent className='h-full w-full '>
                 {products && products.length > 0 &&
                         products.map((product, index) => (
@@ -114,17 +145,17 @@ useEffect(() => {
                                 
                                 <div className="flex left-0 md:left-16   absolute top-10 bottom-0  w-[65%] h-[50%]">
                                 
-                                <div className="absolute top-32 left-1 md:left-16 text-2xl md:text-7xl flex items-center justify-center text-gold  font-semibold">
+                                <div className="absolute top-20 left-1 md:left-16 text-2xl md:text-4xl flex items-center justify-center text-gold  font-semibold">
                                 <Link href={`/category/${product.product_cartegory}`} className='flex flex-col gap-2' >
                                         <span className='font-bold'>{product.product_cartegory}</span>
                                         <div className='flex flex-col md:flex-row ' >
                                                 <span className="text-3xl text-white md:text-5xl font-bold">Ugx: {(parseFloat(product.product_price) || 0).toLocaleString()}</span>
-                        <span className="text-3xl font-semi-bold text-red-300 line-through italic">Ugx: { (parseFloat(product.product_price)*3).toLocaleString()}</span>
+                        {/* <span className="text-3xl font-semi-bold text-red-300 line-through italic">Ugx: { (parseFloat(product.product_price)*3).toLocaleString()}</span> */}
                                         </div>
                                 </Link>
                                 </div>
                                  <div className="absolute md:opacity-70 group-hover:opacity-100 
-                                 transition-all duration-300  mt-4 -bottom-32
+                                 transition-all duration-300  mt-4 -bottom-20
                                   md:left-28 gap-12  flex items-center justify-center text-white text-2xl font-semibold">
                                 <Button className="bg-blue-600 hover:bg-blue-800 rounded-full md:p-6 text-white">
                                         <Link href={`/product/${product._id}`} className='flex gap-2' > <Eye/> View Product</Link>
@@ -160,14 +191,88 @@ useEffect(() => {
                 }
                 </CarouselContent>
         </Carousel>
-         <div className="h-full w-[35%] bg-gradient-to-br from-gold to-black text-white  p-4 md:p-6 flex flex-col">
+        <div className=' grid grid-cols-1 gap-3 p-2 w-[100%] h-[40%]  bg-blue-600' >
+                 {products && products.length > 0 ? (
+                <Carousel opts={{align: "start",loop: true}} plugins={[carousel]} className=" hidden    md:flex items-center justify-center bg-black/20 text-white text-xl font-semibold md:p-2">
+        <CarouselContent className=''>
+  {products.map((product, index) => (
+    <CarouselItem key={index} className=" basis-[200px] md:basis-[300px] shrink-0">
+      <div className="p-1">
+        <Card className="h-auto bg-transparent w-full">
+          <CardContent className="relative  bg-transparent flex rounded-lg items-center justify-center p-6 h-36 overflow-hidden w-full">
+            {/* Image */}
+            <Link href={`/category/${product.product_cartegory}`} >
+              <Image
+                src={product.product_image[0] ?? ""}
+                //       height={100}
+                //       width={450}
+                alt={product.product_name}
+                fill
+                className='object-cover w-full h-full rounded-lg '
+              />
+
+              {/* Text Overlay */}
+              <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black/40 text-white text-xl font-semibold p-4">
+                {product.product_name}
+              </div>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    </CarouselItem>
+  ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+        </Carousel>
+        ):(
+                <Carousel opts={{align: "start",loop: true}} plugins={[carousel]} className=" hidden absolute w-[60%] md:w-[65%] md:left-16   mt-80  md:flex items-center justify-center bg-black/40 text-white text-xl font-semibold md:p-2">
+        <CarouselContent className=''>
+  {Array.from({ length: 7 }).map((_, idx) => (
+    <CarouselItem key={idx} className=" basis-[200px] md:basis-[300px] shrink-0">
+      <div className="p-1">
+        <Card className="h-auto bg-transparent w-full">
+          <CardContent className="relative  bg-blue-500 animate-pulse  flex rounded-lg items-center justify-center  h-36 overflow-hidden w-full">
+              <div className="flex  opacity-95 w-[100%] h-[100%] items-center justify-center">
+                        <div className="flex"><h1 className='text-sm md:text-2xl text-dark  '>Sh</h1></div>
+                        <div className="flex">
+                                <Oval
+                                        visible={true}
+                                        height="30"
+                                        width="30"
+                                        color="#0000FF"
+                                        secondaryColor="#FFD700"
+                                        ariaLabel="oval-loading"
+                                        />
+                        </div>
+                                        <div className="flex text-sm md:text-2xl text-dark  ">p<span className="text-gold">Cheap</span>.  .  .</div>
+                                </div>
+          </CardContent>
+        </Card>
+      </div>
+    </CarouselItem>
+  ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+        </Carousel>
+        )}
+                {/* {products.slice(0,3).map((product) => (
+                        <div  key={product._id} className=' flex items-center justify-center w-full h-full'>
+                <HeroCardImage product={product} />
+                </div>
+                ))} */}
+        </div>
+        </div>
+
+         <div className=" h-full md:w-[30%] lg:w-[20%] bg-green-600 text-white  p-4 md:p-6 flex flex-col">
       {/* Header + timer */}
-      <div className="flex items-start justify-between gap-3">
-        <h2 className="text-xl md:text-2xl font-extrabold tracking-tight">
-          Featured Products
+      <div className="flex flex-col items-start justify-between gap-3">
+        <h2 className="text-xl md:text-xl font-extrabold tracking-tight">
+          You may also like
         </h2>
 
-        <div className="shrink-0">
+        {/* <div className="shrink-0">
           <div className="text-[10px] md:text-xs uppercase opacity-90">Flash Sale ends in</div>
           <div className="flex items-center gap-1 md:gap-2 font-mono">
             {[
@@ -186,28 +291,26 @@ useEffect(() => {
             ))}
           </div>
           {done && <div className="text-[10px] md:text-xs mt-1">Sale ended</div>}
-        </div>
+        </div> */}
       </div>
 
       {/* Scrollable featured list */}
-      <div className="mt-4 md:mt-6 space-y-3 overflow-y-auto pr-1">
+      <div className="mt-4 md:mt-6 space-y-3 overflow-y-auto ">
         {/* Horizontal carousel on small screens; grid on md+ */}
-        <div className="flex md:grid md:grid-cols-1 xl:grid-cols-2 gap-3 overflow-x-auto snap-x snap-mandatory pb-1">
-          {products.map((p) => (
-            <HeroCard key={p._id} product={p} />
-          ))}
+        <div className="flex md:grid md:grid-cols-1 xl:grid-cols-1 gap-3 overflow-x-auto snap-x snap-mandatory pb-1">
+          <Recommended type='view'/>
         </div>
       </div>
 
       {/* Footer link */}
-      <div className="mt-auto pt-3 md:pt-4 text-right">
+      {/* <div className="mt-auto pt-3 md:pt-4 text-right">
         <a
           href="/collections/featured"
           className="inline-block text-sm md:text-base underline decoration-white/60 underline-offset-4 hover:opacity-90"
         >
           See all deals →
         </a>
-      </div>
+      </div> */}
     </div>
        </div>
  
