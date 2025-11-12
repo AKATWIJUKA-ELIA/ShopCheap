@@ -22,7 +22,7 @@ export default function Home() {
             
           }, [data, router]);
   return (
-        <div className="backdrop-blur-md px-24"
+        <div className="backdrop-blur-md md:px-1 lg:px-12 "
         // style={{ backgroundImage: `url("images/wallp.jpg")`,
         //                 backgroundSize: 'cover',
         //                 backgroundPosition: 'center' }}
