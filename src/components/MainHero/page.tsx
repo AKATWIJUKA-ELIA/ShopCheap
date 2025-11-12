@@ -18,6 +18,7 @@ import { Eye } from 'lucide-react';
 import useAddToCart from "@/hooks/useAddToCart"
 import Recommended from "../Recommended/page"
 import { useData } from '@/app/DataContext';
+import HeroCardImage from '../HeroCards/HeroImagaOnly';
 
 // type Producst = {
 //   id: string;
@@ -101,8 +102,8 @@ useEffect(() => {
   return (
         <div className= ' bg-pin k-500 flex  mt-36 h-[300px]  md:h-[550px]'  >
 
-       <div className=' w-full p-2 h-full gap-2 bg-green-900  flex  '>
-       <div className="w-[15%] flex flex-col items-start px-2 bg-gold/70 ">
+       <div className=' w-full p-2 h-full gap-2   flex  '>
+       <div className="w-[15%] flex flex-col items-start px-2 bg-gray-300 rounded-md ">
   <h1 className="text-2xl md:text-3xl font-extrabold text-gray-800 mb-4 border-b-2 border-gray-300 pb-2">
     Categories
   </h1>
@@ -117,7 +118,7 @@ useEffect(() => {
                                                 </div>
                                         )):(<div className="vertical-line ml-2  fade-in "  > Loading . . .  </div>)}
 </div>
-        <div className=' flex flex-col  w-[65%] h-full bg-green-400  ' >
+        <div className=' flex flex-col  w-[65%] h-full ' >
         <Carousel opts={{ align: "start", loop: true }} plugins={[carousel1]} className="grid grid-cols-1  w-[100%] h-[60%] ">
                 <CarouselContent className='h-full w-full '>
                 {products && products.length > 0 &&
@@ -140,7 +141,7 @@ useEffect(() => {
                                         <span className='font-bold'>{product.product_cartegory}</span>
                                         <div className='flex flex-col md:flex-row ' >
                                                 <span className="text-3xl text-white md:text-5xl font-bold">Ugx: {(parseFloat(product.product_price) || 0).toLocaleString()}</span>
-                        <span className="text-3xl font-semi-bold text-red-300 line-through italic">Ugx: { (parseFloat(product.product_price)*3).toLocaleString()}</span>
+                        {/* <span className="text-3xl font-semi-bold text-red-300 line-through italic">Ugx: { (parseFloat(product.product_price)*3).toLocaleString()}</span> */}
                                         </div>
                                 </Link>
                                 </div>
@@ -183,22 +184,8 @@ useEffect(() => {
         </Carousel>
         <div className=' grid grid-cols-3 gap-3 p-2 w-[100%] h-[40%]  bg-blue-500  ' >
                 {products.slice(0,3).map((product) => (
-                        <div className='border flex items-center justify-center h-full'>
-                <Link key={product._id} href={`/product/${product._id}`} className='bg-red-500'>
-                         <Image
-                        src={
-                                        Array.isArray(product.product_image)
-                                        ? (product.product_image.length > 0 ? product.product_image[0] : "")
-                                        : product.product_image
-                        }
-                        alt={product.product_name}
-                        width={100}
-                        height={100}
-
-                        className="w-full h-full "
-                        />
-                
-                </Link>
+                        <div  key={product._id} className=' flex items-center justify-center w-full h-full'>
+                <HeroCardImage product={product} />
                 </div>
                 ))}
         </div>
