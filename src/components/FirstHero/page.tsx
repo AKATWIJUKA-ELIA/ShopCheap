@@ -38,7 +38,7 @@ const FisrtHero =  () => {
                         }, [data.Products.product]);
 
   return (
-        <div className=' flex flex-col   gap-10  mb-10 shadow-lg rounded-lg bg-purple-400/10 '
+        <div className=' flex flex-col   gap-10  mb-10 shadow-lg rounded-lg bg-white '
         >
                 <div className='flex flex-col justify-between items-center mx-auto bg-transparent  w-full '>
                 <h1 className='flex font-bold text-4xl '>Shop By Category</h1>

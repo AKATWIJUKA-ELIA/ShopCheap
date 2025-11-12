@@ -1,6 +1,6 @@
 "use client"
 import FisrtHero from "@/components/FirstHero/page";
-import SecondHero from "@/components/SecondHero/page";
+// import SecondHero from "@/components/SecondHero/page";
 import Main from "@/components/Main/main";
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react";
@@ -22,7 +22,7 @@ export default function Home() {
             
           }, [data, router]);
   return (
-        <div className="backdrop-blur-md"
+        <div className="backdrop-blur-md md:px-1 lg:px-12 "
         // style={{ backgroundImage: `url("images/wallp.jpg")`,
         //                 backgroundSize: 'cover',
         //                 backgroundPosition: 'center' }}
@@ -30,7 +30,7 @@ export default function Home() {
                 <Provider store={store}>
                 <PersistGate persistor={persistor}>
                         <MainHero />
-                        <SecondHero />
+                        {/* <SecondHero /> */}
                         <FisrtHero />
                         <TopRatings />
                         <Main />
