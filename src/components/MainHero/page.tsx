@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
@@ -69,11 +69,11 @@ interface Product {
 
 
 const MainHero = () => {
-          const saleEnd = useMemo(() => {
-    const t = new Date();
-    t.setHours(23, 59, 59, 999);
-    return t;
-  }, []);
+//           const saleEnd = useMemo(() => {
+//     const t = new Date();
+//     t.setHours(23, 59, 59, 999);
+//     return t;
+//   }, []);
   const { width } = useWindowResize();
 //   const { d, h, m, s, done } = useCountdown(saleEnd);
   const carousel = Autoplay({ delay: 4000 });
