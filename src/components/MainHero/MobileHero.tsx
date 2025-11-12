@@ -17,8 +17,8 @@ import { Eye } from "lucide-react"
 import { MdAddShoppingCart } from "react-icons/md"
 import useGetSponsored from "@/hooks/useGetSponsored"
 import useAddToCart from "@/hooks/useAddToCart"
-import { useData } from "@/app/DataContext"
-import Recommended from "../Recommended/page"
+// import { useData } from "@/app/DataContext"
+// import Recommended from "../Recommended/page"
 import { Id } from "../../../convex/_generated/dataModel"
 
 interface Product {
@@ -56,11 +56,11 @@ interface Product {
 const MobileHero: React.FC = () => {
   // Only show on mobile/tablet
   // Hide on large (lg+) screens so it does not conflict with existing MainHero
-  const saleEnd = useMemo(() => {
-    const t = new Date()
-    t.setHours(23, 59, 59, 999)
-    return t
-  }, [])
+//   const saleEnd = useMemo(() => {
+//     const t = new Date()
+//     t.setHours(23, 59, 59, 999)
+//     return t
+//   }, [])
 
 //   const { d, h, m, s, done } = useCountdown(saleEnd)
   const autoplayFast = Autoplay({ delay: 3800 })

@@ -5,9 +5,9 @@ import ProductSkeleton from '../ProductsSkeleton/page'
 // import useAddToCart  from '../../hooks/useAddToCart';
 import { useEffect, useState } from 'react';
 import { Id } from '../../../convex/_generated/dataModel';
-import { Heart, Share2, Star, ShoppingCart } from 'lucide-react';
+import { Heart, Share2, ShoppingCart } from 'lucide-react';
 import { Button } from '../ui/button';
-import { Card, CardContent } from '../ui/card';
+import { Card,  } from '../ui/card';
 import useAddToCart from '../../hooks/useAddToCart';
 import {handleShare} from '@/lib/helpers';
 import { Review } from '@/lib/types';
@@ -41,9 +41,9 @@ const HeroCardImage = ({ product }: HeroCardImageProps) => {
          const [productData, setProductData] = useState<ProductWithReviews | null>(product)
                 const { createBookmark } = useBookmark()
                 const { setNotification } = useNotification();
-        const truncateString = (text: string, maxLength: number): string => {
-                return text.length > maxLength ? text.slice(0, maxLength) + ".." : text;
-              };
+        // const truncateString = (text: string, maxLength: number): string => {
+        //         return text.length > maxLength ? text.slice(0, maxLength) + ".." : text;
+        //       };
               useEffect(() => {
                 if (product) {
                         setProductData(product)
@@ -51,11 +51,11 @@ const HeroCardImage = ({ product }: HeroCardImageProps) => {
               }, [product])
 
                 // Calculate average rating
-  const averageRating = (reviews: Review[]) => {
-    return reviews && reviews.length > 0
-      ? reviews.reduce((acc, review) => acc + (review?.rating ?? 0), 0) / reviews.length
-      : 0
-  }
+//   const averageRating = (reviews: Review[]) => {
+//     return reviews && reviews.length > 0
+//       ? reviews.reduce((acc, review) => acc + (review?.rating ?? 0), 0) / reviews.length
+//       : 0
+//   }
 
                 const handleBookmark = async (product_id:string) => {
                 if (!product_id) return;
