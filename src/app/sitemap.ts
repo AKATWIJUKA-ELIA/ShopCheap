@@ -51,7 +51,7 @@ const categories = [
   "furniture",
 ] as const;
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static top-level routes
   const staticRoutes: MetadataRoute.Sitemap = [
     toSitemapItem("/", { priority: 1, changeFrequency: "daily" }),
@@ -88,18 +88,18 @@ const productRoutes: MetadataRoute.Sitemap = ((productsData ?? []) as AnyRecord[
   MetadataRoute.Sitemap
 >((acc, p) => {
   const slug =
-    (p as any)?.slug ??
-    (p as any)?._id ??
-    (p as any)?.id ??
+    p ?.slug ??
+        p?._id ??
+    p ?.id ??
     null;
   if (!slug) return acc;
 
   const updatedAt =
-    (p as any)?.updatedAt ?? (p as any)?._updatedAt ?? undefined;
+    (p)?.updatedAt ?? p?._updatedAt ?? undefined;
 
   acc.push(
     toSitemapItem(`/product/${encodeURIComponent(String(slug))}`, {
-      lastModified: updatedAt,
+      lastModified: updatedAt as Date ,
       priority: 0.8,
       changeFrequency: "daily",
     })
