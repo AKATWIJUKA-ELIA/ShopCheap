@@ -157,3 +157,12 @@ export const getShopByName = async(shopName:string)=>{
                 return { success: false, message: "Internal Server Error", status: 500 };
         }
 }
+export const getProducts = async()=>{
+        try{
+                const products = await convex.query(api.products.getProducts, {});
+                return { success: true, products: products };
+        }catch(error){
+                console.error("Error fetching products:", error);
+                return { success: false, message: "Internal Server Error", status: 500 };
+        }
+} 
