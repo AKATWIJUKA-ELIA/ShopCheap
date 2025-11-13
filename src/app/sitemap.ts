@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import useGetAllProducts from "@/hooks/useGetAllProducts";
+// import useGetAllProducts from "@/hooks/useGetAllProducts";
+import{getProducts} from "@/lib/convex";
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
   process.env.NEXT_PUBLIC_BASE_URL!
@@ -51,7 +52,7 @@ const categories = [
   "furniture",
 ] as const;
 
-export default function Sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap():Promise<MetadataRoute.Sitemap> {
   // Static top-level routes
   const staticRoutes: MetadataRoute.Sitemap = [
     toSitemapItem("/", { priority: 1, changeFrequency: "daily" }),
@@ -73,7 +74,7 @@ export default function Sitemap(): MetadataRoute.Sitemap {
 
   // Attempt to fetch dynamic product slugs (fallbacks baked in)
   // Replace these endpoints with your actual ones if different.
-  const {data:productsData} = useGetAllProducts()
+  const productsData = await getProducts()
 //   const [ shopsData] = await Promise.all([
 //     safeFetch<AnyRecord[] | { items: AnyRecord[] }>("/api/public/shops-slugs"),
 //   ]);
@@ -84,7 +85,7 @@ export default function Sitemap(): MetadataRoute.Sitemap {
 //   const products = normalizeList(productsData);
 //   const shops = normalizeList(shopsData);
 
-const productRoutes: MetadataRoute.Sitemap = ((productsData ?? []) as AnyRecord[]).reduce<
+const productRoutes: MetadataRoute.Sitemap = ((productsData.products ?? []) as AnyRecord[]).reduce<
   MetadataRoute.Sitemap
 >((acc, p) => {
   const slug =
