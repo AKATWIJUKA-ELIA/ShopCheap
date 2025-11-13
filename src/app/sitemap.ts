@@ -51,7 +51,7 @@ const categories = [
   "furniture",
 ] as const;
 
-export default async function Sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function Sitemap(): MetadataRoute.Sitemap {
   // Static top-level routes
   const staticRoutes: MetadataRoute.Sitemap = [
     toSitemapItem("/", { priority: 1, changeFrequency: "daily" }),
