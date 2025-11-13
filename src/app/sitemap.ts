@@ -1,11 +1,9 @@
 import type { MetadataRoute } from "next";
 // import useGetAllProducts from "@/hooks/useGetAllProducts";
 import{getProducts} from "@/lib/convex";
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  process.env.NEXT_PUBLIC_BASE_URL!
+const SITE_URL =  process.env.NEXT_PUBLIC_BASE_URL!
 
-const base = SITE_URL.replace(/\/+$/, "");
+const base = SITE_URL
 
 type AnyRecord = Record<string, unknown>;
 
