@@ -28,23 +28,24 @@ const Main =  () => {
         const {data} = useData()
           const { sponsored: sponsored } = useGetSponsored();
           const [Sponsored, setSponsored] = useState<ProductWithReviews[]>([]);
-          const [productsWithReviews, setProductsWithReviews] = useState<ProductWithReviews[]>([]);
-              
+        //   const [productsWithReviews, setProductsWithReviews] = useState<ProductWithReviews[]>([]);
+
+        //       setProductsWithReviews(data.Products.product);
               useEffect(() => {
                   const fetchReviews = async () => {
                       if (!sponsored?.length && !data.Products.product?.length) return;
                       
-                      const enhanced = await Promise.all(
-                          data.Products.product.map(async (product) => {
-                              const reviewData = await getReviewsByProduct(product._id);
-                              return {
-                                  ...product,
-                                  reviews: reviewData.data || []
-                              };
-                          })
-                      );
+                //       const enhanced = await Promise.all(
+                //           data.Products.product.map(async (product) => {
+                //               const reviewData = await getReviewsByProduct(product._id);
+                //               return {
+                //                   ...product,
+                //                   reviews: reviewData.data || []
+                //               };
+                //           })
+                //       );
 
-                      setProductsWithReviews(enhanced);
+                //       setProductsWithReviews(enhanced);
                        const enhancedSponsored = await Promise.all(
                           sponsored ? sponsored.map(async (product) => {
                               const reviewData = await getReviewsByProduct(product ? product._id : "" as Id<"products">);
@@ -84,7 +85,7 @@ const Main =  () => {
       )}
     </div>
            <div className='grid grid-cols-2 md:grid-cols-5 p-2 gap-2 dark:bg-black '>
-      {productsWithReviews&&productsWithReviews.length>0?( productsWithReviews.map((product) => (
+      {data.Products.product&&data.Products.product.length>0?( data.Products.product.map((product) => (
         <HeroCard key={product._id} product={product} />
       ))):(
         Array.from({ length: 15 }).map((_, idx) => (

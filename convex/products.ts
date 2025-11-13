@@ -1,7 +1,7 @@
 import {action, internalQuery, mutation, query} from "./_generated/server"
 import {v} from "convex/values"
 import { api, internal } from "../convex/_generated/api";
-import { Id } from "./_generated/dataModel";
+import { Doc, Id } from "./_generated/dataModel";
 
 export const generateUploadUrl = mutation(async (ctx)=>{
       return await ctx.storage.generateUploadUrl()
@@ -60,20 +60,24 @@ export const createProduct = mutation({
         },
   })
 
-  export const getProducts = query({
+  export const getProducts: ReturnType<typeof query> = query({
            
         handler: async (ctx) => {
       const products = await ctx.db.query("products").filter((q)=> q.eq(q.field("approved"), true)).collect();
+                const finalProducts = await Promise.all(products.map(async (product) => {
+                        const reviews = await ctx.runQuery(api.reviews.getReviewsByProduct, { product_id:product._id });
+                        return {
+                                ...product,
+                                product_image:(await Promise.all(
+                                        product.product_image.map(async (image: string) => {
+                                                return await ctx.storage.getUrl(image);
+                                        })
+                                )).filter((url): url is string => url !== null),
+                                reviews: reviews};
+                        }));
 
-                for (const product of products) {
-            product.product_image = (await Promise.all(
-              product.product_image.map(async (image: string) => {
-                return await ctx.storage.getUrl(image);
-              })
-            )).filter((url): url is string => url !== null);
-          }
-//       console.log(products)
-      return products
+//       console.log(finalProducts)
+      return finalProducts;
       
     },
     
@@ -517,7 +521,7 @@ export const getImageUrl = query({
         })
 
         export const getTopRated = internalQuery({
-                handler: async (ctx) => {
+                handler: async (ctx): Promise<(Doc<"products"> & { reviews: Doc<"reviews">[]; product_image: string[] })[]> => {
                         const TopRatedIds = [
                                 ...new Set((await ctx.db.query("reviews")
                                 .collect())
@@ -526,12 +530,15 @@ export const getImageUrl = query({
                         )];
                         // console.log("Top rated Ids",TopRatedIds)
                         return await Promise.all(
-                                TopRatedIds.map((id) => ctx.db.query("products").filter((q) => q.eq(q.field("_id"), id)).first()
+                                TopRatedIds.map(async (id)
+                                :Promise<(Doc<"products"> & { reviews: Doc<"reviews">[]; product_image: string[] }) | null> => ctx.db.query("products").filter((q) => q.eq(q.field("_id"), id)).first()
                                 .then(async (product) => {
                                         // console.log("product: ", product)
                                         if (!product) return null; // Handle case where product is not found
+                                         const reviews = await ctx.runQuery(api.reviews.getReviewsByProduct, { product_id:product._id });
                                         return {
                                                 ...product,
+                                                reviews: reviews,
                                                 product_image: (product.product_image && product.product_image.length > 0) ? 
                                                 (await Promise.all(
                                                         product.product_image.map(async (image: string) => {
@@ -540,8 +547,9 @@ export const getImageUrl = query({
                                                 )).filter((url): url is string => url !== null) : []
                                         };
                                 }
+
                         )
-                        ));
+                        )).then((TopRatedProducts) => TopRatedProducts.filter((product): product is Doc<"products"> & { reviews: Doc<"reviews">[]; product_image: string[] } => product !== null));
                         // return TopRatedProducts
                 }
         })
