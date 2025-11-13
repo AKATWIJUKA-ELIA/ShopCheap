@@ -1,6 +1,7 @@
 "use client";
 
 import ReduxProvider from "./ReduxProvider";
+import {ConvexQueryCacheProvider} from "convex-helpers/react/cache"
 import { ConvexClientProvider } from "@/app/ConvexClientProvider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { FileProvider } from "@/app/FileContext";
@@ -9,9 +10,11 @@ import { NotificationProvider } from "@/app/NotificationContext";
 import { BoostProvider } from "@/app/BoostContext";
 
 
+
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
     <ConvexClientProvider>
+        <ConvexQueryCacheProvider>
           <NotificationProvider>
             <BoostProvider>
               <ReduxProvider>
@@ -25,6 +28,7 @@ export default function ClientProviders({ children }: { children: React.ReactNod
               </ReduxProvider>
             </BoostProvider>
           </NotificationProvider>
+        </ConvexQueryCacheProvider>
     </ConvexClientProvider>
   );
 }
