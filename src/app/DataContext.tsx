@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import useGetApprovedProducts from '@/hooks/useGetApprovedProducts';
 import useGetCategories from '@/hooks/useGetCategories';
 import { Id } from "../../convex/_generated/dataModel";
+import { Review } from '@/lib/types';
 
 interface Product {
   approved: boolean;
@@ -16,8 +17,11 @@ interface Product {
   _creationTime: number;
   _id: Id<"products">;
 }
+ interface ProductWithReviews extends Product {
+        reviews?: Review[];
+       }
 interface Products {
-  product: Product[] | [];
+  product: ProductWithReviews[] | [];
 }
  interface Category {
         _id: Id<"cartegories">;
