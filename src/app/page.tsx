@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useData } from "./DataContext";
 import Loader from "@/components/Loader/loader";
 import FisrtHero from "@/components/FirstHero/page";
-import SecondHero from "@/components/SecondHero/page";
+// import SecondHero from "@/components/SecondHero/page";
 import Main from "@/components/Main/main";
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react";
