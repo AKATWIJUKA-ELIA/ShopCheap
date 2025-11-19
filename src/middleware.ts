@@ -10,10 +10,12 @@ const isProtected = [
         "/sudo",
         
 ]
-const publicRoutes = ['/sign-in', '/sign-up','/home','/passwordChange', '/password-reset'];
+const publicRoutes = ['/sign-in', '/sign-up','/passwordChange', '/password-reset'];
 const RoleProtected = ['/admin(.*)', '/sudo(.*)', ];
 const Middleware = async (req: NextRequest) => {
-        
+          if (req.nextUrl.pathname.includes("/home")) {
+        return NextResponse.redirect(new URL('/', req.url))
+  }
         const path = req.nextUrl.pathname
         // console.log("Middleware path:",path)
         const isProtectedPath = isProtected.some(route => path.startsWith(route));
@@ -33,9 +35,10 @@ const Middleware = async (req: NextRequest) => {
                         return NextResponse.redirect(new URL('/unauthorized', req.url));
                 }
 
-        if (isPublicRoute && session?.userId && req.nextUrl.pathname != '/home') {
-                return NextResponse.redirect(new URL('/home', req.nextUrl))
+        if (isPublicRoute && session?.userId && req.nextUrl.pathname != '/') {
+                return NextResponse.redirect(new URL('/', req.nextUrl))
   }
+
  
   return NextResponse.next()
 }
