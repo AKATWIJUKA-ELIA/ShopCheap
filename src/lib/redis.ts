@@ -11,7 +11,7 @@ const client = createClient({
 await client.connect();
 
 export async function getCache(key: string, ): Promise<{success:boolean, data:Product[] | null, status:number}> {
-        client.on('error', err => console.log('Redis Client Error', err));
+        client.on('error', () => console.log('Redis Client Error, Check your internet connection',));
       return new Promise(async (resolve, reject) => {
         try {
         const cachedData = await client.get(key);
