@@ -122,7 +122,7 @@ export const notifyExpiredSubscriptions = internalAction({
         //get the Product and update its sponsorship status
         if (!sub.product_id || !sub.user_id) break;
       const product = await ctx.runQuery(api.products.getProduct, { id: sub.product_id as Id<"products"> });
-      await ctx.runMutation(api.crons.UpdateProduct,{_id:product?._id as Id<"products">})
+      product?._id && await ctx.runMutation(api.crons.UpdateProduct,{_id:product?._id as Id<"products">})
       // Get user email
       const user = await ctx.runQuery(api.users.GetCustomerById, { id: sub.user_id as Id<"customers"> });
       if (!user?.email) continue;
