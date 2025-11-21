@@ -114,7 +114,7 @@ const MobileHero: React.FC = () => {
             ? products.map((product) => (
                 <CarouselItem
                   key={product._id}
-                  className="relative h-[260px] sm:h-[320px]"
+                  className="relative h-[260px] sm:h-[400px]"
                 >
                   <div
                     className="w-full h-full bg-black/50"
