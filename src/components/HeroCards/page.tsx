@@ -22,8 +22,6 @@ interface Product {
          product_image: string[];
          product_name: string;
          product_owner_id: string;
-         product_discount?: number;
-         
          product_price: string;
          product_discount?: number|undefined;
          product_likes?: number;
