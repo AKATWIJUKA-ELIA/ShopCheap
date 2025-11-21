@@ -76,6 +76,7 @@ const MainHero = () => {
 //   }, []);
   const { width } = useWindowResize();
 //   const { d, h, m, s, done } = useCountdown(saleEnd);
+        const [showMobile, setShowMobile] = useState(false);
   const carousel = Autoplay({ delay: 4000 });
   const carousel1 = Autoplay({ delay: 6000 });
   const [products, setproducts] = useState<Product[]>([]);
@@ -104,9 +105,21 @@ useEffect(() => {
 ));
   }
 }, [sponsored]);
- if (width < 768) {
+useEffect(()=>{
+        if (width < 768) {
+        console.log("width", width);
+        setShowMobile(true);
+  }
+  setShowMobile(false);
+},[width])
+
+ 
+ if (width < 768 || showMobile) {
+        console.log("width", width);
     return <MobileHero />;
   }
+console.log("Width:", width);  
+ 
         
   return (
         <div className= ' bg-pin k-500 flex  mt-36 h-[300px]  md:h-[550px]'  >

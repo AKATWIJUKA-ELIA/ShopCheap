@@ -11,6 +11,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 
 export const metadata: Metadata = {
+        metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://shopcheapug.com"),
     title: {
     template: "%s | Shop Cheap",
     default: "Shop Cheap Anytime, Any where",

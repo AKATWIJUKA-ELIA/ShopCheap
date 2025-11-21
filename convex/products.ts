@@ -63,16 +63,24 @@ export const createProduct = mutation({
   export const getProducts: ReturnType<typeof query> = query({
            
         handler: async (ctx) => {
-      const products = await ctx.db.query("products").filter((q)=> q.eq(q.field("approved"), true)).collect();
-                const finalProducts = await Promise.all(products.map(async (product) => {
-                        const reviews = await ctx.runQuery(api.reviews.getReviewsByProduct, { product_id:product._id });
+
+      const products = await ctx.db.query("products")
+      .filter((q)=> q.eq(q.field("approved"), true))
+      .collect();
+
+        const productIds = new Set(products.map(p => p._id));
+        const allReviews = await ctx.db.query("reviews").collect();
+
+        const reviews = allReviews.filter((review) => productIds.has(review.product_id as Id<"products">));
+        
+        const finalProducts = await Promise.all(products.map(async (product) => {
+                // const reviews = await ctx.runQuery(api.reviews.getReviewsByProduct, { product_id:product._id });
+                const images = product.product_image ?? []
+                const resolvedImages =images.length === 0 ? [] : await Promise.all(
+                        images.slice(0, 3).map((image) => ctx.storage.getUrl(image)),)
                         return {
                                 ...product,
-                                product_image:(await Promise.all(
-                                        product.product_image.map(async (image: string) => {
-                                                return await ctx.storage.getUrl(image);
-                                        })
-                                )).filter((url): url is string => url !== null),
+                                product_image:resolvedImages.filter((url): url is string => url !== null),
                                 reviews: reviews};
                         }));
 
@@ -563,25 +571,49 @@ export const getImageUrl = query({
 
         export const getSponsoredProducts = query({
                 handler: async (ctx) => {
-                        const premium = await ctx.db.query("products")
-                        .withIndex("by_sponsorship", (q) => q.eq("product_sponsorship.type", "premium")).collect();
-                        const basic = await ctx.db.query("products")
-                        .withIndex("by_sponsorship", (q) => q.eq("product_sponsorship.type", "basic")).collect();
-                        const platinum = await ctx.db.query("products")
-                        .withIndex("by_sponsorship", (q) => q.eq("product_sponsorship.type", "platinum")).collect();
+                        const fetchSponsored = await ctx.db.query("products")
+                        .withIndex("by_sponsorship")
+                          .filter((q) =>
+                            q.or(
+                              q.eq(q.field("product_sponsorship.type"), "premium"),
+                              q.eq(q.field("product_sponsorship.type"), "platinum"),
+                              q.eq(q.field("product_sponsorship.type"), "basic")
+                            )
+                          )
+                          .collect();
+                          const groups:{[key: string]: typeof fetchSponsored} = {platinum: [],premium: [],basic: []};
+                          for (const p of fetchSponsored) {
+                                const type = p.product_sponsorship?.type;
+                                if ((type && groups[type])) groups[type].push(p);
+                        }
+                        const { platinum, premium, basic } = groups;
                         const sponsored = [...premium, ...basic, ...platinum];
+                         // Collect all unique storage IDs
+                        const storageIds = new Set<string>();
+                        for (const product of sponsored) {
+                        if (product.product_image?.length) {
+                                product.product_image.forEach((id: string) => storageIds.add(id));
+                        }
+                        }
+
+                        // Fetch all URLs in parallel (batch operation)
+                        const urlMap = new Map<string, string | null>();
+                        await Promise.all(
+                        Array.from(storageIds).map(async (id) => {
+                                const url = await ctx.storage.getUrl(id);
+                                urlMap.set(id, url);
+                        })
+                        );
+
                         return await Promise.all(
                                 sponsored.map(async (product) => {
                                         if (!product) return null; // Handle case where product is not found
                                         return {
                                                 ...product,
-                                                product_image: (product.product_image && product.product_image.length > 0)
-                                                        ? (await Promise.all(
-                                                                product.product_image.map(async (image: string) => {
-                                                                        return await ctx.storage.getUrl(image);
-                                                                })
-                                                        )).filter((url): url is string => url !== null)
-                                                        : []
+                                                product_image: product.product_image?.length>0? product.product_image
+                                                .map((id: string) => urlMap.get(id))
+                                                .filter((url): url is string => url !== null)
+                                                : []
                                         };
                                 })
                         );
