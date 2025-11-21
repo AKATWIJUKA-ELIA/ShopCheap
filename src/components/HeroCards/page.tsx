@@ -22,6 +22,7 @@ interface Product {
          product_image: string[];
          product_name: string;
          product_owner_id: string;
+         product_discount?: number;
          product_price: string;
          product_likes?: number;
          _creationTime: number;
@@ -135,7 +136,6 @@ const HeroCard = ({ product }: HeroCardProps) => {
                            <p className="text-gray-600 text-sm dark:text-gray-300">
                  {truncateString(productData.product_description, 30)}
                </p>
-                
                           <div className="flex items-center gap-1">
                             <div className="flex items-center">
                               {[...Array(5)].map((_, i) => (
@@ -145,14 +145,14 @@ const HeroCard = ({ product }: HeroCardProps) => {
                                 />
                               ))}
                             </div>
-                            <span className="text-xs text-gray-600">({averageRating(productData.reviews?productData.reviews:[])})</span>
+                            <span className="text-xs text-gray-600">({averageRating(productData.reviews?productData.reviews:[]).toFixed(0)})</span>
                           </div>
                 
-                          <div className="flex items-center text-red-600">
+                          <div className="flex items-centerd text-red-600 gap-3">
                             Ugx:<span className="font-bold text-red-600 text-lg">{(parseFloat(productData.product_price) || 0).toLocaleString()}</span>
-                            {/* {product.originalPrice && (
-                              <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
-                            )} */}
+                            {productData?.product_discount && (
+                              <span className="text-sm text-gray-500 line-through"> ${productData.product_discount}</span>
+                            )}
                           </div>
                 
                          
