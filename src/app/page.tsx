@@ -32,12 +32,12 @@ const [loading, setLoading] = useState(true);
         </div>;
   }
   return (
-    <div className="relative flex  items-center justify-center bg-white min-h-screen"
+    <div className=" w-full "
 //     style={{ backgroundImage: `url("images/wallp.jpg")`,
 //                         backgroundSize: 'cover',
 //                         backgroundPosition: 'center' }}
     >
-         <div className="backdrop-blur-md md:px-1 lg:px-12 ">
+         <div className="">
                 <Provider store={store}>
                 <PersistGate persistor={persistor}>
                         <MainHero />

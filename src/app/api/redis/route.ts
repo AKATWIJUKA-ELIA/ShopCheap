@@ -1,18 +1,33 @@
-import { NextResponse,NextRequest } from 'next/server';
-import {setCache} from '@/lib/redis'; 
+import { NextResponse, NextRequest } from "next/server"
+import { z } from "zod"
+import { setCache } from "@/lib/redis"
 
-export async function POST( request: NextRequest) {
-        const body =  await request.json();
-        const {products, key} = body;
-        // console.log('Received key for caching:',key);
-        // console.log('Received products for caching:',products);
+const cacheSchema = z.object({
+  key: z.string().min(1),
+  products: z.array(z.unknown()),
+  ttlSeconds: z.number().int().positive().default(3600),
+})
 
+export async function POST(request: NextRequest) {
+  try {
+    const parsed = cacheSchema.parse(await request.json())
+    await setCache(parsed.key, JSON.stringify(parsed.products), parsed.ttlSeconds)
 
-          const CachedProducts = async () => {
-          const data = await setCache(key, JSON.stringify(products), 3600);
-          return data;
-  };
-        const data = await CachedProducts();
-
-  return NextResponse.json({ value:data });
+    return NextResponse.json(
+      {
+        key: parsed.key,
+        ttl: parsed.ttlSeconds,
+        itemCount: parsed.products.length,
+      },
+      { status: 201 },
+    )
+  } catch (err) {
+    return NextResponse.json(
+      {
+        error: "Failed to cache products",
+        details: err instanceof Error ? err.message : "Unknown error",
+      },
+      { status: 400 },
+    )
+  }
 }

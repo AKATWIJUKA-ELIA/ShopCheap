@@ -11,6 +11,6 @@ export async function POST( request: NextRequest) {
           return data;
   };
         const data = await CachedProducts();
-        // console.log("Returned Data:", data);
+        // console.log("Returned Data:", data); 
   return NextResponse.json({ value:data });
 }
