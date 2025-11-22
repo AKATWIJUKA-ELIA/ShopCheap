@@ -52,7 +52,6 @@ export default function NewsletterAdmin() {
   const {setNotification} = useNotification()
   const {handleDelete} = useDeleteSubscriber()
 
-
   useEffect(() => {
         if(subscribers && subscribers.length > 0) {
                   console.log("Subscribers:", subscribers)
