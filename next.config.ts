@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
                       pathname: '/**',
                     },
                     {
+                      protocol: 'https',
+                      hostname: 'resilient-mastiff-366.convex.cloud',
+                      pathname: '/**',
+                    },
+                    {
                         protocol: 'https',
                         hostname: 'www.bootdey.com',
                         pathname: '/**',

@@ -18,6 +18,7 @@
 /out/
 
 # production
+dev.zip
 /build
 
 # misc
